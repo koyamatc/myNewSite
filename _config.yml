@@ -23,7 +23,8 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://koyamatch.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: koyamatc
 github_username:  koyamatc
-
+paginate:8
+paginate_path: "/articles/page:num"
 # Build settings
 markdown: kramdown
 theme: minima
