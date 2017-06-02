@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="jp">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>{{ site.title }}</title>
+---
+layout: default
+---
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="{{site.url}}/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="{{site.url}}/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-<body>
+<h2>{{ page.title }}</h2> 
+<p>{{ page.date | date: '%B %d, %Y' }}</p>
+<div class="content">
+    {{ content }}
+</div>
 
-<h1>{{ page.title }}</h1>
-{{ content }}
-{% include footer.html %}

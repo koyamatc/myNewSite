@@ -1,7 +1,6 @@
 ---
-title: 投稿記事
 layout: post
-postTitle: 太陽系惑星軌道
+title: 太陽系惑星軌道
 categories: post processingJS
 ---
 

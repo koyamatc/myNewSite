@@ -1,20 +1,11 @@
-{% include header.html %}
- <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="{{ site.url}}" class="brand-logo">{{ site.title }}</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+---
+layout: default
+---
+ 
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
       <br><br>
-      <h1 class="header center orange-text">Starter Template</h1>
+      <h1 class="header center orange-text">Welcome to my site!!</h1>
       <div class="row center">
         <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
       </div>
@@ -27,7 +18,6 @@
   </div>
 
 
-  <div class="container">
     <div class="section">
 
       <!--   Icon Section   -->
@@ -64,16 +54,51 @@
     <br><br>
 
     <div class="section">
-      <h1> Articles</h1>
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
+      <h4> Articles</h4>
+      <div class="row">
+        {% for post in site.posts limit: 3 %}
+          <div class="col s12 m4">
+           <div class="card small z-depth-5">
+            
+            <div class="card-content">
+            <span class="card-title">{{ post.title }}</span>  
+              <p>{{ post.content }}</p>
+            </div>
+            <div class="card-action orange darken-3">
+              <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
+            </div>
+          </div>
+          </div>
+        {% endfor %}  
+      </div>
+      <div class="row">
+        {% for post in site.posts limit: 3 offset: 3 %}
+          <div class="col s12 m4">
+           <div class="card small blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">{{ post.title }}</span>
+              <p>{{ post.content  }}</p>
+            </div>
+            <div class="card-action">
+              <a href="{{ post.url }}">記事へ</a>
+            </div>
+          </div>
+          </div>
+        {% endfor %}  
+      </div>
+      <div class="row">
+        {% for post in site.posts limit: 3 offset: 6 %}
+          <div class="col s12 m4">
+           <div class="card small blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">{{ post.title }}</span>
+              <p>{{ post.content  }}</p>
+            </div>
+            <div class="card-action">
+              <a href="{{ post.url }}">記事へ</a>
+            </div>
+          </div>
+          </div>
+        {% endfor %}  
+      </div>
     </div>
-  </div>
-      
-  
-{% include footer.html %}

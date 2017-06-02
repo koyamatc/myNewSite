@@ -1,10 +1,13 @@
 ---
-title: 投稿記事
 layout: post
-postTitle: Jekyll update to 3.4
+title: Jekyll update to 3.4
 categories: post jekyll
+description: 
+    jekyll のバージョンアップに挑戦。
+    悪戦苦闘してしまいました、
 ---
 
+------
 このサイトも飽きてきたので
 
 そろそろ模様替えを考えています

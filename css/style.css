@@ -12,3 +12,11 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+
+.card-content {
+  height: 100%;
+}
+
+.card-title {
+  margin-left: 20px;
+}
