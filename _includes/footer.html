@@ -1,28 +1,38 @@
-  <footer class="page-footer orange">
+  <footer class="page-footer orange darken-2">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
+          <h5 class="white-text">About this site</h5>
+          <p class="grey-text text-lighten-4">
+            このサイトはフロント・エンド開発のための自習用に作成しています。
+            習得した技術のテスト、確認、備忘録として利用しています。
+            全体の構成は <strong class="teal-text">jekyll</strong>で、
+            デザインには　material design の <strong class="teal-text">materialize</strong>を使用しています。　
+          </p>
 
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">Settings</h5>
           <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
+            <li><a class="white-text" href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a></li>
           </ul>
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">Connect</h5>
           <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
+            <li>
+              <!-- Place this tag where you want the button to render. -->
+              <a class="github-button" href="https://github.com/koyamatc" 
+                 aria-label="Follow @koyamatc on GitHub">Follow @koyamatc</a>
+            </li>
+            <li>
+              <a href="https://twitter.com/koyamatc" class="twitter-follow-button" data-show-count="false">Follow @koyamatc</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </li>
+            <li>
+              <div class="fb-follow" data-href="https://www.facebook.com/koyamatc" data-layout="standard" data-size="small" data-show-faces="true"></div>
+            </li>
+            
           </ul>
         </div>
       </div>
@@ -39,6 +49,15 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="{{site.url}}/js/materialize.js"></script>
   <script src="{{site.url}}/js/init.js"></script>
-
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.9";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
   </body>
 </html>

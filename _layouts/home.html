@@ -1,20 +1,16 @@
 ---
 layout: default
+myPhoto_path: "http://koyamatch.com/images/newHat2015.jpg"
 ---
  
   <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
       <br><br>
       <h1 class="header center orange-text">Welcome to my site!!</h1>
       <div class="row center">
         <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
       </div>
-      <div class="row center">
-        <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-      </div>
       <br><br>
 
-    </div>
   </div>
 
 
@@ -23,48 +19,96 @@ layout: default
       <!--   Icon Section   -->
       <div class="row">
         <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">Speeds up development</h5>
+          <div class="card">
+            <div class="card-image">
+              <img src={{ layout.myPhoto_path }} width="100%" height="100%" alt="" padding="20px">
+              <span class="card-title red-text darken-2 left"></span>
+            </div>
+            <div class="card-content">
+              <p>
+                コヤマ　タケシです。ソフトウェア・エンジニアをやってます。
+                東京は台東区上野生まれ、現在は千葉県浦安市在住。
+                長いことIBM AS400の設計・開発をしてきました。
 
-            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+              </p>
+            </div>
           </div>
         </div>
 
         <div class="col s12 m4">
           <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">User Experience Focused</h5>
+            <h2 class="center light-blue-text"><i class="material-icons">blur_on</i></h2>
+            <h5 class="center">Skills</h5>
 
-            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+              <ul>
+                <li><i class="material-icons small">create</i>Javascript</li>
+                <li><i class="material-icons small">create</i>Python</li>
+                <li><i class="material-icons small">create</i>RPG</li>
+                <li><i class="material-icons small">create</i>Cobol</li>
+                <li><i class="material-icons small">create</i>Delphi</li>
+             </ul>
+             <ul>
+                <li><i class="material-icons apps">apps</i>React</li>
+                <li><i class="material-icons small">apps</i>Jekyll</li>
+                <li><i class="material-icons small">apps</i>Bootstrap</li>
+                <li><i class="material-icons small">apps</i>Excel, Access</li>
+             </ul>
           </div>
         </div>
 
         <div class="col s12 m4">
           <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">Easy to work with</h5>
+            <h2 class="center light-blue-text"><i class="material-icons">music_note</i></h2>
+            <h5 class="center">Like to do</h5>
 
-            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+            <p class="center">音楽を聴き、歌を歌う。</p>
+            <div class="container">
+              <h6 class="center"><i class="material-icons red-text">favorite</i>Singers</h6>
+              <ul>
+                <li><i class="material-icons">mic</i>Nat King Cole</li>
+                <li><i class="material-icons">mic</i>Michael Bubble</li>
+                <li><i class="material-icons">mic</i>Dianne Reeves</li>
+                <li><i class="material-icons">mic</i>Sammy Davis Jr.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
     </div>
-    <br><br>
-
+        
+    <!-- Articles' posts section -->
     <div class="section">
       <h4> Articles</h4>
       <div class="row">
         {% for post in site.posts limit: 3 %}
           <div class="col s12 m4">
-           <div class="card small z-depth-5">
+           <div class="card small z-depth-5 orange lighten-2">
+            
+            <div class="card-content">
+              <span>{{ post.date | date: '%B %d, %Y' }}</span>  
+              <span class="card-title">{{ post.title }}</span>
+              
+              <p class="truncate">{{ post.content }}</p>
+            </div>
+            <div class="card-action">
+              <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
+            </div>
+          
+           </div>
+          </div>
+        {% endfor %}  
+      </div>
+      <div class="row">
+        {% for post in site.posts limit: 3 offset: 3 %}
+          <div class="col s12 m4">
+           <div class="card small z-depth-5 orange lighten-2">
             
             <div class="card-content">
             <span class="card-title">{{ post.title }}</span>  
-              <p>{{ post.content }}</p>
+              <p class="truncate">{{ post.content }}</p>
             </div>
-            <div class="card-action orange darken-3">
+            <div class="card-action">
               <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
             </div>
           </div>
@@ -72,30 +116,15 @@ layout: default
         {% endfor %}  
       </div>
       <div class="row">
-        {% for post in site.posts limit: 3 offset: 3 %}
+        {% for post in site.posts limit: 3 offset:6 %}
           <div class="col s12 m4">
-           <div class="card small blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">{{ post.title }}</span>
-              <p>{{ post.content  }}</p>
+           <div class="card small z-depth-5 orange lighten-2">
+            <div class="card-content">
+            <span class="card-title">{{ post.title }}</span>  
+              <p class="truncate">{{ post.content }}</p>
             </div>
             <div class="card-action">
-              <a href="{{ post.url }}">記事へ</a>
-            </div>
-          </div>
-          </div>
-        {% endfor %}  
-      </div>
-      <div class="row">
-        {% for post in site.posts limit: 3 offset: 6 %}
-          <div class="col s12 m4">
-           <div class="card small blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">{{ post.title }}</span>
-              <p>{{ post.content  }}</p>
-            </div>
-            <div class="card-action">
-              <a href="{{ post.url }}">記事へ</a>
+              <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
             </div>
           </div>
           </div>

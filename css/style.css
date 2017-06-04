@@ -20,3 +20,14 @@
 .card-title {
   margin-left: 20px;
 }
+
+/**
+ MathJax
+*/
+.MathJax_Display {
+  text-align: left !important;
+  color: #fff;
+}
+.MathJax_SVG_Display {
+  text-align: left !important;
+}
