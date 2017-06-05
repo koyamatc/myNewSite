@@ -2,6 +2,10 @@
 layout: post
 title: 太陽系惑星軌道
 categories: post processingJS
+description:
+  Processing.jsで、太陽系の惑星起動と冥王星の軌道を描画しています。
+  惑星の軌道は楕円であることから、まずは、楕円について確認し、
+  それをもとに描画を行います。
 ---
 
 -----

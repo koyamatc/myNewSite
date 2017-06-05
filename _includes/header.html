@@ -11,15 +11,55 @@
   <link href="{{site.url}}/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
+<header>  
 <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="{{ site.url}}" class="brand-logo">{{ site.title }}</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
+    <div class="nav-wrapper container"><a id="logo-container" href="{{ site.url}}" class="brand-logo">{{ site.title }}</a>
+    <ul id="slide-out" class="side-nav fixed">
+      <li>
+        <div class="userView">
+          <div>
+            <img src="{{site.url}}/image/k_1.gif">
+          </div>
+      </li>
+      <li><a href="d3/
+      ">D3</a></li>
+      <li><a href="#!">Second Sidebar Link</a></li>
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header">Data Visualization</a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="{{site.url}}/d3/">D3</a></li>
+                <li><a href="#!">Second</a></li>
+                <li><a href="#!">Third</a></li>
+                <li><a href="#!">Fourth</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li><a href="{{site.url}}/index20170605.html">Old Site Home</a></li>
+    </ul>
+ <!--   
+    <ul class="right hide-on-med-and-down">
+      <li><a href="#!">First Sidebar Link</a></li>
+      <li><a href="#!">Second Sidebar Link</a></li>
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+      <ul id='dropdown1' class='dropdown-content'>
+        <li><a href="#!">First</a></li>
+        <li><a href="#!">Second</a></li>
+        <li><a href="#!">Third</a></li>
+        <li><a href="#!">Fourth</a></li>
       </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </ul>
+-->
+  <a href="#" data-activates="slide-out" class="button-collapse">
+    <i class="material-icons">menu</i></a>
+    
     </div>
+
   </nav> 
+</header>
+<main>

@@ -4,7 +4,7 @@ title: Jekyll update to 3.4
 categories: post jekyll
 description: 
     jekyll のバージョンアップに挑戦。
-    悪戦苦闘してしまいました、
+    v.0 →　v.3 悪戦苦闘してしまいました。
 ---
 
 ------

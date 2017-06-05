@@ -13,6 +13,7 @@
 	font-size: inherit;
 }
 
+/** Cards components */
 .card-content {
   height: 100%;
 }
@@ -20,6 +21,25 @@
 .card-title {
   margin-left: 20px;
 }
+
+/** side navigation */
+.side-nav .collapsible-header, 
+.side-nav.fixed .collapsible-header {
+  padding-left: 30px;
+}
+
+.side-nav .collapsible-body {
+  padding-left: 40px;
+}
+header, main, footer {
+      padding-left: 200px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
 
 /**
  MathJax

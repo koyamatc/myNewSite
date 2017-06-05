@@ -2,7 +2,7 @@
 layout: default
 myPhoto_path: "http://koyamatch.com/images/newHat2015.jpg"
 ---
- 
+
   <div class="section no-pad-bot" id="index-banner">
       <br><br>
       <h1 class="header center orange-text">Welcome to my site!!</h1>
@@ -80,6 +80,7 @@ myPhoto_path: "http://koyamatch.com/images/newHat2015.jpg"
     <!-- Articles' posts section -->
     <div class="section">
       <h4> Articles</h4>
+      <h5 class="red-text">Note リニューアル前の記事の変更は行っていません</h5>
       <div class="row">
         {% for post in site.posts limit: 3 %}
           <div class="col s12 m4">
@@ -88,8 +89,8 @@ myPhoto_path: "http://koyamatch.com/images/newHat2015.jpg"
             <div class="card-content">
               <span>{{ post.date | date: '%B %d, %Y' }}</span>  
               <span class="card-title">{{ post.title }}</span>
-              
-              <p class="truncate">{{ post.content }}</p>
+              <hr>
+              <p>{{ post.description }}</p>
             </div>
             <div class="card-action">
               <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
@@ -105,8 +106,9 @@ myPhoto_path: "http://koyamatch.com/images/newHat2015.jpg"
            <div class="card small z-depth-5 orange lighten-2">
             
             <div class="card-content">
-            <span class="card-title">{{ post.title }}</span>  
-              <p class="truncate">{{ post.content }}</p>
+              <span class="card-title">{{ post.title }}</span>
+              <hr>  
+              <p>{{ post.description }}</p>
             </div>
             <div class="card-action">
               <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
@@ -120,8 +122,9 @@ myPhoto_path: "http://koyamatch.com/images/newHat2015.jpg"
           <div class="col s12 m4">
            <div class="card small z-depth-5 orange lighten-2">
             <div class="card-content">
-            <span class="card-title">{{ post.title }}</span>  
-              <p class="truncate">{{ post.content }}</p>
+              <span class="card-title">{{ post.title }}</span>  
+              <hr>
+              <p>{{ post.description }}</p>
             </div>
             <div class="card-action">
               <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
