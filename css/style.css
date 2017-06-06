@@ -31,6 +31,7 @@
 .side-nav .collapsible-body {
   padding-left: 40px;
 }
+/**
 header, main, footer {
       padding-left: 200px;
     }
@@ -40,7 +41,7 @@ header, main, footer {
         padding-left: 0;
       }
     }
-
+*/
 /**
  MathJax
 */
