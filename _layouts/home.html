@@ -3,134 +3,278 @@ layout: default
 myPhoto_path: "http://koyamatch.com/images/newHat2015.jpg"
 ---
 
-  <div class="section no-pad-bot" id="index-banner">
-      <br><br>
-      <h1 class="header center orange-text">Welcome to my site!!</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-      </div>
-      <br><br>
+<div class="section no-pad-bot" id="index-banner">
+    <br><br>
+    <h1 class="header center orange-text">Welcome to my site!!</h1>
+    <div class="row center">
+      <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+    </div>
+    <br><br>
+</div>
 
+<div class="section">
+
+  <!--   Icon Section   -->
+  <div class="row">
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <img src={{ layout.myPhoto_path }} width="100%" height="100%" alt="" padding="20px">
+          <span class="card-title red-text darken-2 left"></span>
+        </div>
+        <div class="card-content">
+          <p>
+            コヤマ　タケシです。ソフトウェア・エンジニアをやってます。
+            東京は台東区上野生まれ、現在は千葉県浦安市在住。
+            長いことIBM AS400の設計・開発をしてきました。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m4">
+      <div class="icon-block">
+        <h2 class="center light-blue-text"><i class="material-icons">blur_on</i></h2>
+        <h5 class="center">Skills</h5>
+
+        <ul>
+          <li><i class="material-icons small">create</i>Javascript</li>
+          <li><i class="material-icons small">create</i>Python</li>
+          <li><i class="material-icons small">create</i>RPG</li>
+          <li><i class="material-icons small">create</i>Cobol</li>
+          <li><i class="material-icons small">create</i>Delphi</li>
+        </ul>
+    
+        <ul>
+          <li><i class="material-icons apps">apps</i>React</li>
+          <li><i class="material-icons small">apps</i>Jekyll</li>
+          <li><i class="material-icons small">apps</i>Bootstrap</li>
+          <li><i class="material-icons small">apps</i>Excel, Access</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col s12 m4">
+      <div class="icon-block">
+        <h2 class="center light-blue-text"><i class="material-icons">music_note</i></h2>
+        <h5 class="center">Like to do</h5>
+        <p class="center">音楽を聴き、歌を歌う。</p>
+        <div class="container">
+          <h6 class="center"><i class="material-icons red-text">favorite</i>Singers</h6>
+          <ul>
+            <li><i class="material-icons">mic</i>Nat King Cole</li>
+            <li><i class="material-icons">mic</i>Michael Bubble</li>
+            <li><i class="material-icons">mic</i>Dianne Reeves</li>
+            <li><i class="material-icons">mic</i>Sammy Davis Jr.</li>
+          </ul>
+        </div>
+      </div>
+        </div>
+    </div>
+
+</div><!-- /session -->
+        
+<!-- Articles' posts section -->
+<div class="section">
+  <h4> Articles</h4>
+  <hr>
+  <h5 class="red-text">Note リニューアル前の記事の変更は行っていません</h5>
+  <div class="row">
+    {% for post in site.posts limit: 3 %}
+      <div class="col s12 m4">
+        <div class="card small z-depth-5 orange lighten-2">
+            
+          <div class="card-content">
+            <span>{{ post.date | date: '%B %d, %Y' }}</span>  
+            <span class="card-title">{{ post.title }}</span>
+            <hr>
+            <p>{{ post.description }}</p>
+          </div>
+          <div class="card-action">
+            <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
+          </div>
+          
+        </div>
+      </div>
+    {% endfor %}  
   </div>
 
-
-    <div class="section">
-
-      <!--   Icon Section   -->
-      <div class="row">
-        <div class="col s12 m4">
-          <div class="card">
-            <div class="card-image">
-              <img src={{ layout.myPhoto_path }} width="100%" height="100%" alt="" padding="20px">
-              <span class="card-title red-text darken-2 left"></span>
-            </div>
-            <div class="card-content">
-              <p>
-                コヤマ　タケシです。ソフトウェア・エンジニアをやってます。
-                東京は台東区上野生まれ、現在は千葉県浦安市在住。
-                長いことIBM AS400の設計・開発をしてきました。
-
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">blur_on</i></h2>
-            <h5 class="center">Skills</h5>
-
-              <ul>
-                <li><i class="material-icons small">create</i>Javascript</li>
-                <li><i class="material-icons small">create</i>Python</li>
-                <li><i class="material-icons small">create</i>RPG</li>
-                <li><i class="material-icons small">create</i>Cobol</li>
-                <li><i class="material-icons small">create</i>Delphi</li>
-             </ul>
-             <ul>
-                <li><i class="material-icons apps">apps</i>React</li>
-                <li><i class="material-icons small">apps</i>Jekyll</li>
-                <li><i class="material-icons small">apps</i>Bootstrap</li>
-                <li><i class="material-icons small">apps</i>Excel, Access</li>
-             </ul>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">music_note</i></h2>
-            <h5 class="center">Like to do</h5>
-
-            <p class="center">音楽を聴き、歌を歌う。</p>
-            <div class="container">
-              <h6 class="center"><i class="material-icons red-text">favorite</i>Singers</h6>
-              <ul>
-                <li><i class="material-icons">mic</i>Nat King Cole</li>
-                <li><i class="material-icons">mic</i>Michael Bubble</li>
-                <li><i class="material-icons">mic</i>Dianne Reeves</li>
-                <li><i class="material-icons">mic</i>Sammy Davis Jr.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-        
-    <!-- Articles' posts section -->
-    <div class="section">
-      <h4> Articles</h4>
-      <h5 class="red-text">Note リニューアル前の記事の変更は行っていません</h5>
-      <div class="row">
-        {% for post in site.posts limit: 3 %}
-          <div class="col s12 m4">
-           <div class="card small z-depth-5 orange lighten-2">
+  <div class="row">
+    {% for post in site.posts limit: 3 offset: 3 %}
+      <div class="col s12 m4">
+        <div class="card small z-depth-5 orange lighten-2">
             
-            <div class="card-content">
-              <span>{{ post.date | date: '%B %d, %Y' }}</span>  
-              <span class="card-title">{{ post.title }}</span>
-              <hr>
-              <p>{{ post.description }}</p>
-            </div>
-            <div class="card-action">
-              <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
-            </div>
-          
-           </div>
+          <div class="card-content">
+            <span class="card-title">{{ post.title }}</span>
+            <hr>  
+            <p>{{ post.description }}</p>
           </div>
-        {% endfor %}  
+          <div class="card-action">
+            <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
+          </div>
+        </div>
       </div>
-      <div class="row">
-        {% for post in site.posts limit: 3 offset: 3 %}
-          <div class="col s12 m4">
-           <div class="card small z-depth-5 orange lighten-2">
-            
-            <div class="card-content">
-              <span class="card-title">{{ post.title }}</span>
-              <hr>  
-              <p>{{ post.description }}</p>
-            </div>
-            <div class="card-action">
-              <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
-            </div>
+    {% endfor %}  
+  </div>
+  <div class="row">
+    {% for post in site.posts limit: 3 offset:6 %}
+      <div class="col s12 m4">
+        <div class="card small z-depth-5 orange lighten-2">
+          <div class="card-content">
+            <span class="card-title">{{ post.title }}</span>  
+            <hr>
+            <p>{{ post.description }}</p>
           </div>
+          <div class="card-action">
+            <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
           </div>
-        {% endfor %}  
+        </div>
       </div>
-      <div class="row">
-        {% for post in site.posts limit: 3 offset:6 %}
-          <div class="col s12 m4">
-           <div class="card small z-depth-5 orange lighten-2">
-            <div class="card-content">
-              <span class="card-title">{{ post.title }}</span>  
-              <hr>
-              <p>{{ post.description }}</p>
-            </div>
-            <div class="card-action">
-              <a class="waves-effect waves-light btn" href="{{ post.url }}">続きを読む..</a>
-            </div>
+    {% endfor %}  
+  </div>
+</div><!-- /session -->
+
+<!-- Categories list -->
+<div class="section">
+  <h5>Categories</h5>
+  <div class="row">
+    <div class="col s12 m4">
+      <ul class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>All</div>
+          <div class="collapsible-body">
+            <ul>
+              {% for post in site.posts %}
+                <li>
+                  <span>{{ post.date| date_to_string}}</span>&raquo;
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>  
           </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>CSS</div>
+          <div class="collapsible-body">
+            <ul>
+              {% for post in site.categories.css %}
+                <li>
+                  <span>{{ post.date| date_to_string}}</span>&raquo;
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>  
           </div>
-        {% endfor %}  
-      </div>
-    </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>Javascript</div>
+          <div class="collapsible-body">
+            <ul>
+              {% for post in site.categories.javascript %}
+                <li>
+                  <span>{{ post.date| date_to_string}}</span>&raquo;
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>  
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>Jekyll</div>
+          <div class="collapsible-body">
+            <ul>
+             {% for post in site.categories.jekyll %}
+               <li>
+                 <span>{{ post.date| date_to_string}}</span>&raquo;
+                 <a href="{{ post.url }}">{{ post.title }}</a>
+               </li>
+             {% endfor %}
+            </ul>
+          </div>
+        </li>
+        <li>
+         <div class="collapsible-header"><i class="material-icons">subject</i>Compositions</div>
+         <div class="collapsible-body">
+           <ul>
+             {% for post in site.categories.composition %}
+               <li>
+                  <span>{{ post.date| date_to_string}}</span>&raquo;
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>  
+          </div>
+        </li>
+      </ul>
+    </div>  
+    <div class="col s12 m4">
+      <ul class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>Bootstrap</div>
+          <div class="collapsible-body">
+            <ul>
+              {% for post in site.categories.bootstrap %}
+                <li>
+                  <span>{{ post.date| date_to_string}}</span>&raquo;
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>  
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>Compositions</div>
+          <div class="collapsible-body">
+            <ul>
+              {% for post in site.categories.composition %}
+                <li>
+                  <span>{{ post.date| date_to_string}}</span>&raquo;
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>  
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>D3</div>
+          <div class="collapsible-body">
+            <ul>
+              {% for post in site.categories.d3 %}
+                <li>
+                  <span>{{ post.date| date_to_string}}</span>&raquo;
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>ProcessingJS</div>
+          <div class="collapsible-body">
+            <ul>
+              {% for post in site.categories.processingJS %}
+                <li>
+                  <span>{{ post.date| date_to_string}}</span>&raquo;
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>  
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">subject</i>React</div>
+            <div class="collapsible-body">
+              <ul>
+                {% for post in site.categories.react %}
+                  <li>
+                    <span>{{ post.date| date_to_string}}</span>&raquo;
+                    <a href="{{ post.url }}">{{ post.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>  
+            </div>
+          </li>
+      </ul>
+    </div>  
+  </div><!-- /row -->
+</div>

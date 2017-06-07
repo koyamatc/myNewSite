@@ -1,7 +1,6 @@
 ---
-title: 投稿記事
 layout: post
-postTitle: Star Chart(星図)
+title: Star Chart(星図)
 categories: post d3
 ---
 

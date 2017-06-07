@@ -2,42 +2,14 @@
 layout: post
 title: 太陽系惑星軌道
 categories: post processingJS
-description:
-  Processing.jsで、太陽系の惑星起動と冥王星の軌道を描画しています。
-  惑星の軌道は楕円であることから、まずは、楕円について確認し、
-  それをもとに描画を行います。
 ---
 
 -----
-Processing.jsを使って
-太陽系の惑星と冥王星の軌道を描画しています
-<div class="row">
-   <div class="col s12 m6">
-      楕円
-      $$中心座標(0, 0)$$
-      $$長半径(a)=150$$
-      $$離心率(e)=0.5$$
-      $$黄色と緑の点は楕円の焦点(foci)$$
-      $$fociの座標は(f, 0) と (-f, 0)$$
-      $$離心率(e) = \frac{f}{a} \rightarrow f = a * e$$
-      $$f = 150 * 0.5 = 75$$
-      $$黄色の焦点から引かれた直線が描く楕円までの距離をr(赤線)とすると$$
-      $$r=a*\frac{1-e^{2}}{1+e * \cos(\theta)}$$
-      $$x座標\quad x=r * \cos(\theta)$$
-      $$y座標\quad y=r * \sin(\theta)$$ 
-   </div>
-   <div class="col s12 m4">
-       <canvas id="canvas20160707−2"></canvas>
-   </div>
-</div>
-
-
-
-
+太陽系の惑星＋冥王星の軌道
 
 <div class="row">
    <div class="col-xs-6">
-       <canvas id="canvas20160707-1"></canvas>
+       <canvas id="canvas1"></canvas>
        <div class="tz-container">
           <em>スケール -- </em>
           <div id="scale" class="sl"></div>
@@ -53,10 +25,10 @@ Processing.jsを使って
 <br>
 <div class="row">
    <div class="col-xs-6">
-       <canvas id="canvas20160707−2"></canvas>
+       <canvas id="canvas2"></canvas>
    </div>
    <div class="col-xs-6">
-      <h5>楕円</h5>
+      楕円
       $$中心座標(0, 0)$$
       $$長半径(a)=150$$
       $$離心率(e)=0.5$$
@@ -68,6 +40,8 @@ Processing.jsを使って
       $$r=a*\frac{1-e^{2}}{1+e * \cos(\theta)}$$
       $$x座標\quad x=r * \cos(\theta)$$
       $$y座標\quad y=r * \sin(\theta)$$ 
+<pre>
+</pre> 
    </div>
 </div>
 
@@ -261,8 +235,8 @@ function sketchProc2(processing) {
     }; 
 };  
 
-var canvas1 = document.getElementById("canvas20160707-1");
-var canvas2 = document.getElementById("canvas20160707-2");
+var canvas1 = document.getElementById("canvas1");
+var canvas2 = document.getElementById("canvas2");
 
 // attaching the sketchProc function to the canvas
 var p1 = new Processing(canvas1, sketchProc1);
