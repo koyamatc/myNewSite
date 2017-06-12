@@ -51,6 +51,7 @@
   <script src="{{site.url}}/js/init.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -59,6 +60,15 @@
     js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
     fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script>
+  // make code pretty
+  $('pre').addClass('prettyprint');
+  $('pre').css({"background":"#111",
+                 "font-size":"1.05em",
+		                "border":"0px"}
+		            );
+  $('code').css({"font-size":"1.05em","color":"#f00"});
   </script>
   </body>
 </html>
