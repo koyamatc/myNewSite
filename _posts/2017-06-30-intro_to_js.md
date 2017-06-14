@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Introduction to Javascript
-date: 2017-06-12 00:00:00 +900
-categories: post javascript
+title: What can be done with JavaScript
+date: 2017-06-14 00:00:00 +900
+categories: post edx javascript
 description:
   edx's course by W3C.
   Introductory course designed to understand 
@@ -105,7 +105,7 @@ td {
  <h1 id="mainTitle">My home page</h1> 
 
 <p>This is an example of interactivity between JavaScript and the HTML content of a document.</p>
-<button onclick="changeTitle();">Click me to change the title of the page</button>
+<button class="btn" onclick="changeTitle();">Click me to change the title of the page</button>
 </div>
 <script>
     function changeTitle() {
@@ -147,7 +147,7 @@ _event listener_ : click event to call the changeTitle() function
 <h1 id="mainTitle2">My home page</h1> 
 
 <p>This is an example of interactivity between JavaScript and the HTML content of a document.</p>
-<button onclick="changeTitleCSSStyle();">Click me to change the CSS colors of the title of the page</button>
+<button class="btn" onclick="changeTitleCSSStyle();">Click me to change the CSS colors of the title of the page</button>
 
 <script>
   function changeTitleCSSStyle() {
@@ -193,7 +193,7 @@ _CamelCase_ : the CSS name background-color becomes backgroundColor, text-size b
 <p id="msg">Click the button to get your coordinates:</p>
 <p id="address"></p>
  
-<button onclick="getLocation()">Where am I ?</button>
+<button class="btn" onclick="getLocation()">Where am I ?</button>
 <div id="map_canvas" style="width: 500px; height: 300px"></div>
 <script>
   /* p elements for displaying lat / long and address */
@@ -277,7 +277,7 @@ _CamelCase_ : the CSS name background-color becomes backgroundColor, text-size b
   
   <label for="bandName">Band Name: </label>
   <input type="text" id="bandName" value="Metallica">
-  <button onclick="search();">Look for members</button>
+  <button class="btn" onclick="search();">Look for members</button>
   <div id="members"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.10.1/fetch.js"></script>
