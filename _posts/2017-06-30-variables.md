@@ -1,7 +1,7 @@
 ---
 layout: post
 title: JS variables and values 
-date: 2017-06-14 00:00:00 +900
+date: 2017-06-16 00:00:00 +900
 categories: post edx javascript
 description:
   edx's course by W3C.
@@ -271,9 +271,7 @@ that when a variable is null, it is still defined.
 
 __Knowing the type of a JavaScript variable: the typeof operator__
 
-The next section of the course talks about "operators" but there is one that is better introduced in this section: the "typeof" operator, that is useful for knowing the type of a variable depending in its value (possible values: number, string, boolean, undefined, object, or function)
-
-We will use it in lots of examples in the next three sections.
+演算子"operators" についてです。ここで役に立つのが "typeof" operatorで、変数の型を知ることができます(possible values: number, string, boolean, undefined, object, or function)
 
 #### Numbers
 <ul class="collection">
@@ -292,7 +290,8 @@ We will use it in lots of examples in the next three sections.
   </li>
 </ul>
 <p>
-    The value Infinity (or +Infinity) represents all number values greater than 1.79769313486231570e+308 and -Infinity represents values smaller than -1.79769313486231570e+308.
+    値 Infinity (or +Infinity) は　1.79769313486231570e+308 より大きいすべての数値を表します、
+    そして -Infinity は -1.79769313486231570e+308　より小さいすべての数値を表します.
 </p>
 {% highlight javascript linenos %}
 18/8 
@@ -306,16 +305,17 @@ We will use it in lots of examples in the next three sections.
 
 #### JS operators and expressions
 
-##### JavaScript operators and expressions
-
 __Introduction__
 
-An expression is a small piece of code used to produce a value.
+式(expression) は、値を得るために使われる短いコードです。
 
-For example, the expression 3 + 5 produces the value 8, and the value 11 alone is also an expression. Within an expression, we can find values, variables, operators, and expressions. The first two have been already described above, so all that's left are operators.
+例えば 3 + 5 という式は　8　という値を生成します、そして　値　11　だけでも　式です。
+式の中には、値、変数、演算子、式を含めることができます。
+最初の2つはすでに上記で紹介しています。残るは演算子です。
 
-In JavaScript, an operator can be unary or binary (plus one ternary operator). A unary operator is applied to one expression. It can be prefixed or suffixed.
+JavaScript　では、演算子は　unary　または binary (plus one ３つからなるternary operator).
 
+unary 演算子は 1つの式に適用されます. 式は前に置くか、後に置くかできます。
 
 __Unary operator example: __
 
@@ -323,7 +323,7 @@ __Unary operator example: __
 typeof 'world';
 {% endhighlight %}
 
-A binary operator is applied to two different expressions, and is both prefixed and suffixed.
+Binary 演算子は 2つの異なる式に適用します、 式は前後に配置されます
 
 __Binary operator example:__
 
@@ -331,17 +331,13 @@ __Binary operator example:__
 var x = 45 / 32;
 {% endhighlight %}
 
-The division operator is binary.
+除算演算子は binary.
 
-
-Within an expression, we can also use parentheses to force the execution of the expression inside. Parentheses can be used to indicate precedence.
-
-For example, this is an expression: (3 + 2). And the expression (3 + 2) * 4, which equals 20, depends on the expression within the parentheses.
-
-In JavaScript, expressions can evaluate to four types, which are: numbers, strings, booleans, and objects. For example, an expression with the operator - will evaluate to a number. But an expression with the operator + can evaluate to a number or a string (for addition or concatenation).
+JavaScriptでは、 式を4つの型に評価します　: numbers, strings, booleans, and objects.
+例えば 演算子 - のある式は　数値型と判定されますが、演算子 + がある式は　数値型　または　文字列型　に判定できます。
 
 #### Number operators
-The following arithmetic operators are binary:
+次の算術演算子は binary:
 
 +, - , /, *, % (modulo)
 
@@ -349,20 +345,22 @@ Example: 7 % 5 equals 2, which is the remainder of the integer division of 7 by 
 
 Note: (7 / 5 = 5 * 1 + 2 ).
 
-
-And there are also unary operators:
+unary operators:
 
 ++, --, - (the opposite of a number)
 
-++ and -- operators increment or decrement the value of a variable. They can be both prefixed or suffixed, which have different effects:
+++ と -- 演算子は 変数の値を　加算 または 減算 します. 演算子は前にも後にも置くことができますが
+それぞれで異なる効果を与えます:
 
-Suffixed ++ adds one to the value of the variable, then returns the new value.
-Prefixed ++ also adds one to the value, but returns the old value. Both of these must be used with variables.
-Examples typed in the devtool console of a browser:
+前につけた ++ は変数の値に　１　を加えます、そして新しい値となります。
+
+後につけた ++ も変数に　1 を加えますが、前の値を返します。 
+
+どちらも変数とともに使います
 
 __Short variant that mixes assignment and execution of an operator__
 
-Binary operators can be used with a shorter syntax when we want to assign the resulting value to a variable at the same time:
+Binary 演算子は、値を計算しながら同時に変数に割り当てるときに、短縮文法を使えます：
 
 Example (try them in the devtool console of your browser)
 {% highlight javascript linenos %}
@@ -401,9 +399,11 @@ undefined
 
 __Introduction__
 
-To declare or manipulate strings you must write them with single quotes ' or double quotes " around them. Single quotes or double quotes are both accepted, and there is no difference between them in JavaScript. However, the community prefers to use single quote for string - this is not a convention, but a recommendation.
-
-And finally, you cannot start a string with a single and end with a double quotes, or the opposite.
+文字列型を宣言、または操作するためには、シングル・クォート ' または　ダブル・クォート " で文字列を挟みます。　シングルもダブルもどちらも受け付けられますし、JavaScriptでは違いはありません。
+しかしながら、コミュニティは、文字列にはシングル・クォートがよりよいとしています
+　-　これは規則ではなく、推奨しています。 
+ 
+最後に、シングル・クォートではじめ、終わりをダブル・クォートにする、またはその逆はできません。
 
 {% highlight javascrit linenos %}
 > "Hello World";
@@ -419,7 +419,7 @@ And finally, you cannot start a string with a single and end with a double quote
 VM24763:1 Uncaught SyntaxError: Invalid or unexpected token
 {% endhighlight %}
 
-There are many reasons to use simple quotes when possible:
+可能なら、シングル・クォートを使う理由
 <ul class="collection">
   <li class="collection-item">
     1. Double quotes are used in HTML
@@ -441,7 +441,7 @@ There are many reasons to use simple quotes when possible:
 
 __The concatenation operator (+)__
 
-The operator (+) used with strings is called the concatenation operator, and it allows you to concatenate strings.
+文字列とともに使う演算子 (+) は、結合演算子と呼ばれて, 文字列の結合を行います：
 {% highlight javascript linenos %}
 //the operator (+)
 var s1 = 'one';
@@ -456,7 +456,7 @@ typeof s;
 __The shorthand assignment operator (+=)__
 
 {% highlight javascript linenos %}
-The shorthand assignment operator (+=) can also be used to concatenate strings.
+短縮形の割当演算子 (+=) 文字列の結合に使えます。
 
 //the assignment operator (+=)
 var s1 = 'one';
@@ -468,7 +468,7 @@ s1;
 
 __The method concat()__
 
-Another way to concatenate strings is the method concat().
+文字列を結合するもう一つの方法は、concat()　メソッドを使います
 
 {% highlight javascript linenos %}
 //the 'concat' method
@@ -479,7 +479,7 @@ s;
 //returns 'onetwo'
 {% endhighlight %}
 
-All the methods shown above can be used with a variable number of arguments:
+上記のメソッドでは、引数の数を幾つもとることができます
 
 {% highlight javascript linenos %}
 var s1 = 'Hello';
@@ -493,7 +493,7 @@ s3.concat(' World' , ' JavaScript' );
 
 __Converting strings__
 
-A String number in an arithmetic expression is converted to Number, unless the formula is a pure addition.
+算術式が単純な加算ではなければ、式の中の文字列型の数値は、数値型に変換されます 
 
 {% highlight javascript linenos %}
 > var s = '1'; s = 3 * s; typeof s;
@@ -526,7 +526,8 @@ NaN
 
 __How to convert a Number into a String__
 
-There is trick for converting a Number into a String: we concatenate with an empty string, at the beginning of expression (type this in the devtools):
+数値型を文字列型に変換するトリックがあります：
+空の文字列を式の先頭に付けます
 
 {% highlight javascript linenos %}
 var n = 1;
@@ -540,8 +541,7 @@ typeof n;
 
 __Special character: the "\"__
 
-The \ is useful for "escaping" special characters. Here are a few examples:
-
+\ は特別な文字をエスケープするために役立ちます
 {% highlight javascript linenos %}
 var s = 'I don\'t know';
 var s = "I don\'t know"; // here the \ is useless
@@ -588,4 +588,264 @@ __"\t" for "insert a tabulation":__
 var s = "1\t2"
 // s is equal to
 "1 2"
+{% endhighlight %}
+
+--------------
+
+#### Objects (part1)
+
+__Introduction__
+
+<ul class="collectio">
+  <li class="collection-item">
+  オブジェクトは"{" と "}"を使い宣言されます、このようにです
+   var p = {givenName:'Michel', familyName: 'Buffa'}, 
+   givenName と familyName は　プロパティ　と呼ばれます、
+   Michel と Buffa は、それぞれの値です
+  </li>
+  <li class="collection-item">
+  "." 演算子を使いプロパティやメソッドにアクセスします 例 : daysOfTheWeek.length (arrays are objects too - special ones, but objects), or document.body or window.innerWidth (try typing that in the devtool console). 多くの定義済みオブジェクトが JavaScriptにはあります (window, document, navigator, etc.). すでに console.log(...)を使いました, 実は console は、定義済みの JavaScript オブジェクトです. オブジェクト var p = {givenName:'Michel', familyName: 'Buffa'}を使って, 同様にプロパティにアクセスできます, with: p.givenName と p.familyName.
+  </li>
+</ul>
+
+__Take a look at some common objects and properties!__
+
+In devtool console
+{% highlight javascript linenos%}
+> window.innerHeight
+217
+> window.innerWidth
+1704
+> navigator.vendor
+"Google Inc."
+{% endhighlight %}
+
+__You can define your own objects__
+
+自身でJavaScript オブジェクトを作る方法はいろいろあります. まずは簡単な方法, "singleton objects", 今知っておくべきことは、オブジェクトは値を持ったプロパティを持つことができるということです
+{% highlight javascript linenos %}
+var student1 = {
+    fullName:'John Doe',
+    age: 23,
+    city: 'New York',
+    ssn: "11-22-33-44" // no comma at the end of the last property
+}                      // declaration
+{% endhighlight %}
+オブジェクトのプロパティにアクセスする:  "."　演算子を使う
+{% highlight javascript linenos %}
+> student1.ssn
+"11-22-33-44"
+> student1.age
+23
+> student1
+[object Object] {
+    age: 23,
+    city: "New York",
+    fullName: "John Doe",
+    ssn: "11-22-33-44"
+{% endhighlight %}
+
+-------
+
+#### Arrays (part 1)
+
+__Definition: arrays are containers with indexes__
+
+Arrays（配列型） は特別はデータ型です. 配列の宣言に角括弧を使います:
+{% highlight javascript linenos %}
+var daysOfWeek = [];
+{% endhighlight %}
+
+{% highlight javascript linenos %}
+var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+var gradesInMaths = [12, 7, 14, 18, 9, 11];
+{% endhighlight %}
+配列の中の要素にはインデクスを使ってアクセスします
+
+配列の各要素はインデクスを持っています。最初の要素のインデックスは 0　です, 2番目の要素のインデックスは 1 etc.
+
+要素にアクセスするためには, 配列変数と "[" に続けてインデックスの値、それに続けて "]"
+
+{% highlight javascript linenos %}
+> var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+undefined
+> daysOfWeek[0]
+"Monday"
+> daysOfWeek[1]
+"Tuesday"
+> daysOfWeek[2]
+"Wednesday"
+> daysOfWeek.length
+7
+{% endhighlight %}
+
+__Use the length property of an array to know its length__
+
+{% highlight javascript linenos %}
+> var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday','Friday', 'Saturday', 'Sunday'];
+undefined
+> daysOfWeek.length
+7
+{% endhighlight %}
+実際, 1週間に7日あります、そして、 配列 daysOfWeek には　7つの要素があります, 
+インデックスは 0　から daysOfWeek.length -1　までです
+
+新しいインデックスを使って配列に要素を追加できます
+
+配列の最後に新しい要素を加えるには、配列の長さと同じインデックスを使います
+{% highlight javascript linenos %}
+> var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+undefined
+> daysOfWeek.length
+6
+> daysOfWeek[6]
+undefined
+// NO ELEMENT AT INDEX 6 in an array of 6 elements, first index is 0 // last 6-1 = 5
+> daysOfWeek[6] = 'Sunday'
+"Sunday"
+> daysOfWeek.length
+7
+// Sunday, the 7th day of week is at index 6 !
+{% endhighlight %}
+
+__Arrays are JavaScript objects!__
+
+今は重要ではないけど、見てください
+{% highlight javascript linenos %}
+> var a = [];
+> typeof a;
+"object"
+> var a = [1,2,3];
+> a
+[1, 2, 3]
+> a[0]
+1
+> a[1]
+2
+{% endhighlight %}
+これは, daysOfWeek.length　と書いた時には, 配列オブジェクトを使っているのと
+配列オブジェクトのプロパティ length を使っているのです
+
+__Add an element at the end of an array using the push method__
+
+配列はオブジェクトなので、もっといろいろなことができます。
+いまは、最も役に立つ機能を見てみます
+{% highlight javascript linenos %}
+> var daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+undefined
+> daysOfWeek.length
+6
+> daysOfWeek.push('Sunday');
+7
+> daysOfWeek
+["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+> daysOfWeek.length
+7
+{% endhighlight %}
+
+__Arrays and Strings__
+
+文字列は文字の配列です
+
+Consequence:
+
+<ul class="collection">
+  <li class="collection-item">
+    1. They are objects too! 
+  </li>
+  <li class="collection-item">
+    2. They have a length property,
+  </li>
+  <li class="collection-item">
+    3. Each individual character can be accessed using an index.
+  </li>
+</ul>
+
+Examples:
+{% highlight javascript linenos %}
+> var s = 'one';
+> s[0]
+"o"
+> s[1];
+"n"
+> s[2];
+"e"
+> s.length;
+3
+{% endhighlight %}
+
+#### Functions (part 1)
+
+__Definition of a function__
+
+関数はコードをグループにしたもので、名前をつけて、その名前で関数を呼び出すことで関数を実行できます
+
+関数は値を返します: 
+<ul class="collection">
+  <li class="collection-item">
+  明示的に, キーワード return に続けた値
+  </li>
+  <li class="collection-item">
+  暗黙的に, この場合は　return 値　は undefined.
+  </li>
+</ul>
+
+__Declaring a function__
+
+{% highlight javascript linenos %}
+function sum(a, b) {
+    var c = a + b;
+    return c;
+}
+{% endhighlight %}
+
+__Calling a function__
+
+{% highlight javascript linenos %}
+var result = sum(1, 2);
+//result is equal to 3
+console.log(result)
+> 3
+{% endhighlight %}
+
+__Function parameters__
+
+呼び出し中に引数が取り除かれたら、 JavaScript は　undefined　の値を与えます:
+
+{% highlight javascript linenos %}
+> sum(1)
+NaN
+{% endhighlight %}
+
+__Functions with a variable number of parameters__
+
+"argument"　という名の配列は自動的に関数に作られます、 そこには関数のすべての引数が入っています:
+{% highlight javascrit linenos %}
+function f() {
+   return arguments;
+}
+...
+f();
+// returns []
+...
+f( 1, 2, 3, 4, true, 'Michel Buffa');
+// returns [1, 2, 3, 4, true, "Michel Buffa"]
+{% endhighlight %}
+
+__Example of the sum with a variable number of arguments__
+
+{% highlight javascript linenos %}
+function newSum() {
+    var i, res = 0;
+    var numberOfParameters = arguments.length;
+    for (i = 0; i < numberOfParameters; i++) {
+       res += arguments[i];
+    }
+    return res;
+}
+...
+>>> newSum(1, 1, 1);
+3
+>>> newSum(1, 2, 3, 4);
+10
 {% endhighlight %}
