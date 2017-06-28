@@ -675,7 +675,82 @@ Perhaps it's occurred to you that it might be better to move the player "from it
 
 <canvas id="myCanvas10"  width="400" height="400"></canvas>
 
+We have a player that is a rectangle and other objects that are circles. This is cool, as it allows us to find a short function that tests if a circle collides with a rectangle whose sides are aligned to the X-axis and Y-axis. (we implemented this after reading this Thread at StackOverflow):
+{% highlight javascript linenos %}
+// Collisions between rectangle and circle
+function circRectsOverlap(x0, y0, w0, h0, cx, cy, r) {
+   var testX=cx;
+   var testY=cy;
+   if (testX < x0) testX=x0;
+   if (testX > (x0+w0)) testX=(x0+w0);
+   if (testY < y0) testY=y0;
+   if (testY > (y0+h0)) testY=(y0+h0);
+   return (((cx-testX)*(cx-testX)+(cy-testY)*(cy-testY))< r*r);
+}
+{% endhighlight %}
 
+Let's look at our game! This time we've added into the loop a collision test between the player and the balls. If the player hits a ball, it's removed from the ball array. We did this test in the moveBalls function, as we were already testing collisions with walls for each ball in the array. Let's look at this new version:
+{% highlight javascript linenos %}
+function moveAllBalls(ballArray) {
+    // iterate on all balls in array
+    ballArray.forEach(function(b, index) {
+        // b is the current ball in the array
+        b.x += b.speedX;
+        b.y += b.speedY;
+
+        testCollisionBallWithWalls(b);
+        
+        testCollisionWithPlayer(b, index);
+    });
+}
+ 
+function testCollisionWithPlayer(b, index) {
+    if(circRectsOverlap(player.x, player.y,
+                        player.width, player.height,
+                        b.x, b.y, b.radius)) {
+     // we remove the element located at index
+     // from the balls array
+     // splice: first parameter = starting index
+     // second parameter = number of elements to remove
+    balls.splice(index, 1);
+    }
+}
+{% endhighlight %}
+Line 3: Look at the iterator;  this time instead of just one parameter (the current element), we've added a second optional parameter that will be the index of the current element, starting from zero.
+
+Line 10: for each ball in the array, we will call testCollisionWithPlayer(b, index); that will check if there is a collision between the ball b and the player. We also pass the index of the ball. If a collision occurs, we will have to remove the ball from the array, and for that, we will need its index in the array.
+
+Line 15 is the collision test, and if it is true (collision with the player), then the ball dies and we remove it from the array using the splice method you can use on arrays.
+
+Line 22: here it is, we remove the current ball in the array using balls.splice(position, numberOfElementsToRemove). The positon is given by index, and the number of balls to remove is one.
+
+We've also added a function for displaying the number of balls in the array while we are playing. When this number reaches zero, we display "You Win!":
+{% highlight javascript linenos %}
+function drawNumberOfBallsAlive(balls) {
+    ctx.save();
+    ctx.font="30px Arial";
+    if(balls.length === 0) {
+        ctx.fillText("YOU WIN!", 20, 30);
+    } else {
+        ctx.fillText(balls.length, 20, 30);
+    }
+    ctx.restore();
+}
+{% endhighlight %}
+
+This function is called by the mainLoop:
+
+{% highlight javascript linenos %}
+function mainLoop() {
+    // 1 - clear the canvas
+    ctx.clearRect(0, 0, w, h);
+    ...
+    drawNumberOfBallsAlive(balls);
+    ...
+    // ask for a new animation frame
+    requestAnimationFrame(mainLoop);
+}
+{% endhighlight %}
 <script>
 // useful to have them as global variables
 var canvas,  canvas2, canvas3, canvas4, canvas5,
@@ -883,10 +958,10 @@ window.onload = function init() {
     balls10 = createBalls(10);
   
     /* add a mousemove event listener to the canvas*/
-    canvas10.addEventListener('mousemove', mouseMoved);
+    canvas10.addEventListener('mousemove', mouseMoved10);
 
     /* ready to go !*/
-    //mainLoop10();
+    mainLoop10();
 
 };
 
@@ -1353,7 +1428,166 @@ function drawFilledCircle9(c) {
     /* GOOD practice: restore the context*/
     ctx9.restore();
 }
+function mouseMoved10(evt) {
+    mousePos = getMousePos(canvas10, evt);
+}
 
+function getMousePos(canvas, evt) {
+    // necessary work in the canvas coordinate system
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+}
 
+function movePlayerWithMouse() {
+  if(mousePos !== undefined) {
+    player.x = mousePos.x;
+    player.y = mousePos.y;
+  }
+}
+
+function mainLoop10() {
+  /* 1 - clear the canvas*/
+  ctx10.clearRect(0, 0, w9, h9);
+  
+  /* draw the ball and the player*/
+  drawFilledRectangle10(player);
+  drawAllBalls10(balls10);
+  drawNumberOfBallsAlive(balls10);
+
+  /* animate the ball that is bouncing all over the walls*/
+  moveAllBalls10(balls10);
+  
+  movePlayerWithMouse();
+  
+  /* ask for a new animation frame*/
+  requestAnimationFrame(mainLoop10);
+}
+
+// Collisions between rectangle and circle
+function circRectsOverlap(x0, y0, w0, h0, cx, cy, r) {
+   var testX=cx;
+   var testY=cy;
+   if (testX < x0) testX=x0;
+   if (testX > (x0+w0)) testX=(x0+w0);
+   if (testY < y0) testY=y0;
+   if (testY > (y0+h0)) testY=(y0+h0);
+   return (((cx-testX)*(cx-testX)+(cy-testY)*(cy-testY))< r*r);
+}
+
+function drawNumberOfBallsAlive(balls) {
+  ctx10.save();
+  ctx10.font="30px Arial";
+  
+  if(balls.length === 0) {
+    ctx10.fillText("YOU WIN!", 20, 30);
+  } else {
+    ctx10.fillText(balls.length, 20, 30);
+  }
+  ctx10.restore();
+}
+
+function drawAllBalls10(ballArray) {
+    ballArray.forEach(function(b) {
+      drawFilledCircle10(b);
+    });
+}
+
+function moveAllBalls10(ballArray) {
+  /* iterate on all balls in array*/
+  ballArray.forEach(function(b, index) {
+      /* b is the current ball in the array*/
+      b.x += b.speedX;
+      b.y += b.speedY;
+  
+      testCollisionBallWithWalls10(b); 
+    
+      testCollisionWithPlayer10(b, index);
+  });
+}
+
+function testCollisionWithPlayer10(b, index) {
+  if(circRectsOverlap(player.x, player.y,
+                     player.width, player.height,
+                     b.x, b.y, b.radius)) {
+    /* we remove the element located at index*/
+    /* from the balls array*/
+    /* splice: first parameter = starting index*/
+    /*         second parameter = number of elements to remove*/
+    balls10.splice(index, 1);
+  }
+}
+
+function testCollisionBallWithWalls10(b) {
+    /* COLLISION WITH VERTICAL WALLS ?*/
+    if((b.x + b.radius) > w9) {
+    /* the ball hit the right wall*/
+    /* change horizontal direction*/
+    b.speedX = -b.speedX;
+    
+    /* put the ball at the collision point*/
+    b.x = w9 - b.radius;
+  } else if((b.x -b.radius) < 0) {
+    /* the ball hit the left wall*/
+    /* change horizontal direction*/
+    b.speedX = -b.speedX;
+    
+    /* put the ball at the collision point*/
+    b.x = b.radius;
+  }
+  
+  /* COLLISIONS WTH HORIZONTAL WALLS ?*/
+  /* Not in the else as the ball can touch both*/
+  /* vertical and horizontal walls in corners*/
+  if((b.y + b.radius) > h9) {
+    /* the ball hit the right wall*/
+    /* change horizontal direction*/
+    b.speedY = -b.speedY;
+    
+    /* put the ball at the collision point*/
+    b.y = h9 - b.radius;
+  } else if((b.y -b.radius) < 0) {
+    /* the ball hit the left wall*/
+    /* change horizontal direction*/
+    b.speedY = -b.speedY;
+    
+    /* put the ball at the collision point*/
+    b.Y = b.radius;
+  }  
+}
+
+function drawFilledRectangle10(r) {
+    /* GOOD practice: save the context, use 2D trasnformations*/
+    ctx10.save();
+  
+    /* translate the coordinate system, draw relative to it*/
+    ctx10.translate(r.x, r.y);
+  
+    ctx10.fillStyle = r.color;
+    /* (0, 0) is the top left corner of the monster.*/
+    ctx10.fillRect(0, 0, r.width, r.height);
+  
+    /* GOOD practice: restore the context*/
+    ctx10.restore();
+}
+
+function drawFilledCircle10(c) {
+    /* GOOD practice: save the context, use 2D trasnformations*/
+    ctx10.save();
+  
+    /* translate the coordinate system, draw relative to it*/
+    ctx10.translate(c.x, c.y);
+  
+    ctx10.fillStyle = c.color;
+    /* (0, 0) is the top left corner of the monster.*/
+    ctx10.beginPath();
+    ctx10.arc(0, 0, c.radius, 0, 2*Math.PI);
+    ctx10.fill();
+ 
+    /* GOOD practice: restore the context*/
+    ctx10.restore();
+}
 </script>
 
