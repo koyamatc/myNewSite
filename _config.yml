@@ -34,3 +34,14 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - starter-template
+
+collections:
+  edX:
+    output: true  
+
+defaults:
+  - scope:
+      path: ""
+      type: edX
+    values:
+      layout: page

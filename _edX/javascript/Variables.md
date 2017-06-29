@@ -2,7 +2,7 @@
 layout: post
 title: JS variables and values 
 date: 2017-06-16 00:00:00 +900
-categories: post edx javascript
+subject: javascript
 description:
   edx's course by W3C.
   Introductory course designed to understand 
