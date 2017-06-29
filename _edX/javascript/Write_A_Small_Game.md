@@ -1590,4 +1590,29 @@ function drawFilledCircle10(c) {
     ctx10.restore();
 }
 </script>
-
+{% capture edX %}{{page.collection}}{% endcapture %}
+  {% if page.collection %}
+    {% assign  document = site[edX] %}
+  {% endif %}
+{% for links in document  %}
+  {% if links.subject == 'javascript' %}  
+  {% if links.title == page.title %}
+    {% unless forloop.first %}
+      {% assign prevurl = prev.url %}
+    {% endunless %}
+    {% unless forloop.last %}
+      {% assign next = document[forloop.index] %}
+      {% assign nexturl = next.url %}
+    {% endunless %}
+  {% endif %}
+  {% assign prev = links %}
+  {% endif %}
+{% endfor %}
+<div class="row">
+    <div class="col s6">
+    {% if prevurl %}<a href="{{prevurl}}" class="prev">PREV {{prevurl}}</a>{% endif %}
+    </div>
+    <div class="col s6">
+    {% if nexturl %}<a class="btn" href="{{nexturl}}" class="nxt">Next {{nexturl}}</a>{% endif %}
+    </div>
+</div>
