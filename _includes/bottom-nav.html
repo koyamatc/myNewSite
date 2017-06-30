@@ -1,0 +1,41 @@
+<style type="text/css">
+  #bottomNav span{
+    font-size: 1.5em;
+    padding-bottom: 50px;
+    top: -10px;
+  }
+</style>
+{% capture edX %}{{page.collection}}{% endcapture %}
+  {% if page.collection %}
+    {% assign  document = site[edX] %}
+  {% endif %}
+{% for links in document  %}
+  {% if links.subject == page.subject %}
+  {% if links.title == page.title %}
+    {% unless forloop.first %}
+      {% assign prevurl = prev.url %}
+      {% assign prevtitle = prev.title %}
+    {% endunless %}
+    {% unless forloop.last %}
+      {% assign next = document[forloop.index] %}
+      {% assign nexturl = next.url %}
+      {% assign nexttitle = next.title %}
+    {% endunless %}
+  {% endif %}
+  {% assign prev = links %}
+  {% endif %}
+{% endfor %}
+<br><br>
+<div class="row" id="bootomNav">
+    <div class="col offset-s1 s5">
+    {% if prevurl %}
+    <a href="{{prevurl}}" class="prev">
+      <h5>&lt;&lt; {{prevtitle}}</h5></a>
+    {% endif %}
+    </div>
+    <div class="col s5">
+    {% if nexturl %}
+      <a href="{{nexturl}}" class="nxt"><h5>{{nexttitle}} &gt;&gt;</h5></a>
+    {% endif %}
+    </div>
+</div>

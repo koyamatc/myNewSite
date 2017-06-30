@@ -5,7 +5,7 @@ date: 2017-06-26 00:00:00 +900
 subject: javascript
 description:
   edx's course by W3C.
-  Introductory course designed to understand 
+  Introductory course designed to understand
   the basic concepts of JavaScript.  
 ---
 
@@ -70,7 +70,7 @@ Extract from the JavaScript code:
 {% highlight javascript linenos %}
 // useful to have them as global variables
 var canvas, ctx;
- 
+
 window.onload = function init() {
   // called AFTER the page has been loaded
   canvas = document.querySelector("#myCanvas");
@@ -123,36 +123,36 @@ Explanations:
 
 {% highlight javascript linenos %}
 // useful to have them as global variables
-var canvas, ctx, w, h; 
+var canvas, ctx, w, h;
 
 window.onload = function init() {
     // called AFTER the page has been loaded
     canvas = document.querySelector("#myCanvas");
-  
+
     // often useful
-    w = canvas.width; 
+    w = canvas.width;
     h = canvas.height;  
-  
+
     // important, we will draw with this object
     ctx = canvas.getContext('2d');
-  
+
     // ready to go !
     drawFilledRectangle(10, 10, 20, 20, "red");
-  
+
     drawFilledCircle(100, 100, 15, "green");
 };
 
 function drawFilledRectangle(x, y, width, height, color) {
     // GOOD practice: save the context, use 2D trasnformations
     ctx.save();
-  
+
     // translate the coordinate system, draw relative to it
     ctx.translate(x, y);
-  
+
     ctx.fillStyle = color;
     // (0, 0) is the top left corner of the monster.
     ctx.fillRect(0, 0, width, height);
-  
+
     // GOOD practice: restore the context
     ctx.restore();
 }
@@ -160,16 +160,16 @@ function drawFilledRectangle(x, y, width, height, color) {
 function drawFilledCircle(x, y, radius, color) {
     // GOOD practice: save the context, use 2D trasnformations
     ctx.save();
-  
+
     // translate the coordinate system, draw relative to it
     ctx.translate(x, y);
-  
+
     ctx.fillStyle = color;
     // (0, 0) is the top left corner of the monster.
     ctx.beginPath();
     ctx.arc(0, 0, radius, 0, 2*Math.PI);
     ctx.fill();
- 
+
     // GOOD practice: restore the context
     ctx.restore();
 }
@@ -197,7 +197,7 @@ Here is JavaScript code that implements these best practices:
 // useful to have them as global variables
 var canvas, ctx, w, h;
 
- 
+
 window.onload = function init() {
   // Called AFTER the page has been loaded
   canvas = document.querySelector("#myCanvas");
@@ -214,34 +214,34 @@ window.onload = function init() {
     // the monster
   drawMyMonster(10, 10); // try to change that
 };
- 
+
 function drawMyMonster(x, y) {
   // Draw a big monster!
   // Head
-  
+
   // BEST practice: save the context, use 2D transformations
   ctx.save();
 
   // Translate the coordinate system, draw relative to it
   ctx.translate(x, y);
-  
+
   // (0, 0) is the top left corner of the monster.
   ctx.strokeRect(0, 0, 100, 100);
-  
+
   // Eyes
   ctx.fillRect(20, 20, 10, 10);
   ctx.fillRect(65, 20, 10, 10);
-  
+
   // Nose
   ctx.strokeRect(45, 40, 10, 40);
-  
+
   // Mouth
   ctx.strokeRect(35, 84, 30, 10);
-  
+
   // Teeth
   ctx.fillRect(38, 84, 10, 10);
   ctx.fillRect(52, 84, 10, 10);
-  
+
   // BEST practice: restore the context
   ctx.restore();
 }
@@ -275,7 +275,7 @@ A typical animation loop will do the following at regular intervals:
 
 <ul class="collection">
     <li class="collection-item">
-    1. Clear the canvas 
+    1. Clear the canvas
     </li>
     <li class="collection-item">
     2. Draw graphic objects / shapes
@@ -332,7 +332,7 @@ var ball = {
   speedX:2,
   speedY:1
 }
- 
+
 var player = {
   x:10,
   y:10,
@@ -351,14 +351,14 @@ function mainLoop() {
   // draw the ball and the player
   drawFilledRectangle(player);
   drawFilledCircle(ball);
- 
+
   // animate the ball that is bouncing all over the walls
   moveBall(ball);
   // ask for a new animation frame
   requestAnimationFrame(mainLoop);
 }
 {% endhighlight %}
-Now, let's decompose the animation loop in some external functions to make it more readable. At each frame of animation, we will clear the canvas, draw the player as a rectangle, draw the ball as a circle, and move the ball. 
+Now, let's decompose the animation loop in some external functions to make it more readable. At each frame of animation, we will clear the canvas, draw the player as a rectangle, draw the ball as a circle, and move the ball.
 
 You can take a look at the new versions of drawFilledRectangle that now take only one parameter named r, instead of x, y, width, height and a color. We've only changed a few things in its code (changed x to r.x, y to r.y, color to r.color etc.)
 
@@ -373,7 +373,7 @@ function moveBall(b) {
 {% endhighlight %}
 This function is called 60 times per second. So, 60 times per second we modify the b.x and b.y positions of the ball passed as parameter by adding to them the b.speedX and b.speedY property values.
 
-Notice that we call moveBall(ball) from mainLoop. In the moveBall function, the ball passed as a parameter becomes the b parameter. So when we change the b.x value inside the function, we are in reality changing the x value of the global object ball! 
+Notice that we call moveBall(ball) from mainLoop. In the moveBall function, the ball passed as a parameter becomes the b parameter. So when we change the b.x value inside the function, we are in reality changing the x value of the global object ball!
 
 Ok, and at line 5 we call testCollisionBallWithWalls(b), which will test if the ball b hits a vertical or horizontal wall. Let's see an extract of this function now:
 {% highlight javascript linenos %}
@@ -390,9 +390,9 @@ function testCollisionBallWithWalls(b) {
     ...
 }
 {% endhighlight %}
-At line 3 you can see the test that checks if the ball b hits the right side of the canvas. The right wall is at w (the width of the canvas) on the X-axis. If we compare (b.x + b.radius) with w, we can check if a part of the ball extends beyond the right wall. 
+At line 3 you can see the test that checks if the ball b hits the right side of the canvas. The right wall is at w (the width of the canvas) on the X-axis. If we compare (b.x + b.radius) with w, we can check if a part of the ball extends beyond the right wall.
 
-Remember that each 1/60th of a second, the ball moves a certain number of pixels to the right (the exact value is b.speedX). Imagine that the ball moves 10 pixels to the right at each frame of animation. At some point, it will "cross the right wall". We cannot just change the sign of b.speedX to make it go to the other side. If we did this, it may stay stuck against the side with one half of the ball on either side of the wall. 
+Remember that each 1/60th of a second, the ball moves a certain number of pixels to the right (the exact value is b.speedX). Imagine that the ball moves 10 pixels to the right at each frame of animation. At some point, it will "cross the right wall". We cannot just change the sign of b.speedX to make it go to the other side. If we did this, it may stay stuck against the side with one half of the ball on either side of the wall.
 
 If we now remove b.speedX to the ball.x position, we return the ball to the position it was in before it hit the wall. If we then reverse speedX, the ball will indeed start moving with a reverse horizontal speed. This will work but can give a strange visual effect if the balls moves, say, 20 pixels per frame or more. The ball will never be in a position where the eye can "see it against the wall". This is why experienced game coders know that you just need to put the ball "at the contact position", not to its previous position, before reversing the speed value. This is done at lines 8-9. Try changing speedX to say, 20, and you'll see what we mean.
 
@@ -475,7 +475,7 @@ function drawAllBalls(ballArray) {
         drawFilledCircle(b);
     });
 }
- 
+
 function moveAllBalls(ballArray) {
     // iterate on all balls in array
     ballArray.forEach(function(b) {
@@ -507,7 +507,7 @@ The example below is about listening to mouseup and mousedown events (when a use
 canvas.addEventListener('mousedown', function (evt) {
     // do something with the mousedown event
 });
- 
+
 canvas.addEventListener('mousedup', function (evt) {
     // do something with the mouseup event
 });
@@ -566,7 +566,7 @@ canvas.addEventListener('mousemove', function (evt) {
     var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
     writeMessage(canvas, message);
 }, false);
- 
+
 ...
 function getMousePos(canvas, evt) {
    // WRONG!!!
@@ -577,7 +577,7 @@ function getMousePos(canvas, evt) {
 }
 {% endhighlight %}
 
-##### A good version of the code: 
+##### A good version of the code:
 <p> Move the mouse cursor and click anywhere!</p>
 <canvas id="myCanvas8" width="300" height="200"></canvas>
 
@@ -605,7 +605,7 @@ Working example:
 Extract from the JavaScript source code:
 {% highlight javascript linenos %}
 var mousePos;
- 
+
 window.onload = function init() {
 ...
    // create 10 balls
@@ -613,15 +613,15 @@ window.onload = function init() {
 
    // add a mousemove event listener to the canvas
    canvas.addEventListener('mousemove', mouseMoved);
- 
+
    // ready to go !
    mainLoop();
 };
- 
+
 function mouseMoved(evt) {
    mousePos = getMousePos(canvas, evt);
 }
- 
+
 function getMousePos(canvas, evt) {
    // from the previous section
    var rect = canvas.getBoundingClientRect();
@@ -633,7 +633,7 @@ function getMousePos(canvas, evt) {
 {% endhighlight %}
 Line 9 defines a mousemove event listener: the mouseMoved callback function will be called each time the user moves the mouse on the canvas.
 
-The mouseMoved(evt) function uses the trick from the previous section and puts the correct mouse position in the mousePos variable. 
+The mouseMoved(evt) function uses the trick from the previous section and puts the correct mouse position in the mousePos variable.
 
 With this code, as soon as we move the mouse on top of the canvas, we'll have this mousePos global variable (line1) that will contain the mouse position (in the form of the mousePos.x and mousePos.y properties).
 
@@ -645,7 +645,7 @@ function mainLoop() {
     // draw the ball and the player
     drawFilledRectangle(player);
     drawAllBalls(balls);
- 
+
     // animate the ball that is bouncing all over the walls
     moveAllBalls(balls);
     movePlayerWithMouse();
@@ -699,11 +699,11 @@ function moveAllBalls(ballArray) {
         b.y += b.speedY;
 
         testCollisionBallWithWalls(b);
-        
+
         testCollisionWithPlayer(b, index);
     });
 }
- 
+
 function testCollisionWithPlayer(b, index) {
     if(circRectsOverlap(player.x, player.y,
                         player.width, player.height,
@@ -781,7 +781,7 @@ var player = {
 }
 
 // an empty array!
-var balls = []; 
+var balls = [];
 var balls9 = [];
 var balls10 = [];
 
@@ -790,22 +790,22 @@ window.onload = function init() {
     canvas = document.querySelector("#myCanvas");
     /* important, we will draw with this object*/
     ctx = canvas.getContext('2d');
-  
+
     /* ready to go !*/
     /* filled rectangle*/
     ctx.fillStyle = 'red';
     ctx.fillRect(10, 10, 30, 30);
-  
+
     /* wireframe rectangle*/
     ctx.strokeStyle = 'green';
     ctx.lineWidth = 4;
     ctx.strokeRect(100, 40, 40, 40);
-  
+
     /* fill circle, will use current ctx.fillStyle*/
     ctx.beginPath();
     ctx.arc(60, 60, 10, 0, 2*Math.PI);
     ctx.fill();
-  
+
     /* some text */
     ctx.fillStyle = "purple";
     ctx.font = "20px Arial";
@@ -813,76 +813,76 @@ window.onload = function init() {
 
  /* called AFTER the page has been loaded*/
     canvas2 = document.querySelector("#myCanvas2");
-  
+
     /* often useful*/
-    w = canvas2.width; 
+    w = canvas2.width;
     h = canvas2.height;  
-  
+
     /* important, we will draw with this object*/
     ctx2 = canvas2.getContext('2d');
-  
+
     /* ready to go !*/
     drawFilledRectangle(10, 10, 20, 20, "red");
-  
+
     drawFilledCircle(100, 100, 15, "green");
 
     /* called AFTER the page has been loaded*/
     canvas3 = document.querySelector("#myCanvas3");
-  
+
     /* often useful*/
-    w3 = canvas3.width; 
+    w3 = canvas3.width;
     h3 = canvas3.height;  
-  
+
     /* important, we will draw with this object*/
     ctx3 = canvas3.getContext('2d');
-  
+
     /* ready to go !*/
     /* Try to change the parameter values to move*/
     /* the monster*/
-    drawMyMonster(10, 10, ctx3); 
+    drawMyMonster(10, 10, ctx3);
 
     /*  example 2-1 */
  /* called AFTER the page has been loaded*/
     canvas4 = document.querySelector("#myCanvas4");
-  
+
     /* often useful*/
-    w4 = canvas.width; 
+    w4 = canvas.width;
     h4 = canvas.height;  
-  
+
     /* important, we will draw with this object*/
     ctx4 = canvas4.getContext('2d');
-  
+
     /* ready to go !*/
     mainLoop();
 
     /* example 2-2 */
 /* called AFTER the page has been loaded*/
     canvas5 = document.querySelector("#myCanvas5");
-  
-    /* often useful */ 
-    w = canvas5.width; 
+
+    /* often useful */
+    w = canvas5.width;
     h = canvas5.height;  
-  
+
     /* important, we will draw with this object*/
     ctx5 = canvas5.getContext('2d');
-  
+
     /* ready to go !*/
     mainLoop2();
 
     /* multiple objects*/
     /* called AFTER the page has been loaded*/
     canvas6 = document.querySelector("#myCanvas6");
-  
+
     /* often useful*/
-    w6 = canvas6.width; 
+    w6 = canvas6.width;
     h6 = canvas6.height;  
-  
+
     /* important, we will draw with this object*/
     ctx6 = canvas6.getContext('2d');
-  
+
     /* create 10 balls*/
     balls = createBalls(10);
-  
+
     /* ready to go !*/
     mainLoop3();
 
@@ -928,17 +928,17 @@ window.onload = function init() {
     }, false);
 
     canvas9 = document.querySelector("#myCanvas9");
- 
+
     /* often useful*/
-    w9 = canvas9.width; 
+    w9 = canvas9.width;
     h9 = canvas9.height;  
-  
+
     /* important, we will draw with this object*/
     ctx9 = canvas9.getContext('2d');
-  
+
     /* create 10 balls*/
     balls9 = createBalls(10);
-  
+
     /* add a mousemove event listener to the canvas*/
     canvas9.addEventListener('mousemove', mouseMoved);
 
@@ -946,17 +946,17 @@ window.onload = function init() {
     mainLoop9();
 
     canvas10 = document.querySelector("#myCanvas10");
- 
+
     /* often useful*/
-    w10 = canvas10.width; 
+    w10 = canvas10.width;
     h10 = canvas10.height;  
-  
+
     /* important, we will draw with this object*/
     ctx10 = canvas10.getContext('2d');
-  
+
     /* create 10 balls*/
     balls10 = createBalls(10);
-  
+
     /* add a mousemove event listener to the canvas*/
     canvas10.addEventListener('mousemove', mouseMoved10);
 
@@ -969,14 +969,14 @@ window.onload = function init() {
 function drawFilledRectangle(x, y, width, height, color) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx2.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx2.translate(x, y);
-  
+
     ctx2.fillStyle = color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx2.fillRect(0, 0, width, height);
-  
+
     /* GOOD practice: restore the context*/
     ctx2.restore();
 }
@@ -984,16 +984,16 @@ function drawFilledRectangle(x, y, width, height, color) {
 function drawFilledCircle(x, y, radius, color) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx2.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx2.translate(x, y);
-  
+
     ctx2.fillStyle = color;
     /* (0, 0) is the top left corner of the monster*/
     ctx2.beginPath();
     ctx2.arc(0, 0, radius, 0, 2*Math.PI);
     ctx2.fill();
- 
+
     /* GOOD practice: restore the context*/
     ctx2.restore();
 }
@@ -1001,51 +1001,51 @@ function drawFilledCircle(x, y, radius, color) {
 function drawMyMonster(x, y, ctx_) {
     /* draw a big monster !*/
     /* head*/
-  
+
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx_.save();
-  
+
     /*translate the coordinate system, draw relative to it*/
     ctx_.translate(x, y);
-  
+
     /* (0, 0) is the top left corner of the monster.*/
     ctx_.strokeRect(0, 0, 100, 100);
-  
+
     /* eyes, x=20, y=20 is relative to the top left corner*/
     /* of the previous rectangle*/
     ctx_.fillRect(20, 20, 10, 10);
     ctx_.fillRect(65, 20, 10, 10);
-  
+
     /* nose*/
     ctx_.strokeRect(45, 40, 10, 40);
-  
+
     /* mouth*/
    ctx_.strokeRect(35, 84, 30, 10);
-  
+
    /* teeth*/
    ctx_.fillRect(38, 84, 10, 10);
    ctx_.fillRect(52, 84, 10, 10);
-  
+
    /* GOOD practice: restore the context*/
    ctx_.restore();
 }
 function mainLoop() {
   /* 1 - clear the canvas. We told you that w, and h will be useful!*/
   ctx4.clearRect(0, 0, w, h);
-  
+
   /* 2 - draw the monster*/
   drawMyMonster(xMonster, yMonster, ctx4);
-  
+
   /* 3 - move the monster*/
   xMonster += monsterSpeed;
-  
+
   /* 4 - test collisions with vertical boundaries*/
    if (((xMonster + 100)> w) || (xMonster < 0))  {
      /* collision with left or right wall*/
     /* change the direction of movement*/
     monsterSpeed = -monsterSpeed;
   }
-  
+
   /* 5 - request a new frame of animation in 1/60s*/
   requestAnimationFrame(mainLoop);
 }
@@ -1053,14 +1053,14 @@ function mainLoop() {
 function mainLoop2() {
   /* 1 - clear the canvas*/
   ctx5.clearRect(0, 0, w, h);
-  
+
   /* draw the ball and the player*/
   drawFilledRectangle2(player);
   drawFilledCircle2(ball);
 
   /* animate the ball that is bouncing all over the walls*/
   moveBall(ball);
-  
+
   /* ask for a new animation frame*/
   requestAnimationFrame(mainLoop2);
 }
@@ -1068,7 +1068,7 @@ function mainLoop2() {
 function moveBall(b) {
   b.x += b.speedX;
   b.y += b.speedY;
-  
+
   testCollisionBallWithWalls(b);
 }
 
@@ -1078,18 +1078,18 @@ function testCollisionBallWithWalls(b) {
     /* the ball hit the right wall*/
     /* change horizontal direction*/
     b.speedX = -b.speedX;
-    
+
     /* put the ball at the collision point*/
     b.x = w - b.radius;
   } else if((b.x -b.radius) < 0) {
     /* the ball hit the left wall*/
     /* change horizontal direction*/
     b.speedX = -b.speedX;
-    
+
     /* put the ball at the collision point*/
     b.x = b.radius;
   }
-  
+
   /* COLLISIONS WTH HORIZONTAL WALLS ?*/
   /* Not in the else as the ball can touch both*/
   /* vertical and horizontal walls in corners*/
@@ -1097,14 +1097,14 @@ function testCollisionBallWithWalls(b) {
     /* the ball hit the right wall*/
     /* change horizontal direction*/
     b.speedY = -b.speedY;
-    
+
     /* put the ball at the collision point*/
     b.y = h - b.radius;
   } else if((b.y -b.radius) < 0) {
     /* the ball hit the left wall*/
     /* change horizontal direction*/
     b.speedY = -b.speedY;
-    
+
     /* put the ball at the collision point*/
     b.Y = b.radius;
   }  
@@ -1113,14 +1113,14 @@ function testCollisionBallWithWalls(b) {
 function drawFilledRectangle2(r) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx5.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx5.translate(r.x, r.y);
-  
+
     ctx5.fillStyle = r.color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx5.fillRect(0, 0, r.width, r.height);
-  
+
     /* GOOD practice: restore the context*/
     ctx5.restore();
 }
@@ -1128,16 +1128,16 @@ function drawFilledRectangle2(r) {
 function drawFilledCircle2(c) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx5.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx5.translate(c.x, c.y);
-  
+
     ctx5.fillStyle = c.color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx5.beginPath();
     ctx5.arc(0, 0, c.radius, 0, 2*Math.PI);
     ctx5.fill();
- 
+
     /* GOOD practice: restore the context*/
     ctx5.restore();
 }
@@ -1147,14 +1147,14 @@ function drawFilledCircle2(c) {
 function mainLoop3() {
   /* 1 - clear the canvas*/
   ctx6.clearRect(0, 0, w6, h6);
-  
+
   /* draw the ball and the player*/
   drawFilledRectangle6(player);
   drawAllBalls(balls);
 
   /* animate the ball that is bouncing all over the walls*/
   moveAllBalls(balls)
-  
+
   /* ask for a new animation frame*/
   requestAnimationFrame(mainLoop3);
 }
@@ -1162,7 +1162,7 @@ function mainLoop3() {
 function createBalls(n) {
   /* empty array*/
   var ballArray = [];
-  
+
   /* create n balls*/
   for(var i=0; i < n; i++) {
      var b = {
@@ -1185,9 +1185,9 @@ function getARandomColor() {
   /* a value between 0 and color.length-1*/
   /* Math.round = rounded value*/
   /* Math.random() a value between 0 and 1*/
-  var colorIndex = Math.round((colors.length-1)*Math.random()); 
+  var colorIndex = Math.round((colors.length-1)*Math.random());
   var c = colors[colorIndex];
-  
+
   /* return the random color*/
   return c;
 }
@@ -1204,8 +1204,8 @@ function moveAllBalls(ballArray) {
       /* b is the current ball in the array*/
       b.x += b.speedX;
       b.y += b.speedY;
-  
-      testCollisionBallWithWalls6(b); 
+
+      testCollisionBallWithWalls6(b);
   });
 }
 
@@ -1215,18 +1215,18 @@ function testCollisionBallWithWalls6(b) {
     /* the ball hit the right wall*/
     /* change horizontal direction*/
     b.speedX = -b.speedX;
-    
+
     /* put the ball at the collision point*/
     b.x = w6 - b.radius;
   } else if((b.x -b.radius) < 0) {
     /* the ball hit the left wall*/
     /* change horizontal direction*/
     b.speedX = -b.speedX;
-    
+
     /* put the ball at the collision point*/
     b.x = b.radius;
   }
-  
+
   /* COLLISIONS WTH HORIZONTAL WALLS ?*/
   /* Not in the else as the ball can touch both*/
   /* vertical and horizontal walls in corners*/
@@ -1234,14 +1234,14 @@ function testCollisionBallWithWalls6(b) {
     /* the ball hit the right wall*/
     /* change horizontal direction*/
     b.speedY = -b.speedY;
-    
+
     /* put the ball at the collision point*/
     b.y = h6 - b.radius;
   } else if((b.y -b.radius) < 0) {
     /* the ball hit the left wall*/
     /* change horizontal direction*/
     b.speedY = -b.speedY;
-    
+
     /* put the ball at the collision point*/
     b.Y = b.radius;
   }  
@@ -1250,14 +1250,14 @@ function testCollisionBallWithWalls6(b) {
 function drawFilledRectangle6(r) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx6.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx6.translate(r.x, r.y);
-  
+
     ctx6.fillStyle = r.color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx6.fillRect(0, 0, r.width, r.height);
-  
+
     /* GOOD practice: restore the context*/
     ctx6.restore();
 }
@@ -1265,16 +1265,16 @@ function drawFilledRectangle6(r) {
 function drawFilledCircle6(c) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx6.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx6.translate(c.x, c.y);
-  
+
     ctx6.fillStyle = c.color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx6.beginPath();
     ctx6.arc(0, 0, c.radius, 0, 2*Math.PI);
     ctx6.fill();
- 
+
     /* GOOD practice: restore the context*/
     ctx6.restore();
 }
@@ -1328,16 +1328,16 @@ function movePlayerWithMouse() {
 function mainLoop9() {
   /* 1 - clear the canvas*/
   ctx9.clearRect(0, 0, w9, h9);
-  
+
   /* draw the ball and the player*/
   drawFilledRectangle9(player);
   drawAllBalls9(balls9);
 
   /* animate the ball that is bouncing all over the walls*/
   moveAllBalls(balls9);
-  
+
   movePlayerWithMouse();
-  
+
   /* ask for a new animation frame*/
   requestAnimationFrame(mainLoop9);
 }
@@ -1354,8 +1354,8 @@ function moveAllBalls9(ballArray) {
       /* b is the current ball in the array*/
       b.x += b.speedX;
       b.y += b.speedY;
-  
-      testCollisionBallWithWalls9(b); 
+
+      testCollisionBallWithWalls9(b);
   });
 }
 
@@ -1365,18 +1365,18 @@ function testCollisionBallWithWalls9(b) {
     /* the ball hit the right wall*/
     /* change horizontal direction*/
     b.speedX = -b.speedX;
-    
+
     /* put the ball at the collision point*/
     b.x = w9 - b.radius;
   } else if((b.x -b.radius) < 0) {
     /* the ball hit the left wall*/
     /* change horizontal direction*/
     b.speedX = -b.speedX;
-    
+
     /* put the ball at the collision point*/
     b.x = b.radius;
   }
-  
+
   /* COLLISIONS WTH HORIZONTAL WALLS ?*/
   /* Not in the else as the ball can touch both*/
   /* vertical and horizontal walls in corners*/
@@ -1384,14 +1384,14 @@ function testCollisionBallWithWalls9(b) {
     /* the ball hit the right wall*/
     /* change horizontal direction*/
     b.speedY = -b.speedY;
-    
+
     /* put the ball at the collision point*/
     b.y = h9 - b.radius;
   } else if((b.y -b.radius) < 0) {
     /* the ball hit the left wall*/
     /* change horizontal direction*/
     b.speedY = -b.speedY;
-    
+
     /* put the ball at the collision point*/
     b.Y = b.radius;
   }  
@@ -1400,14 +1400,14 @@ function testCollisionBallWithWalls9(b) {
 function drawFilledRectangle9(r) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx9.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx9.translate(r.x, r.y);
-  
+
     ctx9.fillStyle = r.color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx9.fillRect(0, 0, r.width, r.height);
-  
+
     /* GOOD practice: restore the context*/
     ctx9.restore();
 }
@@ -1415,16 +1415,16 @@ function drawFilledRectangle9(r) {
 function drawFilledCircle9(c) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx9.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx9.translate(c.x, c.y);
-  
+
     ctx9.fillStyle = c.color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx9.beginPath();
     ctx9.arc(0, 0, c.radius, 0, 2*Math.PI);
     ctx9.fill();
- 
+
     /* GOOD practice: restore the context*/
     ctx9.restore();
 }
@@ -1451,7 +1451,7 @@ function movePlayerWithMouse() {
 function mainLoop10() {
   /* 1 - clear the canvas*/
   ctx10.clearRect(0, 0, w9, h9);
-  
+
   /* draw the ball and the player*/
   drawFilledRectangle10(player);
   drawAllBalls10(balls10);
@@ -1459,9 +1459,9 @@ function mainLoop10() {
 
   /* animate the ball that is bouncing all over the walls*/
   moveAllBalls10(balls10);
-  
+
   movePlayerWithMouse();
-  
+
   /* ask for a new animation frame*/
   requestAnimationFrame(mainLoop10);
 }
@@ -1480,7 +1480,7 @@ function circRectsOverlap(x0, y0, w0, h0, cx, cy, r) {
 function drawNumberOfBallsAlive(balls) {
   ctx10.save();
   ctx10.font="30px Arial";
-  
+
   if(balls.length === 0) {
     ctx10.fillText("YOU WIN!", 20, 30);
   } else {
@@ -1501,9 +1501,9 @@ function moveAllBalls10(ballArray) {
       /* b is the current ball in the array*/
       b.x += b.speedX;
       b.y += b.speedY;
-  
-      testCollisionBallWithWalls10(b); 
-    
+
+      testCollisionBallWithWalls10(b);
+
       testCollisionWithPlayer10(b, index);
   });
 }
@@ -1526,18 +1526,18 @@ function testCollisionBallWithWalls10(b) {
     /* the ball hit the right wall*/
     /* change horizontal direction*/
     b.speedX = -b.speedX;
-    
+
     /* put the ball at the collision point*/
     b.x = w9 - b.radius;
   } else if((b.x -b.radius) < 0) {
     /* the ball hit the left wall*/
     /* change horizontal direction*/
     b.speedX = -b.speedX;
-    
+
     /* put the ball at the collision point*/
     b.x = b.radius;
   }
-  
+
   /* COLLISIONS WTH HORIZONTAL WALLS ?*/
   /* Not in the else as the ball can touch both*/
   /* vertical and horizontal walls in corners*/
@@ -1545,14 +1545,14 @@ function testCollisionBallWithWalls10(b) {
     /* the ball hit the right wall*/
     /* change horizontal direction*/
     b.speedY = -b.speedY;
-    
+
     /* put the ball at the collision point*/
     b.y = h9 - b.radius;
   } else if((b.y -b.radius) < 0) {
     /* the ball hit the left wall*/
     /* change horizontal direction*/
     b.speedY = -b.speedY;
-    
+
     /* put the ball at the collision point*/
     b.Y = b.radius;
   }  
@@ -1561,14 +1561,14 @@ function testCollisionBallWithWalls10(b) {
 function drawFilledRectangle10(r) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx10.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx10.translate(r.x, r.y);
-  
+
     ctx10.fillStyle = r.color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx10.fillRect(0, 0, r.width, r.height);
-  
+
     /* GOOD practice: restore the context*/
     ctx10.restore();
 }
@@ -1576,43 +1576,17 @@ function drawFilledRectangle10(r) {
 function drawFilledCircle10(c) {
     /* GOOD practice: save the context, use 2D trasnformations*/
     ctx10.save();
-  
+
     /* translate the coordinate system, draw relative to it*/
     ctx10.translate(c.x, c.y);
-  
+
     ctx10.fillStyle = c.color;
     /* (0, 0) is the top left corner of the monster.*/
     ctx10.beginPath();
     ctx10.arc(0, 0, c.radius, 0, 2*Math.PI);
     ctx10.fill();
- 
+
     /* GOOD practice: restore the context*/
     ctx10.restore();
 }
 </script>
-{% capture edX %}{{page.collection}}{% endcapture %}
-  {% if page.collection %}
-    {% assign  document = site[edX] %}
-  {% endif %}
-{% for links in document  %}
-  {% if links.subject == 'javascript' %}  
-  {% if links.title == page.title %}
-    {% unless forloop.first %}
-      {% assign prevurl = prev.url %}
-    {% endunless %}
-    {% unless forloop.last %}
-      {% assign next = document[forloop.index] %}
-      {% assign nexturl = next.url %}
-    {% endunless %}
-  {% endif %}
-  {% assign prev = links %}
-  {% endif %}
-{% endfor %}
-<div class="row">
-    <div class="col s6">
-    {% if prevurl %}<a href="{{prevurl}}" class="prev">PREV {{prevurl}}</a>{% endif %}
-    </div>
-    <div class="col s6">
-    {% if nexturl %}<a class="btn" href="{{nexturl}}" class="nxt">Next {{nexturl}}</a>{% endif %}
-    </div>
-</div>
