@@ -336,7 +336,7 @@ undefined
 undefined
 {% endhighlight %}
 
-Some horrible things we can do with arrays (TO AVOID!):
+__Some horrible things we can do with arrays (TO AVOID!):__
 
 {% highlight console linenos %}
 > var a = [1, 2];
@@ -455,9 +455,10 @@ undefined
 
 {% endhighlight %}
 
-The slice() method returns a sub-array without modifying the original array:
+slice() メソッドは、元の配列を変更することなくサブ配列を返します。:
 
-The slice() method returns a shallow copy of a portion of an array into a new array object selected from begin to end (end not included). The original array will not be modified.
+slice() メソッドは、配列の指定された開始位置から終了位置（終了位置は含まず）までを
+新しい配列オブジェクトへコピーして返します。元の配列は変更されません。
 
 Possible syntaxes:
 <ul class="collection">
@@ -490,8 +491,9 @@ Possible syntaxes:
 // a is unchanged by calls to a.slice(...)
 {% endhighlight %}
 
-The splice() method modifies the array: it removes “a slice” and also adds new elements
+splice() メソッドは配列を変更します: メソッドは、一部を切り取り、新しい要素を追加もします。
 
+最初の2つの引数は、スタートとエンドの指標です、その他の引数は、配列に追加する要素で取り除かれる一部と置き換えられます。
 The first two parameters are start and end indexes, the other parameters are the elements to add to the array to replace the slice that will be removed.
 
 Possible syntaxes:
@@ -507,11 +509,12 @@ Possible syntaxes:
   </li>
 </ul>
 
-start: index at which to start changing the array (with origin 0)
+start: 配列の変更を開始する指標 (最初は 0)
 
-deleteCount: An integer indicating the number of old array elements to remove.
+deleteCount: 配列から取り除く要素の数を整数で指定する。
 
-item1, item2, ...: these are optional. They are the elements to add to the array, beginning at the start index. If you don't specify any elements, splice() will only remove elements from the array.
+item1, item2, ...: オプション。配列に追加する要素、start指標から追加されます。
+オプションの要素指定がなければ、配列から要素を取り除くだけです。
 
 Examples:
 {% highlight console linenos %}
@@ -534,7 +537,7 @@ Examples:
 ------------
 
 #### Built-in JS class: Number
-The Number class can be used to transform strings into numbers, but it is recommended that you use parseInt or parseFloat instead.
+Number クラスは、文字列を数値に変換するために使えます。しかし、parseInt または parseFloat を使うことを推奨しています。
 
 {% highlight console linenos %}
 > var n = Number('3.1416');
@@ -663,10 +666,14 @@ undefined
 
 Explanations:
 
-Line 10: in JavaScript, and in many other programming languages, a string is not modifiable at all.
-When we do var s = s + "hello", in fact, we are building a new string somewhere in memory, and we assign this new value to the variable s.
-We never "modify" the characters of the string s, we just give to s another address in memory to point to.
-Useful methods: toUpperCase, toLowerCase, indexOf, charAt
+Line 10: JavaScriptでは、ほかのプログラミング言語の多くと同じように
+文字列は、変更可能ではありません。
+var s = s + "hello"としたとき、メモリ上の別な場所に新しい文字列が組み立てられています、
+そして、この新しい値を変数 s に割り当てています。
+
+文字列 s の個々の文字の変更はしません、ただ、s に対してメモリ上の別のアドレスを与えているだけです
+
+__Useful methods: toUpperCase, toLowerCase, indexOf, charAt__
 
 These methods are all inherited from the String class:
 
@@ -715,7 +722,7 @@ s2.charAt(8); // same as s2[8]
 "w"
 {% endhighlight %}
 
-Other useful methods: lastIndexOf, chaining methods
+__Other useful methods: lastIndexOf, chaining methods__
 
 <ul class="collection">
   <li class="collection-item">
@@ -745,3 +752,594 @@ undefined
 > s1.toLowerCase().lastIndexOf('w'); // we can chain method calls using ‘.’
 10
 {% endhighlight %}
+
+#### The most useful methods of the class String
+##### The most useful methods of the String class: slice, substring, split, join
+The slice and substring methods
+
+__Both these methods can be used to extract a substring from a string.__
+
+They take two parameters: the start and end index of the slice (element at end index will NOT be included in the slice): “please cut from this index, to this one, not included!”.
+
+These two methods are very similar.
+
+Examples:
+{% highlight console linenos %}
+> var s = "My name is Bond! James Bond!";
+undefined
+
+> s;
+"My name is Bond! James Bond!"
+
+> s.slice(11, 16);
+"Bond!"
+
+> s; // s is unchanged
+"My name is Bond! James Bond!"
+
+s.substring(11, 16);
+"Bond!"
+
+> s; // s is still unchanged
+"My name is Bond! James Bond!"
+> s = s.substring(11, 16);
+"Bond!"
+
+> s; // this time s has changed, because we did s = s.substring(...), the same
+     // could have been done with s = s .slice(...)
+"Bond!"
+{% endhighlight %}
+
+__[advanced] There is a difference between slice and substring, when the second parameter is negative:__
+
+If you are a beginner, we recommend that you use substring for most common cases (as it will behave the same as slice) and that you stay away from negative parameters, where slice and substring show small differences.
+
+Beginners: do not read what follows about slice and substring! There will be no quiz questions at the end of this chapter about this part!
+
+{% highlight console linenos %}
+> var s = "My name is Bond! James Bond!";
+undefined
+
+> s.slice(11, -1); // start from index = 11 to length-1, extract the end of the string from 11th element
+"Bond! James Bond"
+
+> s.substring(11, -1); // the reverse, extract from 0 until 11-1, get the first 10 chars
+"My name is "
+
+> s.substring(1, -1); // extract from 0 to 1-1 = 0, get the first char
+"M"
+{% endhighlight %}
+
+Actually, here is a summary of the common behaviors and the differences between slice and substring.
+
+[advanced] slice(start, stop) works like substring(start, stop) with a few different behaviors:
+
+__What they have in common:__
+
+<ul class="collection">
+  <li class="collection-item">
+  If start equals stop: returns an empty string
+  </li>
+  <li class="collection-item">
+  If stop is omitted: extracts characters to the end of the string
+  </li>
+  <li class="collection-item">
+  If either argument is greater than the string's length, the string's length will be used instead.
+  </li>
+</ul>
+
+__Distinctions of substring():__
+
+<ul class="collection">
+  <li class="collection-item">
+  If start > stop, then substring will swap those two arguments.
+  </li>
+  <li class="collection-item">
+  If either argument is negative or is NaN, it is treated as if it were 0.
+  </li>
+</ul>
+
+__Distinctions of slice():__
+
+<ul class="collection">
+  <li class="collection-item">
+  If start > stop, slice() will NOT swap the two arguments.
+  </li>
+  <li class="collection-item">
+  If start is negative: sets char from the end of string.
+  </li>
+  <li class="collection-item">
+  If stop is negative: sets stop to: string.length – Math.abs(stop.
+  </li>
+</ul>
+
+##### The split(), join() and concat() methods
+
+The split method returns an array of strings, the parameter is a separator. The join method builds a string from an array of strings.
+
+{% highlight console linenos %}
+> var s = "My name is Bond! James Bond!";
+undefined
+
+> s.split(" ");
+["My", "name", "is", "Bond!", "James", "Bond!"]
+
+> s;
+"My name is Bond! James Bond!"
+
+> s.split(' ').join('-#-');
+"My-#-name-#-is-#-Bond!-#-James-#-Bond!"
+
+> s.split(' ').join('.......');
+"My.......name.......is.......Bond!.......James.......Bond!"
+
+> s.split('Bond!').join('.......');
+"My name is ....... James ......."
+
+> s.split('Bond!').join(' ');
+"My name is James "
+
+> s; // s is unchanged
+"My name is Bond! James Bond!"
+
+> s.concat("And I've made a lot of movies!");
+"My name is Bond! James Bond! And I've made a lot of movies!"
+
+> s; // s is also unchanged by concat
+"My name is Bond! James Bond!"
+
+> s = s + "and I've made a lot of movies!"; // this changes s
+"My name is Bond! James Bond! And I've made a lot of movies!"
+
+> s += " Action films!" // this too, most common syntax for concatenating strings
+"My name is Bond! James Bond! And I've made a lot of movies! Action films!"
+
+> s; // s changed too
+"My name is Bond! James Bond! And I've made a lot of movies! Action films!"
+{% endhighlight %}
+
+-----
+
+#### Built-in JavaScript class: Math
+##### It’s not possible to do var m = new Math();
+
+{% highlight console linenos %}
+> var m = new Math();
+VM5777:1 Uncaught TypeError: Math is not a constructor
+at <anonymous>:1:9
+(anonymous) @ VM5777:1
+{% endhighlight %}
+
+But the Math class has a lot of properties and methods that are useful for arithmetic expressions. They are all class methods and properties, so you will need to use the name of the class followed by the dot operator to access them.
+
+Here are some examples:
+
+{% highlight console linenos %}
+> Math.PI;
+3.141592653589793
+
+> Math.SQRT2;
+1.4142135623730951
+
+> Math.E; // Euler constant
+2.718281828459045
+
+> Math.LN2; // Neperian log of 2
+0.6931471805599453
+
+> Math.LN10; // Neperian log of 10
+2.302585092994046
+{% endhighlight %}
+
+##### Random numbers between 0 and 1 with Math.random()
+
+Math.random() returns a float value between 0 and 1.
+
+Examples:
+{% highlight console linenos %}
+> Math.random();
+0.6033316111663034
+
+> 100 * Math.random(); // between 0 and 100
+11.780563288516422
+{% endhighlight %}
+
+__To get a number between a min and a max value, use this formula: val = ((max - min) * Math.random()) + min__
+
+And here is an utility function:
+{% highlight console linenos %}
+function getRandomValue(min, max) {
+    return ((max - min) * Math.random()) + min;
+}
+
+> getRandomValue(5, 10);
+5.064160540161435
+{% endhighlight %}
+
+__Math and rounding methods round(), ceil(), floor()__
+
+round: to get the closest integer value.
+
+For example Math.round(Math.random()); will return 0 or 1.
+<ul class="collection">
+  <li class="collection-item">
+  Indeed, if Math.random() returns a value above 0.5, Math.round of this value will return 1, if the value is below 0.5, Math.round will return 0:
+  </li>
+</ul>
+
+{% highlight console linenos %}
+> Math.round(Math.random());
+1
+
+> Math.round(Math.random());
+0
+
+> Math.round(Math.random());
+1
+
+> Math.round(Math.random());
+1
+{% endhighlight %}
+
+__Get the min and the max of two values with Math.min(a, b) and Math.max(a, b)__
+
+{% highlight console linenos %}
+> Math.min(12, 4);
+4
+
+> Math.max(12, 4);
+12
+{% endhighlight %}
+
+__A useful function that restricts a value between  min and  max bounds:__
+
+{% highlight console linenos %}
+function restrictValue(value, min, max) {
+    return Math.min(Math.max(1, value), max);
+}
+
+> restrictValue(40, 1, 20);
+20
+
+> restrictValue(-10, 1, 20);
+1
+
+> restrictValue(10, 1, 20);
+10
+{% endhighlight %}
+
+__Math functions for arithmetical computations sin(), cos(), tan(), atan(), atan2(), pow(), sqrt()__
+
+{% highlight console linenos %}
+> Math.pow(2, 8); // 2^8
+256
+
+> Math.sqrt(9);
+3
+
+> Math.sin(Math.PI/2);
+1
+
+> Math.cos(Math.PI/2);
+6.123233995736766e-17
+{% endhighlight %}
+
+__Math.atan2(dy, dx) is useful for getting an angle between a point in a canvas and the mo_use cursor__
+
+Here is a typical example of the use of Math.atan2 in a video game, in order to make an object follow the mouse cursor by moving towards it. Look at the code in the mainloop function.
+
+##### Move the mouse cursor and see the black rectangle following it.
+<canvas id="myCanvas" width="400" height="400"></canvas>
+
+------
+
+#### Built-in JS class: Date
+
+##### Getting a date by calling the Date constructor
+
+Without any argument, a call to new Date() returns the current date.
+
+Note: The return value is actually a Date object, which is displayed by calling toString() on this object.
+{% highlight console linenos %}
+> var date = new Date();
+undefined
+
+> date;
+Wed Apr 12 2017 11:10:28 GMT+0200 (CEST)
+> date.toString(); // same thing!
+Wed Apr 12 2017 11:10:28 GMT+0200 (CEST)
+{% endhighlight %}
+
+__We can also pass it an argument that can be:__
+
+<ul class="collection">
+  <li class="collection-item">
+  A string that encodes a date
+  </li>
+  <li class="collection-item">
+  A set of numeric values separated by a comma for month, day, hour, and so on
+  </li>
+  <li class="collection-item">
+  A Unix "timestamp"  (number of milliseconds elapsed since 1970)
+  </li>
+</ul>
+
+... in this case it returns a date object that corresponds to the encoded date passed as argument.
+
+Examples:
+{% highlight console linenos %}
+> new Date('2017 04 28');
+Fri Apr 28 2017 00:00:00 GMT+0200 (CEST)
+
+> new Date('2017 1 2');
+Mon Jan 02 2017 00:00:00 GMT+0100 (CET)
+
+> new Date('2017 1 2 8:30');
+Mon Jan 02 2017 08:30:00 GMT+0100 (CET)
+{% endhighlight %}
+
+Numerical parameters can also be passed in this order: year, month (0-11), day (1-31), time (0-23), minutes (0-59), seconds , milliseconds (0-999). We do not have to pass everything but it should always be in this order.
+
+Examples:
+{% highlight console linenos %}
+> new Date(2017, 3, 16, 14, 43, 10, 120);
+Sun Apr 16 2017 14:43:10 GMT+0200 (CEST)
+
+> new Date(2017, 0, 10, 14);
+Tue Jan 10 2017 14:00:00 GMT+0100 (CET)
+
+> new Date(2017, 1, 28) // 1 is February! Month indexes start at 0!
+Tue Feb 28 2017 00:00:00 GMT+0100 (CET)
+
+> new Date(2008, 1, 29);
+Fri Feb 29 2008 00:00:00 GMT+0100 (CET)
+
+> new Date(2017, 1, 29); // No February 29th in 2017! Gives 1st of March
+Wed Mar 01 2017 00:00:00 GMT+0100 (CET)
+
+> new Date(2017, 11, 31); // Happy new year!
+Sun Dec 31 2017 00:00:00 GMT+0100 (CET)
+
+> new Date(2017, 11, 32) // 32 Dec -> 1st of January!
+Mon Jan 01 2018 00:00:00 GMT+0100 (CET)
+{% endhighlight %}
+
+One can build the date with a Unix timestamp (number of milliseconds since 1970):
+
+{% highlight console linenos %}
+> new Date(1199885822900);
+Wed Jan 09 2008 14:37:02 GMT+0100 (CET)
+{% endhighlight %}
+
+Calling Date() without "new" returns the current date as a string. It does not matter if we pass parameters:
+
+{% highlight console linenos %}
+> Date();
+"Sun Apr 16 2017 14:51:47 GMT+0200 (CEST)"
+{% endhighlight %}
+
+Useful methods
+{% highlight console linenos %}
+> var d = new Date();
+undefined
+
+> d.toString();
+"Sun Apr 16 2017 14:52:52 GMT+0200 (CEST)"
+
+> d.setMonth(2); // Change for month with index=2
+1489672372092
+
+> d.toString();
+"Thu Mar 16 2017 14:52:52 GMT+0100 (CET)"
+
+> d.getMonth(); // get current month index
+2
+{% endhighlight %}
+
+Let's play with my birthday!
+
+{% highlight console linenos %}
+> var d = new Date(1965, 3, 16); // Michel Buffa's birthday
+undefined
+
+> d.getDay(); // Sunday is 0
+5
+
+> d; // let's verify
+Fri Apr 16 1965 00:00:00 GMT+0200 (CEST)
+
+> // Great, it was a Friday :-)
+{% endhighlight %}
+
+Let's write a small piece of code that will guess which days of the week Michel Buffa's birthday will occur, between 2017 and 2047:
+
+{% highlight console linenos %}
+> var dayOfTheWeek = [0,0,0,0,0,0,0];
+
+for (var year = 2017; year <= 2047; year++) {
+    dayOfTheWeek[new Date(year, 4, 16).getDay()]++;
+}
+
+> dayOfTheWeek
+[4, 4, 5, 5, 5, 4, 4] // 4 times on a Sunday, Monday, Friday and Saturday,
+                      // 5 times on Tuesday, Wednesday and Thursday
+{% endhighlight %}
+
+Explanations:
+<ul class="collection">
+  <li class="collection-item">
+  Line 1 we use an array with each element being the number of times the birthday occurs on a Sunday, Monday, etc.
+  </li>
+  <li class="collection-item">
+  Line 3: we iterate using a for loop on every year between 2017 and 2047.
+  </li>
+  <li class="collection-item">
+  Line 4: we build a Date object using 16 of April, but change the year, we compute the date of each of Michel Buffa's birthdays between 2017 and 2045, and we get the index of the day (using the getDay() method). This index is used to increment corresponding elements of the array defined in line 1.
+  </li>
+  <li class="collection-item">
+  Finally, line 7 displays the content of the array. Remember  that typing a variable name in the devtool console is equivalent to calling the object toString() method.
+  </li>
+</ul>
+
+And here is a full version with input fields and results displayed in an HTML table:
+<label for="birthday">Your birthday: </label>
+<input id="birthday" type="date" value="1958-05-15">
+<p>Please enter a starting and an ending year, then click the button.</p>
+<label for="start">Start year:</label>
+<input type="number" id="start" value="2017" min="1958" max="3000">
+<p></p>
+<label for="end">End year:</label>
+<input type="number" id="end" value="2047" min="1958" max="3000">
+<p></p>
+<button class="btn" onclick="computeBirthdays();">
+    Compute how many times
+    your birthday will occur,
+    for each day of the week
+</button>
+<p></p>
+<output id="results"></output>
+<button class="btn" onclick="rest01()">Reset</button>
+
+
+
+<style type="text/css">
+canvas {
+  border: 2px solid black;
+}
+td {
+  text-align: center;
+}
+</style>
+
+<script>
+
+window.onload = init;
+
+var canvas, ctx, width, height;
+var rect = {x:40, y:40, radius: 30, width:40, height:40, v:3};
+var mousepos = {x:0, y:0};
+
+function init() {
+  canvas = document.querySelector("#myCanvas");
+  ctx = canvas.getContext('2d');
+  width = canvas.width;
+  height = canvas.height;
+
+  canvas.addEventListener('mousemove', function (evt) {
+        mousepos = getMousePos(canvas, evt);
+     }, false);
+
+  mainloop();
+}
+
+
+function mainloop() {
+    // 1) clear screen
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 2) move object
+    var dx = rect.x - mousepos.x;
+    var dy = rect.y - mousepos.y;
+    var angle = Math.atan2(dy, dx);
+
+    rect.x -= rect.v*Math.cos(angle);   
+    rect.y -= rect.v*Math.sin(angle);
+
+    // 3) draw object
+    drawRectangle(angle);
+
+    // 4) request new frame
+     window.requestAnimationFrame(mainloop);
+}
+
+function drawRectangle(angle) {
+  ctx.save();
+
+  // These two lines move the coordinate system
+  ctx.translate(rect.x, rect.y);
+  ctx.rotate(angle);
+  // recenter the coordinate system in the middle
+  // the rectangle. Like that it will rotate around
+  // this point instead of top left corner
+  ctx.translate(-rect.width/2, -rect.height/2);
+
+  ctx.fillRect(0, 0, rect.width, rect.height);
+  ctx.restore();
+}
+
+function getMousePos(canvas, evt) {
+  // necessary to take into account CSS boudaries
+  var rect = canvas.getBoundingClientRect();
+  return {
+     x: evt.clientX - rect.left,
+     y: evt.clientY - rect.top
+  };
+}
+
+/*******************************************/
+function computeBirthdays() {
+  // An array. Each element is the number of times my birthday
+  // will occur. For the moment: 0 times on a Monday, 0 times on Friday
+  // etc.
+  var dayOfTheWeek = [0,0,0,0,0,0,0];
+
+
+  var birthday = document.querySelector("#birthday").value;
+
+  // birthday is the value of the input field,
+  // as a string (ex: "1958-5-15")
+  // Let's turn it into a Date object
+  var birthdayAsDate = new Date(birthday);
+
+  // Get the month and year (ex: 15 May)
+  var birthdayMonth = birthdayAsDate.getMonth(); // ex: May
+  var birthdayDate  = birthdayAsDate.getDate();   // ex: 15
+
+  var startYear = document.querySelector("#start").value;
+  var endYear = document.querySelector("#end").value;
+
+  for (var year = startYear; year <= endYear; year++) {
+      var dayOfTheWeekMyBirthDayOccurs =
+          new Date(year, birthdayMonth, birthdayDate).getDay();
+
+        console.log('Year : ' + year + " Day of your birthday: " +
+                    getDayName(dayOfTheWeekMyBirthDayOccurs));
+
+      // increment the counter for this day
+      dayOfTheWeek[dayOfTheWeekMyBirthDayOccurs]++;
+   }
+
+   // add a table to the web page, presenting the results
+   displayResults(dayOfTheWeek);
+
+}
+
+function getDayName(dayIndex) {
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  return days[dayIndex];
+}
+
+function displayResults(array) {
+  document.querySelector("#results").innerHTML = "<p>Occurences of your Birthday:</p>";
+
+  var table = document.createElement("table");
+  var firstRow = table.insertRow();
+  var secondRow = table.insertRow();
+
+  table.classList.add('bordered');
+
+  array.forEach(function(dayOccurence, index) {
+    var dayNameCell = firstRow.insertCell(index);
+    dayNameCell.innerHTML = getDayName(index);
+
+    var nbCell = secondRow.insertCell(index);
+    nbCell.innerHTML = dayOccurence;
+
+  });
+
+  document.querySelector("#results").appendChild(table);
+}
+function rest01() {
+  document.querySelector("#results").innerHTML = "";
+}
+</script>
