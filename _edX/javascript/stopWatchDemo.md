@@ -61,12 +61,71 @@ The user should be able to do the following:
         <button class="btn" id="startstop">Start/Stop</button>
         <button class="btn" id="reset">Reset</button>
         <button class="btn" id="record">Record Time</button>
+        <br>
+        <br>
         <b>Past Times</b>
         <p id="pastTimes"></p>
     </div>
     <div class="col s12 m6">
     </div>
 </div>
+
+__JavaScript Code:__
+{% highlight javascript linenos %}
+/* global variables */
+var interval;
+var start = false;
+var counter = 0;
+
+/* execute function */
+setUp();
+
+/* function definition */
+function setUp() {
+    let timer     = document.querySelector("#timer");
+    let pastTimes = document.querySelector("#pastTimes");
+    let startstop = document.querySelector("#startstop");
+    let reset     = document.querySelector("#reset");
+    let record    = document.querySelector("#record");
+    timer.innerHTML = "0.00"; 
+    startstop.addEventListener('click', function(){
+        if(start){
+            clearInterval(interval);
+        }else{
+            interval = setInterval(function(){
+                counter += 0.01;
+                timer.innerHTML = counter.toFixed(2); 
+            }, 100);
+        }         
+        start = !start;
+    })
+    reset.addEventListener('click', function(){
+        /*location.reload();*/
+        clearInterval(interval);
+        counter = 0;
+        start = false;
+        timer.innerHTML = counter.toFixed(2);
+        pastTimes.innerHTML = "";
+    })
+    record.addEventListener('click', function(){
+        pastTimes.innerHTML += counter.toFixed(2) + "<br/>";
+        
+    })
+
+   　document.addEventListener('keydown', function(event){
+
+        switch (event.key) {
+            case 's' :  startstop.click();
+                        break;
+            case 'r' :  reset.click();
+                        break;
+            case 't' :  record.click();
+                        break;                        
+        }
+        
+    });
+}
+{% endhighlight %}
 
 <script>
 /* global variables */
@@ -79,10 +138,13 @@ setUp();
 
 /* function definition */
 function setUp() {
-    let timer = document.querySelector("#timer");
+    let timer     = document.querySelector("#timer");
     let pastTimes = document.querySelector("#pastTimes");
+    let startstop = document.querySelector("#startstop");
+    let reset     = document.querySelector("#reset");
+    let record    = document.querySelector("#record");
     timer.innerHTML = "0.00"; 
-    document.querySelector("#startstop").addEventListener('click', function(){
+    startstop.addEventListener('click', function(){
         if(start){
             clearInterval(interval);
         }else{
@@ -93,7 +155,7 @@ function setUp() {
         }         
         start = !start;
     })
-    document.querySelector('#reset').addEventListener('click', function(){
+    reset.addEventListener('click', function(){
         /*location.reload();*/
         clearInterval(interval);
         counter = 0;
@@ -101,10 +163,23 @@ function setUp() {
         timer.innerHTML = counter.toFixed(2);
         pastTimes.innerHTML = "";
     })
-    document.querySelector('#record').addEventListener('click', function(){
+    record.addEventListener('click', function(){
         pastTimes.innerHTML += counter.toFixed(2) + "<br/>";
         
     })
+
+   　document.addEventListener('keydown', function(event){
+
+        switch (event.key) {
+            case 's' :  startstop.click();
+                        break;
+            case 'r' :  reset.click();
+                        break;
+            case 't' :  record.click();
+                        break;                        
+        }
+        
+    });
 }
 
 </script>
