@@ -5,7 +5,7 @@ function analyze(){
     var reqBody = {
         "documents": [
             {
-            "language":"jp",
+            "language":"en",
             "id" : 1,
             "text": document.querySelector("#url").value
             }
@@ -13,8 +13,8 @@ function analyze(){
     };
 
     var myHeader =  new Headers({
-        'Content-Type': 'application/json',
-        'Ocp-Apim-Subscription-Key':'17a26f2fbc9240aebfb272df98928812'
+        'Content-Type': 'application/octet-stream',
+        'Ocp-Apim-Subscription-Key':' be6c055642544d3bb3383189536df7d5'
     });
 
     var initObject = {
@@ -23,7 +23,7 @@ function analyze(){
         headers: myHeader
     }
 
-    var request = new Request('https://southeastasia.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=false', initObject);
+    var request = new Request('https://westcentralus.api.cognitive.microsoft.com/face/v1.0', initObject);
 
     fetch(request).then(function(response){
         if(response.ok){

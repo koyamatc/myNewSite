@@ -371,7 +371,7 @@ fetch(request).then(function(result){
 
 -----
 
-#### Face API Demo
+#### Face API Demo ( under construction )
 
 The user should see the following:
 
