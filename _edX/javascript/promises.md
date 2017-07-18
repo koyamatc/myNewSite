@@ -12,11 +12,10 @@ description:
 #### intro to Promises
 ##### What are Promises?
 
-Promises are containers for values that are not yet available yet but may eventually become available.
+プロミスは、今はまだ利用できないが、最終的に利用できるようになるであろう値のコンテナです。
 
 ##### Why are Promises important?
-
-Promises are becoming the standard way to handle asynchronous functions in JavaScript.
+プロミスは JavaScriptで非同期関数を扱う標準的な方法となって来ています。
 
 #### Creating Promises
 ##### Creating a new Promise
@@ -40,21 +39,22 @@ var promise = new Promise(function(resolve, reject) {
 
 ##### new Promise()
 
-The new Promise() constructor is called to create a new promise. The constructor takes in a callback function with the arguments resolve and reject.
+新しプロミスを作成するために new Promise()コンストラクタが呼ばれます。
+このコンストラクタは、引数 resolve　と　reject をとるコールバック関数をもちます。
 
 {% highlight javascript linenos %}
 var promise = new Promise(function(resolve, reject) {
-    
+
 });
 {% endhighlight %}
 
 ##### Resolve()
+resolve() 関数は、プロミスの状態を保留中から満了へ変更するために使われる。
+resolve() 関数の中で受け渡される値が、プロミスの満了したときの値になります。
 
-The resolve() function is used to change the status of the promise from pending to fulfilled. The value that is passed inside the resolve() function becomes the fulfillment value of the promise.
+一度 resolve() 関数が呼ばれると、その後の resolve() と reject() の呼び出しは何の効果もありません。
 
-Once the resolve() function is called, future resolve() and reject() calls no longer have any effect.
-
-Notice how the resolve() method is used to set the fulfillment value of the promise:
+resolve() メソッドがどの様にプロミスの満了値をセットするかを見てみましょう：
 
 {% highlight javascript linenos %}
 resolve("Success!"); //"Success" is set as the fulfillment value of the promise
@@ -62,13 +62,14 @@ resolve("Success!"); //"Success" is set as the fulfillment value of the promise
 
 ##### Reject()
 
-The reject() function is used to change the status of the promise from pending to rejected. The value that is passed inside the reject() function becomes the rejection value of the promise.
+reject() 関数は、プロミスの状態を保留中かた、拒絶へ変更するために使われる。
+reject() 関数の中で受け渡される値は、プロミスのリジェクト値になります。
 
-Once the reject() function is called, future resolve() and reject() calls no longer have any effect.
+一度でも reject() 関数が呼ばれると、　その後の reject() と resolve() 呼び出しは何の効果もありません。
 
-The resolve function can take in any object as an argument, but one common practice is to pass in a Error object because it provides a more detailed error report. 
+reject() 関数は、引数としてオブジェクトをとることができます、一般的な例としては、エラーオブジェクトを渡して、より詳細なエラーレポートを提供します。
 
-Notice how a reject() is used to send an Error object as its reject value:
+reject() が、リジェクト値としてエラーオブジェクトを送る方法：
 
 {% highlight javascript linenos %}
 reject(Error("failure")); //rejection value becomes an Error object
@@ -76,41 +77,48 @@ reject(Error("failure")); //rejection value becomes an Error object
 
 ##### Promise.resolve() and Promise.reject()
 
-Promise.resolve() is used to return a promise that is already fulfilled. Likewise, the Promise.reject() method may be used to return an already rejected promise. Both of these methods can be called outside of the new Promise() constructor.
+Promise.resolve() は、既に満了したプロミスを返すために使われます。
+一方、Promise.reject() メソッドは、すでにリジェクトされたプロミスを返すために使えます。
+両メソッドともに、 new Promise コンストラクタの外部で呼ぶことができます。
 
-Notice how the Promise.resolve() method is used to create an already fulfilled promise:
+すでに満了したプロミスを作成するための Promise.resolve() の使い方：
 
 {% highlight javascript linenos %}
 //A resolved promise with fulfillment value "already resolved"
-var resolvedPromise = Promise.resolve("already resolved"); 
+var resolvedPromise = Promise.resolve("already resolved");
 {% endhighlight %}
 
-Notice how the Promise.reject() method is used to create an already rejected promise:
+すでにリジェクトしたプロミスを作成するための Promise.reject() の使い方：
 
 {% highlight javascript linenos %}
 //A rejected promise with rejected value "already rejected"
-var rejectedPromise = Promise.reject("already rejected"); 
+var rejectedPromise = Promise.reject("already rejected");
 {% endhighlight %}
 
 ##### Resolving another Promise
 
-If another promise is passed in as an argument to resolve() then the new promise takes the fulfillment value of the passed in promise.
+他のプロミスが、resolve() に対する引数として受け渡されたなら、
+新しいプロミスは、プロミスに受け渡された満了値を取得します。
 
-Notice how resolve() handles another Promise as an argument:
+resolve() が、引数として別のプロミスを扱う方法：
 
 {% highlight javascript linenos %}
 var firstPromise = Promise.resolve("already resolved");
 
 //fullfillment value of secondPromise is "already resolved"
-var secondPromise = Promise.resolve(firstPromise); 
+var secondPromise = Promise.resolve(firstPromise);
 {% endhighlight %}
 
 #### Using Promises
 ##### Using Promises with Then() and Catch()
 
-The then() and catch() methods are used to handle the results of Promises once they have finished pending. The then() method is used to handle resolved Promises while the catch() method is used to handle rejected Promises. Both of the methods use callback functions. The callback functions should each have one argument representing the Promise result.
+then() と catch() メソッドは、保留状態を終了したプロミスの結果を扱うために使われます。
+then() メソッドは、解決したプロミスを扱うために使われ、
+一方、catch() メソッドは、リジェクトされたプロミスを扱うために使われます。
+両メソッドともに、コールバック関数を使います。
+それぞれのコールバック関数は、プロミスの結果を表す1つの引数を持つべきです。
 
-Notice how the then() and catch() methods use callbacks to handle Promise results:
+then() と catch() メソッドが　プロミスの結果を扱うためのコールバック関数の使い方:
 
 {% highlight javascript linenos %}
 var promise = new Promise(function(resolve, reject) {
@@ -144,9 +152,10 @@ promise.then(function(val){//val represents the fulfillment value
 
 ##### Using Promises with Then(onSuccess,onFailure)
 
-The then() method can be called with a success callback and a failure callback as an alternative to using the then() and catch() methods. 
+then() メソッドは、then(), catch()メソッドを使う代わりに、成功コールバックと失敗コールバックを使い呼び出すことができます。
 
-Notice how the then() method is used with a success and failure callback to handle promise results:
+プロミスの結果を扱うために成功と失敗コールバックをthen()メソッドで使う方法：
+
 {% highlight javascript linenos %}
 promise.then(function(val){//success callback
 
@@ -154,7 +163,7 @@ promise.then(function(val){//success callback
 
 },function(val){//rejection callback
 
-    console.log(val); 
+    console.log(val);
 
 })
 {% endhighlight %}
@@ -165,14 +174,15 @@ promise.then(function(val){//success callback
 ##### Transforming Values
 __Calling return within then()__
 
-Promise results can be transformed by calling the return statement within the then() callback. This will cause the then() method to return a new Promise with the transformed result.
+then() コールバックの中で return文を呼び出すことで、プロミスの結果を変換することができます。
+このことは、thne() メソッドが、変換された結果を持つ新しいプロミスを返せるということです・
 
-Notice how a new Promise is created with a transformed result using the return statement within the then() callback:
+then()コールバック内のreturn文を使い変換した結果を持つ新しいプロミスの作り方：
 
 {% highlight javascript linenos %}
 var promise = Promise.resolve("hello");
 
-var promise2 = promise.then(function(result) { 
+var promise2 = promise.then(function(result) {
     console.log(result) //logs "hello"
     return result + " world" //adds " world" to the result and sets this as the new fulfillment value of promise2
 });
@@ -184,15 +194,15 @@ promise2.then(function(result){
 
 __Chaining Transforms__
 
-Several transforms can be chained together using multiple then() method calls.
+複数のthen()メソッドを使い、複数の変換を連続して呼び出すことができます。
 
 Notice how promise results are transformed using multiple then() methods calls:
 
 {% highlight javascript linenos %}
 var promise = Promise.resolve([1,2,3,4]);
 
-promise.then(function(result) { 
-    console.log(result) //logs [1,2,3,4] 
+promise.then(function(result) {
+    console.log(result) //logs [1,2,3,4]
     return result.map(x => x * x); //squares each value in the array
 
 }).then(function(result2){
@@ -217,6 +227,7 @@ promise.then(function(result) {
 
 __Returning a Promise within then()__
 
+then() コールバック内で別のプロミスを返すということは、
 Returning another Promise within a then() callback will cause the then() method to return the returned Promise.
 
 Notice how returning a Promise within a then() callback creates a new promise with the returned promise's result:
@@ -224,7 +235,7 @@ Notice how returning a Promise within a then() callback creates a new promise wi
 {% highlight javascript linenos %}
 var promise = Promise.resolve("hello");
 
-var promise2 = promise.then(function(result) { 
+var promise2 = promise.then(function(result) {
     console.log(result) //logs "hello"
     return Promise.resolve("12345") //causes then() to return a promise with a fulfillment value of "12345"
 
@@ -252,7 +263,7 @@ getRandomNumber() - asynchronously returns a random number
 getNameFromNumber - takes in a number and asynchronously returns a name
     </li>
     <li class="collection-item">
-getAgeFromName - takes in a name and asynchronously returns an age 
+getAgeFromName - takes in a name and asynchronously returns an age
     </li>
 </ul>
 
@@ -312,7 +323,7 @@ getRandomNumber(function(number)){
         function(error){
             console.log(error);
         }
-    }, 
+    },
     function(error){
         console.log(error);
     }
@@ -340,9 +351,9 @@ getRandomNumber().then(function(result) {
 });
 {% endhighlight %}
 
-As you can see, it is difficult to make changes to a chain of asynchronous operations using CPS, especially since there has to be a callback for both the success and failure cases for each asynchronous call. 
+As you can see, it is difficult to make changes to a chain of asynchronous operations using CPS, especially since there has to be a callback for both the success and failure cases for each asynchronous call.
 
-Promises allow asynchronous operations to be chained in a much more maintainable way. 
+Promises allow asynchronous operations to be chained in a much more maintainable way.
 
 #### Promise.all()
 ##### Promise.all()
@@ -352,18 +363,18 @@ The Promise.all() method is used to process multiple Promises at the same time. 
 Notice how the Promise.all() method is used to handle multiple Promises at the same time:
 
 {% highlight javascript linenos %}
-var promise1 = Promise.resolve('hello'); 
-var promise2 = Promise.resolve({age:2,height:188}) 
+var promise1 = Promise.resolve('hello');
+var promise2 = Promise.resolve({age:2,height:188})
 var promise3 = 42; //normal values work with Promise.all() too
 
 
-Promise.all([promise1,promise2,promise3]).then(function(result) { 
+Promise.all([promise1,promise2,promise3]).then(function(result) {
 
     console.log(result) //logs the array ["hello",{age:2,height:188},42]
 
 }).catch(function(error){
 
-    console.log(error) 
+    console.log(error)
 
 });
 {% endhighlight %}
@@ -371,12 +382,12 @@ Promise.all([promise1,promise2,promise3]).then(function(result) {
 Notice how Promise.all() method call rejects when one of the Promises that it is processing rejects:
 
 {% highlight javascript linenos %}
-var promise1 = Promise.resolve('hello'); 
-var promise2 = Promise.resolve({age:2,height:188}) 
+var promise1 = Promise.resolve('hello');
+var promise2 = Promise.resolve({age:2,height:188})
 var promise3 = Promise.reject('failure.'); //rejected promise
 
 
-Promise.all([promise1,promise2,promise3]).then(function(result) { 
+Promise.all([promise1,promise2,promise3]).then(function(result) {
 
     console.log(result) //doesn't occur since promise3 rejected
 
@@ -410,7 +421,7 @@ var promise2 = new Promise(function(resolve,reject){
 });
 
 
-Promise.race([promise1,promise2]).then(function(result) { 
+Promise.race([promise1,promise2]).then(function(result) {
 
     console.log(result) // logs "finished in two seconds" because promise1 resolved first
 
@@ -439,7 +450,7 @@ var promiseRejectFiveSeconds = new Promise(function(resolve,reject){
 });
 
 
-Promise.race([promiseResolveTenSeconds,promiseRejectFiveSeconds]).then(function(result) { 
+Promise.race([promiseResolveTenSeconds,promiseRejectFiveSeconds]).then(function(result) {
 
     console.log(result) // never occurs because promiseRejectFiveSeconds rejected
 
@@ -478,7 +489,7 @@ Promise.race([promiseResolveTenSeconds,promiseRejectFiveSeconds]).then(function(
     <table id="similarTable" width="300px" border="1" >
     <tr>
         <th>ProductId</th>
-        <th>Type</th> 
+        <th>Type</th>
         <th>Price</th>
         <th>Examine</th>
     </tr>
@@ -489,7 +500,7 @@ Promise.race([promiseResolveTenSeconds,promiseRejectFiveSeconds]).then(function(
 <table id="allTable" width="300px" border="1" >
     <tr>
         <th>ProductId</th>
-        <th>Type</th> 
+        <th>Type</th>
         <th>Price</th>
         <th>Examine</th>
     </tr>
@@ -515,7 +526,7 @@ __library.js__
         //function definitions go here
         function createRandomProduct(){
             var typeArray = ['Electronics','Book','Clothing','Food'];
-            var price = (Math.random()*500).toFixed(2) 
+            var price = (Math.random()*500).toFixed(2)
             var type = typeArray[Math.floor(Math.random()*4)];
 
             return {price:price, type:type};                
@@ -527,7 +538,7 @@ __library.js__
                 var obj = createRandomProduct();
                 catalog.push({id:i,price:obj.price,type:obj.type});
             }
-            
+
             return catalog;
         }
 
@@ -557,7 +568,7 @@ __library.js__
                     reject("Invalid ID: " + id);
                 },1000);
             });
-            
+
             return promise;
         }
 
@@ -582,7 +593,7 @@ __library.js__
                     },1000);
                 }
             });
-            
+
             return promise;
         }
 
@@ -605,10 +616,10 @@ __library.js__
                     },1000);
                 }
             });
-            
+
             return promise;
         }
-        
+
 
     }
 
@@ -617,17 +628,17 @@ __library.js__
         window.api = myLibrary();
     }
 
-})(window); 
+})(window);
 {% endhighlight %}
 
 __productCatalog.js__
 {% highlight javascript linenos %}
 function createTableHeader(tableId){
-    
+
     var table = document.querySelector("#" + tableId);
     var row = table.insertRow();
     row.innerHTML = '<th>ProductId</th><th>Type</th><th>Price</th><th>Examin</th>'
-  
+
 }
 
 function updateTable(tableId,productArray){
@@ -733,5 +744,5 @@ document.querySelector("#inputButtonPrice").addEventListener('click',function(){
 });
 {% endhighlight %}
 
-<script src="library.js"></script> 
-<script src="productCatalog.js"></script> 
+<script src="library.js"></script>
+<script src="productCatalog.js"></script>
