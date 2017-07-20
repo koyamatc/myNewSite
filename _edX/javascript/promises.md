@@ -227,10 +227,10 @@ promise.then(function(result) {
 
 __Returning a Promise within then()__
 
-then() コールバック内で別のプロミスを返すということは、
-Returning another Promise within a then() callback will cause the then() method to return the returned Promise.
+then() コールバック内で別のプロミスを返すということは、返されてきたプロミスを、
+この then() メソッドで返させることになります
 
-Notice how returning a Promise within a then() callback creates a new promise with the returned promise's result:
+then() コールバック内でプロミスを返すことで、返されたプロミスの結果を持った新しいプロミスを作る方法：
 
 {% highlight javascript linenos %}
 var promise = Promise.resolve("hello");
@@ -249,27 +249,30 @@ promise2.then(function(result){
 
 __Sequencing Asynchronous Operations__
 
-Asynchronous Operations can be sequenced by returning Promises within then() callbacks.
+then() コールバック内でプロミスを返すことで、非同期オペレーションを順番に行うことができます。
 
-Imagine that there are three asynchronous functions called getRandomNumber(), getNameFromNumber() and getAgeFromName() that return Promises.
+プロミスを返す3つの非同期関数 getRandomNumber(), getNameFromNumber() と getAgeFromName() があるとします。
 
-The functions do the following:
+関数は以下のようなことをします:
 
 <ul class="collection">
     <li class="collection-item">
-getRandomNumber() - asynchronously returns a random number
+    getRandomNumber() - 非同期で乱数を返します
     </li>
     <li class="collection-item">
-getNameFromNumber - takes in a number and asynchronously returns a name
+    getNameFromNumber - 数字を受け取り、非同期に名前を返します
     </li>
     <li class="collection-item">
-getAgeFromName - takes in a name and asynchronously returns an age
+    getAgeFromName - 名前を受け取り、非同期に年齢を返します
     </li>
 </ul>
 
-If we wanted to first call getRandomNumber() to get an number, then call getNameFromNumber() to get a name from that number, and then lastly call getAgeFromName() on the returned name to get an age then we would have to sequence them correctly.
+最初に getRandomNumber() を呼び数字を取得し、
+次に getNameFromNumber() を呼びその数字から名前を取得し、
+最後に getAgeFromName() を呼び出し戻ってきた名前から年齢を取得すれば、
+正しい順番に操作されます。
 
-If they were normal synchronous functions then it would be simple and would look like this:
+もしこれらの関数が一般の同期的関数であるならば、単純です。
 
 {% highlight javascript linenos %}
 var number = getRandomNumber();
@@ -277,9 +280,10 @@ var name = getNameFromNumber(number);
 var age = getAgeFromName(name);
 {% endhighlight %}
 
-However, since the functions are asynchronous, the number variable may be undefined by the time getNameFromNumber() is called and the name variable may be undefined by the time getAgeFromName() is called.
+しかし、関数が非同期のため、number 変数は、getNameFromNumber() が呼ばれるときには undefined かもしれない、
+そして name 変数は getAgeFromName() が呼び出されるときに、 undefined であるかもしれません。
 
-Thus, we need to do the following to sequence them correctly:
+それなので、正しく順番に実行するには下記のようにする必要があります。
 
 {% highlight javascript linenos %}
 //getRandomNumber() returns a promise containing a random number
@@ -299,12 +303,13 @@ getRandomNumber().then(function(result) {
 });
 {% endhighlight %}
 
-If any of the then() functions returns a rejected Promise then the catch() method will handle the rejected result.
+もし then() 関数のいづれかが リジェクト・プロミスを返したときには
+catch()メソッドがリジェクト結果を扱います。
 
 #### Promises Chaining vs Callback Pyramids
 ##### Chaining Promises vs Continuation Passing Style(CPS)
 
-Lets see how Promises compare with CPS when trying to chain asynchronous operations.
+非同期オペレーションを続けて行うとき、プロミスとCPSの比較をしてみましょう。
 
 __Chaining Asynchronous Operations using the Continuation Passing Style:__
 
@@ -333,6 +338,7 @@ getRandomNumber(function(number)){
 {% endhighlight %}
 
 __Chaining Asynchronous Operations using Promises:__
+
 {% highlight javascript linenos %}
 //getRandomNumber() returns a promise containing a random number
 getRandomNumber().then(function(result) {  
@@ -351,16 +357,20 @@ getRandomNumber().then(function(result) {
 });
 {% endhighlight %}
 
-As you can see, it is difficult to make changes to a chain of asynchronous operations using CPS, especially since there has to be a callback for both the success and failure cases for each asynchronous call.
+見ての通り、CPSを使った非同期オペレーションの連続処理に対して、変更を加えるのは難しいです、
+各々の非同期呼び出しに対して、成功と失敗の場合両方のコールバックを用意しなくてはならないからです。
 
-Promises allow asynchronous operations to be chained in a much more maintainable way.
+プロミスは非常にメンテナンス性の高い方法で、非同期オペレーションを連続して行うことができます。
 
 #### Promise.all()
 ##### Promise.all()
 
-The Promise.all() method is used to process multiple Promises at the same time. The method takes in an array of Promises and then waits for them to all to resolve. Once they have all finished resolving, an array of results can be obtained by using the then() method. If any of the Promises reject, then the Promise.all() method will return the first rejected Promise.
+Promise.all()メソッドは、同時に複数のプロミスを処理するために使います。
+このメソッドはプロミスの配列を受け取り、すべてのプロミスが解決するまで待ちます。
+解決がすべて終了した際には、then()メソッドを使うことで結果の配列を取得てきます。
+プロミスのどれかがリジェクトすると、Promise.all()メソッドは最初のリジェクトプロミスを返します。
 
-Notice how the Promise.all() method is used to handle multiple Promises at the same time:
+Promise.all() メソッドで同時に複数のプロミスを扱う方法:
 
 {% highlight javascript linenos %}
 var promise1 = Promise.resolve('hello');
@@ -379,7 +389,7 @@ Promise.all([promise1,promise2,promise3]).then(function(result) {
 });
 {% endhighlight %}
 
-Notice how Promise.all() method call rejects when one of the Promises that it is processing rejects:
+処理中のプロミスの１つがリジェクトしたときに Promise.all()メソッドがリジェクトを呼び出す方法：
 
 {% highlight javascript linenos %}
 var promise1 = Promise.resolve('hello');
@@ -401,11 +411,11 @@ Promise.all([promise1,promise2,promise3]).then(function(result) {
 #### Promise.race()
 ##### Promise.Race()
 
-The Promise.race() method takes in an array of promises and takes the result of the promise that rejects or resolves the fastest. Like normal promises, the then() and catch() methods are used to retrieve the results of the fastest promise.
+Promise.race()メソッドはプロミスの配列を受け取り、１番早くリジェクトまたは解決したプロミスの結果を取得します。通常のプロミスのように、then(), catch() メソッドを使い、１番早いプロミスの結果を取得します。
 
-The Promise.race() method can be used to choose the quickest source when there are two similar sources of the same data.
+Promise.RACE()メソッドは、同じデータに対して、２つの似たコードがあるとき、速く終了するコードを選ぶために使うことができます。
 
-Notice how the Promise.race() method is used to take the result of the faster promise:
+より速いプロミスの結果を得るため Promise.race() の使い方：　
 
 {% highlight javascript linenos %}
 var promise1 = new Promise(function(resolve,reject){
@@ -432,7 +442,8 @@ Promise.race([promise1,promise2]).then(function(result) {
 });
 {% endhighlight %}
 
-The Promise.race() method can also be used to limit the amount of time promises have to resolve by including a promise that is forced to reject after a given amount of time.
+Promise.race()メソッドは、与えられた時間数が経過したら強制的にリジェクトされるプロミスを含めることで、
+解決するためにプロミスが使える時間数を制限するためにも使われます。
 
 Notice how the Promise.race() method is used to limit the amount of time a Promise has to resolve:
 
