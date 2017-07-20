@@ -14,11 +14,12 @@ description:
 
 __What are Generators?__
 
-Generators are functions that can be paused and resumed. Generators can send out values when pausing and take in values when resuming.
+ジェネレータは関数であり、一時停止や再開ができる。
+ジェネレータは停止中に値を送信できる、再開するときに値を受け取ることができる
 
 __Why are Generators important?__
 
-Generators are important because they allow asynchronous functions to written like normal synchronous functions.
+ジェネレータが重要なのは、非同期関数を、普通の同期関数と同じように欠けるということです。
 
 #### Creating a Generator Function
 ##### Creating a Generator Function
@@ -29,27 +30,30 @@ function* genFunc() {
     yield 'a';
     yield;
     yield 123;
-        
+
     return "finished";
 }
 {% endhighlight %}
 
 __Function* Keyword__
 
-Generator functions look similar to regular functions, except that they have an asterisk (*) after the function keyword. This syntax may look similar to the pointer notation from other languages, but it is unrelated.
+ジェネレータ関数は一般の関数と似ていますが、functionキーワードの末尾にアスタリスク(*)をつけるという違いがあります。
+この文法は、ほかの言語のポインタ表記と同じように見えますが関係はありません。
 
 Notice how the function* keyword is used the declare a Generator function:
 {% highlight javascript linenos %}
 function* genFunc() { //notice the function* keyword
-       
+
 }
 {% endhighlight  %}
 
 __Yield Keyword__
 
-The __yield__ keyword is used to pause the generator. The yield keyword may also be used to receive input and send output from the generator.
+__yield__　キーワードは、ジェネレータを一時停止するために使います。
+__yield__　キーワードは、入力を受け取るため、またジェネレータから出力を送信するためにも使います。
 
 Notice how the yield keyword is used to pause and send several different types of output from the Generator function:
+
 {% highlight javascript linenos %}
     yield 'a'; //pauses the generator and sends out a value of 'a'
     yield;     //pauses the generator and sends out an undefined value
@@ -58,7 +62,9 @@ Notice how the yield keyword is used to pause and send several different types o
 
 __Return Value__
 
-Generator Functions have an optional return value. Omitting the return value is equivalent to returning an undefined value. The return value of Generator functions is often left unused.
+ジェネレータ関数は、オプションとして戻り値があります。
+戻り値をつけない場合には undefined 値が戻るのと同じことです。
+ジェネレータ関数の戻り値は、使われないこともしばしばです。
 
 Notice the return value of the Generator function:
 {% highlight javascript linenos %}
@@ -70,7 +76,8 @@ Notice the return value of the Generator function:
 
 ##### Creating a Generator Object
 
-A Generator Object is returned from calling a Generator function. It is important to not confuse Generator Objects with Generator functions. 
+ジェネレータ　オブジェクトはジェネレータ関数を呼び出し、そこから戻ってくるもの。
+ジェネレータオブジェクトとジェネレータ関数を混同しないことが稚拙です。
 
 Notice how a Generator Object is created by calling a Generator function:
 {% highlight javascript linenos %}
@@ -82,7 +89,7 @@ function* genFunc() {
     console.log("passed second yield");
     yield 123;
     console.log("passed third yield");
-        
+
     return "finished";
 }
 
@@ -91,17 +98,22 @@ var genObject = genFunc(); //creates a generator object called genObject
 
 ##### Iterating through a Generator Object with next()
 
-Generator Objects conform to the iterator protocol and may be iterated with the next() method.
+ジェネレータ　オブジェクトは、イテレータ　プロトコルに従っている、
+next()メソッドを用い順次処理を行える。
 
-Generator functions are initially paused and the first call to __next()__ starts the Generator function. The Generator function then runs until it hits the first __yield__ keyword and then pauses. Subsequent calls to __next()__  will resume the Generator function until the next __yield__ keyword appears.
+ジェネレータ関数は、まずは停止している、そして最初の __next()__ を呼び出すことで、
+そのジェネレータ関数は動き出します。
+そのジェネレータ関数は、__yield__ キーワードに突き当たるまで実行され、
+そして停止します。
+その次の、 __next()__ 呼び出しでジェネレータ関数は再開し、__yield__ キーワードが出現するまで動作します。
 
-The __next()__ method returns an object with two properties:
+__next()__ メソッドは２つのプロパティを持つオブジェクトを返します。:
 <ul class="collection">
     <li class="collection-item">
-    done - a boolean indicating whether the Generator function has processed all of the yield statements or has already returned. 
+    done - 真偽値で、ジェネレータ関数がすべての yield文を処理したか、または、すでに返されたかを示します。
     </li>
     <li class="collection-item">
-    value - the value associated with the most recent yield statement.
+    value - 最後に実行された yield文に関連付けされた値。
     </li>
 </ul>
 
@@ -111,13 +123,19 @@ var a = genObject.next(); // Object {value: 'a', done: false}
 //console.log("started");
 
 var b = genObject.next(); // Object {value: undefined, done: false}
-//console.log("passed first yield"); 
+//console.log("passed first yield");
 
 var c = genObject.next(); // Object {value: 123, done: false}
 //console.log("passed second yield");
 {% endhighlight %}
 
-After all of the __yield__ statements have been processed with __next()__, the following __next()__ call returns an object with a value property equal to the Generator function __return value__ and a __done__ property set to true. If the __return__ statement was omitted from the Generator function then the __value__ property will be undefined. After the the __done__ property is true in one of the returned objects, additional __next()__ calls will return objects with an undefined value property and a true done property. Yield statements after the __return__ statement are ignored.
+__next()__ ですべての __yield__ 文が処理された後、
+次に来る __next()__ 呼び出しはジェネレータ関数の　__戻り値__　と同じ値プロパティと trueに設定された
+__done__ プロパティを持つオブジェクトを返します。
+ジェネレータ関数に return文が書かれていない場合は、 __value__ プロパティは undefined となります。
+返されたオブジェクトの一つの __done__ プロパティが true となった後は、
+次に来る __next()__ 呼び出しは、undefined の value プロパティと true の done プロパティを持つオブジェクトを返いsます。
+__return__ 文以後の yield文は無視されます。
 
 Notice how additional calls to next() behave:
 {% highlight javascript linenos %}
@@ -130,7 +148,9 @@ var e = genObject.next(); // Object {value: undefined, done: true} <-- additiona
 #### Throwing Errors Inside a Generator Function
 ##### Throwing Errors from within a Generator Function
 
-If an error is encountered within a Generator function, then the error will be thrown by the next() call that encounters the error. The next() call that throws the error will return an undefined value and additional yield statements after the error are ignored. Additional next() calls after the error will also return undefined values.
+ジェネレータ関数内でエラーに遭遇したら、エラーのあった next() 呼び出しによってエラーが投げられます。
+エラーを投げる next() 呼び出しは、undefined 値を返し、エラー後に続く yield文は無視されます。
+エラー後の next() 呼び出もまあた、undefined 値を返します。
 
 Notice the affects of throwing an error within a Generation function:
 
@@ -142,7 +162,7 @@ function* genFunc() {
     throw new Error("error thrown by genFunc()!");
     yield 'c';
     yield 'd';
-        
+
 }
 
 var genObject = genFunc();
@@ -164,7 +184,7 @@ catch(e){
 
 __Yield* Keyword__
 
-The yield* keyword is used to call another Generator function within a Generator function.
+yield* キーワードは、ジェネレータ関数内で別のジェネレータ関数を呼ぶために使われます。
 
 Notice how the yield* statement is used to call genFuncA() within genFuncB():
 
@@ -175,7 +195,7 @@ function* genFuncA() {
     yield 'c';
 
     return "done with genFuncA()!"
-        
+
 }
 
 function* genFuncB(){
@@ -198,7 +218,8 @@ var f = genObject.next(); //Object {value: 3, done: false}
 var g = genObject.next(); //Object {value: "done with genFuncB()!", done: true}
 {% endhighlight %}
 
-The yield* statement does not add the return value of the generator function that it calls to its list of iterables. Instead, the return value may be accessed by the return value of the yield* statement.
+yield* 文は、繰返し要素のリストに、ジェネレータ関数の戻り値を付け加えません。
+その代わり、戻り値は、 yield*文の戻り値によってアクセスされます。
 
 Notice how the yield* genFuncA() statement returns the return value of genFuncA():
 
@@ -208,7 +229,7 @@ function* genFuncA() {
     yield 'b';
 
     return "done with genFuncA()!"
-        
+
 }
 
 function* genFuncB(){
@@ -230,7 +251,7 @@ var e = genObject.next(); //Object {value: 2, done: false}
 var f = genObject.next(); //Object {value: "done with genFuncB()!", done: true}
 {% endhighlight %}
 
-The yield* statement can be used on any iterable in addition to Generator functions.
+yield* 文は、ジェネレータ関数に付け足された繰返し要素にも使うことgできます
 
 Notice how the yield* statement is used to yield all of the values of in an array:
 
@@ -254,6 +275,9 @@ var f = genObject.next(); //Object {value: undefined, done: true}
 
 #### Sending Input to Generator Functions
 ##### Sending input using next()
+
+ジェネレータ　オブジェクトの中を繰返していくのに加え、next() はジェネレータ関数に値を送り返すことができます。
+このことは、引数を next() メソッドに渡すことでできます。
 
 In addition to iterating through Generator Objects, next() can also be used to send values back into Generator functions. This is accomplished by passing a value into the next() method call as an argument. The value that is passed into the next() method call eventually becomes the return value of the most recent yield statement. Since the first next() call starts the Generator function, any value that gets passed into it will be ignored.
 
@@ -319,7 +343,7 @@ function* genFunc(){
 }
 
 for (var x of genFunc()){ //for...of statement
-    console.log(x); 
+    console.log(x);
 }
 //Outputs:
 //'a'
@@ -377,7 +401,7 @@ var [a,b,c,d,e,f,g] = genFunc(); //destructuring assignment
 #### Return()
 ##### Return()
 
-Generator Objects have a return() method that terminates the Generator function. Return() causes a return statement to be performed at the most recent yield statement. The return() method takes in one optional variable that is used as the return value of the Generator function. Calling return(x) will return an object with a value property equal to x and a done property of true. After return() is called, subsequent yield statements in the Generator function are ignored. 
+Generator Objects have a return() method that terminates the Generator function. Return() causes a return statement to be performed at the most recent yield statement. The return() method takes in one optional variable that is used as the return value of the Generator function. Calling return(x) will return an object with a value property equal to x and a done property of true. After return() is called, subsequent yield statements in the Generator function are ignored.
 
 Notice how calling return() affects the generator function:
 
@@ -411,11 +435,11 @@ function* genFunc(){
         console.log(a); // a = 123
         var b = yield 'b'; //exception is thrown, function exits
         //the code below never occurs because an exception occurred and was uncaught
-        console.log(b); 
-        var c = yield 'c'; 
-        console.log(c); 
+        console.log(b);
+        var c = yield 'c';
+        console.log(c);
 
-        return "finished!"; 
+        return "finished!";
 
 }
 
@@ -430,7 +454,7 @@ var z = genObject.next('abc'); // z = undefined
 #### Using Generators with Asynchronous Functions
 ##### Using Generators with Asynchronous Functions
 
-Generator functions work well with asynchronous functions that return Promises. This is because Generator functions can yield a Promise, process the Promise result asynchronously, and then receive the Promise result back. This allows asynchronous code to be written inside generator functions like normal synchronous functions. 
+Generator functions work well with asynchronous functions that return Promises. This is because Generator functions can yield a Promise, process the Promise result asynchronously, and then receive the Promise result back. This allows asynchronous code to be written inside generator functions like normal synchronous functions.
 
 Notice how Promises can be written in a synchronous way inside Generator functions:
 
@@ -438,7 +462,7 @@ Notice how Promises can be written in a synchronous way inside Generator functio
 function* genFunc(){ //looks synchronously written
 
         var post1title = yield fetch("https://jsonplaceholder.typicode.com/posts/1");
-        console.log(post1title); 
+        console.log(post1title);
         //post1title = "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
         var post2title = yield fetch("https://jsonplaceholder.typicode.com/posts/2");
         console.log(post2title);
@@ -503,7 +527,7 @@ function *gen(){
 
         var post1Stream = yield fetch("https://jsonplaceholder.typicode.com/posts/1");
         var post1 = yield post1Stream.json();
-        console.log(post1.title); 
+        console.log(post1.title);
         //post1.title = "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
         var post2Stream = yield fetch("https://jsonplaceholder.typicode.com/posts/2");
         var post2 = yield post2Stream.json();
@@ -541,7 +565,7 @@ function *gen(){
 
         var post1Stream = yield fetch("https://jsonplaceholder.typicode.com/posts/1");
         var post1 = yield post1Stream.json();
-        console.log(post1.title); 
+        console.log(post1.title);
         //post1.title = "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
         var post2Stream = yield fetch("https://jsonplaceholder.typicode.com/posts/2");
         var post2 = yield post2Stream.json();
@@ -552,7 +576,7 @@ function *gen(){
         //error thrown here, generator function terminates
 
         var number = yield 12345;
-        console.log(number); //doesn't occur because an earlier promise was rejected 
+        console.log(number); //doesn't occur because an earlier promise was rejected
 
         return 'done'; //doesn't occur because an earlier promise was rejected
 
@@ -645,7 +669,7 @@ Select two Starships from the dropdown lists to compare
             <option value="29">B-wing</option>
             <option value="39">Naboo Fighter</option>
             <option value="10">Millenium Falcon</option>
-        </select> 
+        </select>
     </div>
     <div class="col s12 m4">
         <select id="s2" class="browser-default">
@@ -661,11 +685,11 @@ Select two Starships from the dropdown lists to compare
             <option value="29">B-wing</option>
             <option value="39">Naboo Fighter</option>
             <option value="10">Millenium Falcon</option>
-        </select> 
+        </select>
     </div>
     <div class="col s12 m4">
         <button class="btn" id="compareBtn">Compare</button>
     </div>
 </div>
 
-<script src="starwars.js"></script> 
+<script src="starwars.js"></script>
