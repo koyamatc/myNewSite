@@ -21,6 +21,17 @@ description:
             {% endfor %}
         </ul>
     </div>
-    <div class="col s12 m4"></div>
+    <div class="col s12 m4">
+        <ul class="collection">
+            <li class="collection-header"><h5>ReactJS</h5></li>
+            {% for lesson in site.edX %}
+                {% if lesson.subject == 'reactjs' %}
+                    <li class="collection-item">
+                        <a href="{{ lesson.url }}"><b>{{ lesson.title }}</b></a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
     <div class="col s12 m4"></div>
 </div>
