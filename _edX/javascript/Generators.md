@@ -277,9 +277,9 @@ var f = genObject.next(); //Object {value: undefined, done: true}
 ##### Sending input using next()
 
 ジェネレータ　オブジェクトの中を繰返していくのに加え、next() はジェネレータ関数に値を送り返すことができます。
-このことは、引数を next() メソッドに渡すことでできます。
-
-In addition to iterating through Generator Objects, next() can also be used to send values back into Generator functions. This is accomplished by passing a value into the next() method call as an argument. The value that is passed into the next() method call eventually becomes the return value of the most recent yield statement. Since the first next() call starts the Generator function, any value that gets passed into it will be ignored.
+このことは、値を引数として next() メソッドに渡すことでできます。
+next()メソッド呼び出しに渡されたその値は、結果的に1番最後の yield文の戻り値になります。
+最初の next()呼び出しが、ジェネレータ関数を開始するので、最初のnext()メソッドに渡された値は、無視されます。
 
 Notice how the next() method call is used to send values back into the Generator function:
 
@@ -401,7 +401,11 @@ var [a,b,c,d,e,f,g] = genFunc(); //destructuring assignment
 #### Return()
 ##### Return()
 
-Generator Objects have a return() method that terminates the Generator function. Return() causes a return statement to be performed at the most recent yield statement. The return() method takes in one optional variable that is used as the return value of the Generator function. Calling return(x) will return an object with a value property equal to x and a done property of true. After return() is called, subsequent yield statements in the Generator function are ignored.
+ジェネレータ　オブジェクトは、ジェネレータ関数を終了させる return()メソッドを持ちます。
+return()は、return文に1番最後のyield文を実行させます。
+return()メソッドには、ジェネレータ関数の戻り値として使われるオプションの変数をとることができます。
+return(x)を呼ぶと、value プロパティが x で done プロパティが true のオブジェクトが返ります。
+return()が呼ばれた後は、ジェネレータ関数の中の次の yield文は無視されます。
 
 Notice how calling return() affects the generator function:
 
@@ -424,7 +428,8 @@ var c = genObject.next(); // c = Object {value: undefined, done: true}
 #### Throwing Errors
 ##### Throw()
 
-Generator Objects have a throw() method that causes an error to be thrown at the most recent yield statement. The throw() method takes in one argument, which is commonly an Error object.
+ジェネレータ　オブジェクトには、throw()メソッドがあり、これは1番最後の yield文で起きたエラーを投げます。
+throw()メソッドは、1つの引数をとります、それは通常エラーオブジェクトです。
 
 Notice how throw() affects the Generator function:
 
@@ -454,7 +459,10 @@ var z = genObject.next('abc'); // z = undefined
 #### Using Generators with Asynchronous Functions
 ##### Using Generators with Asynchronous Functions
 
-Generator functions work well with asynchronous functions that return Promises. This is because Generator functions can yield a Promise, process the Promise result asynchronously, and then receive the Promise result back. This allows asynchronous code to be written inside generator functions like normal synchronous functions.
+ジェネレータ関数は、プロミスを返す非同期関数を使うといい感じで機能します。
+なぜなら、ジェネレータ関数は、プロミスを生成(yield)でき、非同期にプロミスの結果を処理し、
+戻ったプロミスの結果を受け取ることgできるからです。
+これは非同期コードを一般の同期関数のようにジェネレータ関数内で書けるということです。
 
 Notice how Promises can be written in a synchronous way inside Generator functions:
 
@@ -489,12 +497,10 @@ promise.then(function(val){ //callback for then() of promise
 })
 {% endhighlight %}
 
-The code inside the generator function is clean and readable, however all the iterating code below it is a mess. Luckily, there is a recursive method for iterating through promises that will be covered on the next page.
-
 #### Recursive Method to Iterate through Promises
 ##### Recursive Method for Iterating through Promises
 
-A recursive function may be used to iterate through yielded Promises and return their fulfillment values back to the Generator function.
+再帰的関数は、生成されたプロミスを１つ１つ処理していくのと、プロミスの充足値をジェネレータ関数に戻すために使われます。
 
 Notice how a recursive function is used to handle yields to Promises and yields to other values in any order:
 
@@ -518,6 +524,10 @@ function run(genFunc){
 }
 {% endhighlight %}
 
+上記の run()関数は引数としてジェネレータ関数を受け取り、
+再帰的な iterate()関数を使い、ジェネレータ関数の yield文すべてを処理しています。
+プロミスが生成されると、そのプロミスの充足値はジェネレータ関数に送り返されます。
+整数、文字列、オブジェクトが生成されると、それらの値はそのままジェネレータ関数に送り返されます。
 The run() function shown above takes in a Generator function as an argument and uses the recursive iterate() function to process through all of the Generator function's yield statements. If a Promise is yielded, the fulfillment value of that Promise is sent back to the Generator function. If an integer, string or object is yielded, then those values are sent back as is to the Generator function.
 
 Notice how the run() function is used to process a Generator function:
@@ -556,7 +566,7 @@ run(gen).then(x => console.log(x)) //logs "done"
         .catch(x => console.log(x.message));
 {% endhighlight %}
 
-If a rejected Promise is yielded, the run() method will stop iterating through the Generator function and return a rejected Promise.
+リジェクト　プロミスが生成されると、 run()メソッドはジェネレータ関数の繰返しを止め、リジェクトプロミスを返えします。
 
 Notice how the run() method handles rejected promises:
 
