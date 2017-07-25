@@ -83,7 +83,7 @@ Properties can be string literals, arrays or any other type of JavaScript object
 
     ReactDOM.render(
         <HelloWorld index = "3" numberArray={[1,2,3,4,5]}/>,
-        document.q("root")
+        document.querySelector("#root")
     )
 {% endhighlight %}
 
@@ -439,9 +439,7 @@ Now that we have completed all of the steps, we can test our entire application 
 
 <div id="root05"></div>
 
-#### Module1 Lab
 
-<div id="root06"></div>
 
 <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
 <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
@@ -619,47 +617,28 @@ Now that we have completed all of the steps, we can test our entire application 
         return (
             <div>
                 <h3>{props.header}</h3>
-                <ListTables items = {props}/>
+                <Aa items = {props.items}/>
             </div>
         )
     }
 
-    function ListTables(props){
-        var items = Array.from(props.items.items);
-            items.map(function(item){
-                return (
-                    <div>
-                                      <table>
-                <tr>
-                    <th>Year</th>
-                    <th>Type</th>
-                    <th>Model</th>
-                    <th>Price</th>
-                    <th>Buy</th>
-                </tr>
-               </table>
-                    </div>
-                )
-            })
-    }
-    function ItemTable(props){
+    function Aa(props){
+        var table = [];
+        var h1="";
+        for (var i=0; i<props.items.length;i++){
+            h1 += '<br>'
+        }
+        console.log({h1});
         return (
-               <table>
-                <tr>
-                    <th>Year</th>
-                    <th>Type</th>
-                    <th>Model</th>
-                    <th>Price</th>
-                    <th>Buy</th>
-                </tr>
-               </table>
-        )
+            <div>
+                <p>aaaaa {h1} bbbbbbbbbb</p>
+            </div>
+            );
     }
-
 
     ReactDOM.render(
         <App data={data}/>,
-        document.querySelector("#root06")
+        document.querySelector("#rootxx")
     )
 
 </script>
