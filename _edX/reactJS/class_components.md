@@ -133,7 +133,7 @@ class Counter extends React.Component{
         //initial state set up
         this.state = {message:"initial message"}
     }
-    componentDidMount()
+    componentDidMount(){
         //updating state
         this.setState({message:"new message"})
     }
