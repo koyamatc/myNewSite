@@ -58,6 +58,9 @@ The user should be able to go through at least 10 questions
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
 
 <script type="text/babel">
+var interval;
+var time;
+
 class Game extends React.Component{
   
     constructor(props){ 
@@ -65,32 +68,48 @@ class Game extends React.Component{
 
         var answers = [];
         answers.push(new Array(5).fill(0));
-        console.log(answers);
 
         this.state = {
             correct:0,
             incorrect:0,
             question:"",
             answer:0,
-            answers:answers
+            answers:answers,
+            numOfQuestions:10,
+            seconds:3,
+            gameover:false
         }
         this.handleClick = this.handleClick.bind(this)
+
+
     }
     componentDidMount(){
         /*updating state*/
         this.createQuestion();
+        this.interval = setInterval(this.tick.bind(this), 100);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+  
+    tick() {
+        this.setState({
+            seconds: this.state.seconds - 0.1
+        });
     }
 
     createQuestion(){
-        let operator = ["+","-","X","/"]
+        let operator = ["+","-","x","/"]
         let a = Math.floor(Math.random()*100)+1;
         let b = Math.floor(Math.random()*100)+1;
-        let o = Math.floor(Math.random()*3);
+        let o = Math.floor(Math.random()*4);
+        let t = (o==3)?" of integer part":"";
         
         let question = 'What is ' 
                      + a + " " 
                      + operator[o]  + " "
-                     + b + "?";
+                     + b + t +"?";
         
         console.log(question);
 
@@ -103,48 +122,83 @@ class Game extends React.Component{
         } else if (o==2){
             ans = a * b;
         } else {
-            ans = Math.int(a / b);
+            ans = Math.trunc(a / b);
         }
 
         /* To do delete later*/
-        question += " = " + ans;
+        /*question += " = " + ans;*/
 
         let rightAnswerPosition = Math.floor(Math.random()*5);
-        let dif = [-4,-3,-2,-1,0,1,2,3,4];
+        let dif = [-10,-8,-5,-2,0,2,5,8,10];
 
         let answers = [];
         for (let i=0; i<5;i++){
             answers.push(ans+dif[i+4-rightAnswerPosition]);        
         } 
         
-        console.log(answers);
+        this.setState({question:question, answer:ans, answers:answers});
 
-        this.setState({question:question, answer:ans, answers:answers});             
+        var elem = document.querySelector("#temp");
+        elem.style.opacity = 1;
+        elem.focus();
+        elem.style.opacity = 0;
 
     }
 
-    handleClick(){
-
+    checkAnswer(ans){
+        if (ans == this.state.answer){
+            let num = this.state.correct + 1;
+            this.setState({correct:num},()=>{
+                this.checkGameOver(this.state.correct+this.state.incorrect);
+            });
+        } else {
+            let num = this.state.incorrect + 1;
+            this.setState({incorrect:num},()=>{
+                this.checkGameOver(this.state.correct+this.state.incorrect);
+            });
+        }
     }
 
+    checkGameOver(count){
+        if(this.state.numOfQuestions==count){
+            let rate = (this.state.correct / this.state.numOfQuestions * 100).toFixed(1) + "% correct";
+            this.setState({question:"Game Over " + rate, gameover:true})
+        }
+    }
+
+    
+    handleClick(ans){
+        if (!this.state.gameover){
+            this.checkAnswer(ans);
+            this.createQuestion();
+        }
+    }
+
+
+    restart(){
+        clearInterval(interval);
+        this.setState({ gameover : false, correct : 0, incorrect:0})
+        this.createQuestion();
+    }
     render(){
         return (
             <div className='row'>
                 <div className="col s12 m6">
                     <Question question={this.state.question}/>
-                    
-                    <Answers/>
+                    <Answers answers={this.state.answers} handleClick={this.handleClick}/>
+                    <button id="restart" onClick = { () => this.restart()}>Restart</button>
                 </div>
                 <div className="col s12 m6">
+                    <Board correct={this.state.correct} incorrect={this.state.incorrect} seconds={this.state.seconds}/>
                 </div>
             </div>
         )
     }
 }
-function Answers(){
+function Answers(props){
     var buttons = [];
     for(let i=0; i<5; i++){
-        buttons.push(<Button/>)
+        buttons.push(<Button key={i} answer={props.answers[i]} handleClick={props.handleClick}/>)
     }
 
     return (
@@ -153,16 +207,37 @@ function Answers(){
         </div>
     )
 }
-function Button(){
+function Button(props){
     var style = {
         width: "100%",
         height: "50px",
         fontSize: "2em"
     }
+    console.log(props);
+    
     return (
-        <button style={style}>ans</button>
+        <button style={style} onClick = {() => props.handleClick(props.answer)}>{props.answer}</button>
     )
 }
+
+function Board(props){
+    var style = {
+        fontSize: "1.5em",
+        fontWeight: "bold",
+        paddingTop:"30px",
+        paddingBottom:"70px"
+    }
+    return (
+        <div>
+            <h4 id="timer">Time: {props.seconds.toFixed(1)}</h4>
+            <p style={style}>Correct:{props.correct}</p>
+            <p style={style}>incorrect:{props.incorrect}</p>
+            <button id="temp"></button>
+        </div>
+    )
+
+}
+
 function Question(props){
     return (
         <h3 className="red-text center">{props.question}</h3>
