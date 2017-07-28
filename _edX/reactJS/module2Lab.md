@@ -58,34 +58,29 @@ The user should be able to go through at least 10 questions
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
 
 <script type="text/babel">
-var interval;
-var time;
-
 class Game extends React.Component{
   
     constructor(props){ 
         super(props)
 
-        var answers = [];
+        var answers = [1,2,3,4,5];
         answers.push(new Array(5).fill(0));
 
         this.state = {
             correct:0,
             incorrect:0,
-            question:"",
+            question:"Click Start Button",
             answer:0,
             answers:answers,
-            numOfQuestions:10,
-            seconds:3,
-            gameover:false
+            numOfQuestions:20,
+            seconds:5,
+            gameover:true
         }
         this.handleClick = this.handleClick.bind(this)
 
 
     }
     componentDidMount(){
-        /*updating state*/
-        this.createQuestion();
         this.interval = setInterval(this.tick.bind(this), 100);
     }
 
@@ -94,13 +89,27 @@ class Game extends React.Component{
     }
   
     tick() {
-        this.setState({
-            seconds: this.state.seconds - 0.1
-        });
+        if (!this.state.gameover){
+            let seconds = this.state.seconds - 0.1;
+            if (seconds <= 0){
+                this.setState({incorrect:this.state.incorrect + 1},()=>{
+                    this.checkGameOver(this.state.correct + this.state.incorrect);
+                })
+
+                if(!this.state.gameover){
+                    this.createQuestion();
+                };    
+
+           } else {
+                if(!this.state.gameover){
+                    this.setState({seconds: seconds});
+                }
+            }
+        }
     }
 
     createQuestion(){
-        let operator = ["+","-","x","/"]
+        let operator = ["+","-","x","/"];
         let a = Math.floor(Math.random()*100)+1;
         let b = Math.floor(Math.random()*100)+1;
         let o = Math.floor(Math.random()*4);
@@ -114,7 +123,7 @@ class Game extends React.Component{
         console.log(question);
 
         /* compute */
-        var ans = 0;
+        let ans = 0;
         if (o==0){
             ans = a + b;
         } else if (o==1){
@@ -125,9 +134,6 @@ class Game extends React.Component{
             ans = Math.trunc(a / b);
         }
 
-        /* To do delete later*/
-        /*question += " = " + ans;*/
-
         let rightAnswerPosition = Math.floor(Math.random()*5);
         let dif = [-10,-8,-5,-2,0,2,5,8,10];
 
@@ -136,9 +142,9 @@ class Game extends React.Component{
             answers.push(ans+dif[i+4-rightAnswerPosition]);        
         } 
         
-        this.setState({question:question, answer:ans, answers:answers});
+        this.setState({question:question, answer:ans, answers:answers, seconds:5});
 
-        var elem = document.querySelector("#temp");
+        let elem = document.querySelector("#temp");
         elem.style.opacity = 1;
         elem.focus();
         elem.style.opacity = 0;
@@ -147,13 +153,11 @@ class Game extends React.Component{
 
     checkAnswer(ans){
         if (ans == this.state.answer){
-            let num = this.state.correct + 1;
-            this.setState({correct:num},()=>{
+            this.setState({correct:this.state.correct + 1},()=>{
                 this.checkGameOver(this.state.correct+this.state.incorrect);
             });
         } else {
-            let num = this.state.incorrect + 1;
-            this.setState({incorrect:num},()=>{
+            this.setState({incorrect:this.state.incorrect + 1},()=>{
                 this.checkGameOver(this.state.correct+this.state.incorrect);
             });
         }
@@ -176,9 +180,9 @@ class Game extends React.Component{
 
 
     restart(){
-        clearInterval(interval);
         this.setState({ gameover : false, correct : 0, incorrect:0})
         this.createQuestion();
+        document.querySelector("#restart").innerHTML = "Restart";
     }
     render(){
         return (
@@ -186,7 +190,7 @@ class Game extends React.Component{
                 <div className="col s12 m6">
                     <Question question={this.state.question}/>
                     <Answers answers={this.state.answers} handleClick={this.handleClick}/>
-                    <button id="restart" onClick = { () => this.restart()}>Restart</button>
+                    <button id="restart" className="btn" onClick = { () => this.restart()}>Start</button>
                 </div>
                 <div className="col s12 m6">
                     <Board correct={this.state.correct} incorrect={this.state.incorrect} seconds={this.state.seconds}/>
@@ -229,7 +233,7 @@ function Board(props){
     }
     return (
         <div>
-            <h4 id="timer">Time: {props.seconds.toFixed(1)}</h4>
+            <h4 id="timer">Timer: {props.seconds.toFixed(1)}</h4>
             <p style={style}>Correct:{props.correct}</p>
             <p style={style}>incorrect:{props.incorrect}</p>
             <button id="temp"></button>
