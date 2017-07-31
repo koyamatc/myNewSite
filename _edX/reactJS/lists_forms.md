@@ -486,10 +486,12 @@ class ControlledCheckbox extends React.Component{
     }
     render(){
         return (
-            <form action="#">
-            <input type = "checkbox" id="text" className="filled-in" checked = {this.state.checked} onChange = {this.handleChange}/>
-            <label for="test">Red</label>
-            </form>
+            <div>
+            <input type = "checkbox" id="test" className="browser-default" onChange = {this.handleChange}/>
+            <label for="test">
+            Red</label>
+            </div>        
+
         )
     }
 }
