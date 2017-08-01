@@ -6500,8 +6500,8 @@ form p:last-child {
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
   position: absolute;
-  left: 20px;
-  opacity: 1;
+  left: -9999px;
+  opacity: 0;
 }
 
 [type="checkbox"] {
@@ -6516,7 +6516,8 @@ form p:last-child {
   height: 25px;
   line-height: 25px;
   font-size: 1rem;
-  -webkit-user-select: none;
+  
+  -webkit-user-select: container;
   /* webkit (safari, chrome) browsers */
   -moz-user-select: none;
   /* mozilla browsers */
@@ -6524,6 +6525,7 @@ form p:last-child {
   /* webkit (konqueror) browsers */
   -ms-user-select: none;
   /* IE10+ */
+
 }
 
 [type="checkbox"] + label:before,

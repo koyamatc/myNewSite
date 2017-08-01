@@ -323,6 +323,8 @@ class ControlledTextArea extends React.Component{
 }
 {% endhighlight %}
 
+<div id="root23"></div>
+
 ##### Controlling Select Tags
 
 Controlling Select Tags is similar to controlling Input Fields in React:
@@ -351,6 +353,8 @@ class ControlledSelect extends React.Component{
 }
 {% endhighlight %}
 
+<div id="root24"></div>
+
 Select Components can also have their options dynamically generated using the map() method. Example:
 
 {% highlight javascript %}
@@ -377,6 +381,8 @@ class ControlledSelect extends React.Component{
     }
 }
 {% endhighlight %}
+
+<div id="root25"></div>
 
 ##### Handling Multiple Inputs
 
@@ -420,89 +426,4 @@ class ControlledMultiple extends React.Component{
 <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
 
-<script type="text/babel">
-function ListItem(props){
-    /*don't need to add a key to */
-    return <li>Product: {props.product} | Price: ${props.price}  </li>
-}
-
-
-class ProductList extends React.Component{
-  render(){
-    var elements = array.map( (item,index) => {
-      /*need to add a key here*/
-      return <ListItem key={item.id} product={item.product} price = {item.price}/>
-    })
-
-    return (
-      <ol>
-        {elements}
-      </ol>
-    )
-
-  }
-
-}
-
-var array =[
-  {id: 100, product:"Apple", price:3},
-  {id: 101, product:"Banana", price:1},
-  {id: 102, product:"Carrot", price:2},
-  {id: 103, product:"Donuts", price:5},
-  {id: 104, product:"Eggplant", price:4}
-]
-
-ReactDOM.render(
-  <ProductList productArray = {array}/>,
-  document.querySelector('#root')
-)
-
-class ControlledInput extends React.Component{
-
-    constructor(props){
-        super(props)
-        this.state = {value: ''}
-        this.handleChange = this.handleChange.bind(this)
-    }
-    handleChange(event){
-        this.setState({value: event.target.value})
-    }
-    render(){
-        return (
-            <input type = "text" value = {this.state.value} onChange = {this.handleChange}/>
-        )
-    }
-}
-class ControlledCheckbox extends React.Component{
-
-    constructor(props){
-        super(props)
-        this.state = {checked: false}
-        this.handleChange = this.handleChange.bind(this)
-    }
-    handleChange(event){
-        console.log(event.target.checked);
-        this.setState({checked: event.target.checked})
-    }
-    render(){
-        return (
-            <div>
-            <input type = "checkbox" id="test" className="browser-default" onChange = {this.handleChange}/>
-            <label for="test">
-            Red</label>
-            </div>        
-
-        )
-    }
-}
-
-ReactDOM.render(
-  <ControlledInput/>,
-  document.querySelector('#root21')
-)
-ReactDOM.render(
-  <ControlledCheckbox/>,
-  document.querySelector('#root22')
-)
-
-</script>
+<script src="lists_forms.js"></script>
