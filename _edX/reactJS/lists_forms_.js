@@ -66,7 +66,6 @@ class ControlledCheckbox extends React.Component{
         this.handleChange = this.handleChange.bind(this)
     }
     handleChange(event){
-        console.log(event.target.checked);
         this.setState({checked: event.target.checked})
     }
     render(){
@@ -131,12 +130,42 @@ class ControlledSelect1 extends React.Component{
             <option key={i} value = {item}>{item}</option>
         )
         return (
-          <Input type='select' value={this.state.value} onChange={this.handleChange} label="Materialize select">
+          <Input type='select' className="browser-default" value={this.state.value} onChange={this.handleChange}>
             {options}
           </Input>
         )
     }
 }
+class ControlledMultiple extends React.Component{
+
+    constructor(props){
+        super(props)
+        this.state = {value: 'apple'}
+        this.handleChange = this.handleChange.bind(this)
+    }
+    handleChange(event){
+
+
+        this.setState({[event.target.name]: event.target.value})
+    }
+    render(){
+        var array = ["apple","banana","carrot","donuts"]
+        var options = array.map( (item) =>
+            <option value = {item}>{item}</option>
+        )
+        return (
+            <form>
+                <input name="inputName" type = "input" value = {this.state.inputName} onChange = {this.handleChange}/>
+                <textarea name="textAreaName" type = "text" value = {this.state.textAreaName} onChange = {this.handleChange}/>
+
+                <select className="browser-default" name = "selectName" value={this.state.selectName} onChange={this.handleChange}>
+                    {options}
+                </select>
+            </form>
+        )
+    }
+}
+
 ReactDOM.render(
   <ControlledInput/>,
   document.querySelector('#root21')
@@ -156,4 +185,8 @@ ReactDOM.render(
 ReactDOM.render(
   <ControlledSelect1/>,
   document.querySelector('#root25')
+)
+ReactDOM.render(
+  <ControlledMultiple/>,
+  document.querySelector('#root26')
 )

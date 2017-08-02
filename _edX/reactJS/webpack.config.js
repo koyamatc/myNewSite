@@ -2,13 +2,13 @@ var path = require('path');
 
 module.exports = {
 	// Application entry point
-	entry: './lists_forms_.js',
+	entry: './module3Lab_.js',
 	output:{
 		// ﾌｧｲﾙの出力先
 		path: __dirname,
 		
 		// output file name
-		filename :'lists_forms.js'
+		filename :'module3Lab.js'
 	},
 	module: {
 		loaders: [

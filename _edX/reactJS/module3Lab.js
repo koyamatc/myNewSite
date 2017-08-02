@@ -50,8 +50,6 @@
 
 	var _reactMaterialize = __webpack_require__(1);
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -61,298 +59,61 @@
 	var React = __webpack_require__(236);
 	var ReactDOM = __webpack_require__(261);
 
-	function ListItem(props) {
-	    /*don't need to add a key to */
+	function FirstName() {
 	    return React.createElement(
-	        'li',
+	        'div',
 	        null,
-	        'Product: ',
-	        props.product,
-	        ' | Price: $',
-	        props.price,
-	        '  '
+	        React.createElement(
+	            'label',
+	            null,
+	            'First Name'
+	        ),
+	        React.createElement(_reactMaterialize.Input, { type: 'text', s: 4 })
 	    );
 	}
 
-	var ProductList = function (_React$Component) {
-	    _inherits(ProductList, _React$Component);
+	var App = function (_React$Component) {
+	    _inherits(App, _React$Component);
 
-	    function ProductList() {
-	        _classCallCheck(this, ProductList);
+	    function App(props) {
+	        _classCallCheck(this, App);
 
-	        return _possibleConstructorReturn(this, (ProductList.__proto__ || Object.getPrototypeOf(ProductList)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+	        _this.state = {
+	            firstName: '',
+	            lastName: '',
+	            activity: '',
+	            restrictions: '',
+	            items: []
+	        };
+	        return _this;
 	    }
 
-	    _createClass(ProductList, [{
+	    _createClass(App, [{
 	        key: 'render',
 	        value: function render() {
-	            var elements = array.map(function (item, index) {
-	                /*need to add a key here*/
-	                return React.createElement(ListItem, { key: item.id, product: item.product, price: item.price });
-	            });
+	            var _this2 = this;
 
 	            return React.createElement(
-	                'div',
-	                null,
-	                React.createElement(
-	                    'ol',
-	                    null,
-	                    elements
-	                ),
+	                _reactMaterialize.Col,
+	                { s: 4 },
+	                React.createElement(FirstName, null),
 	                React.createElement(
 	                    _reactMaterialize.Button,
-	                    { waves: 'light' },
-	                    'EDIT ME',
-	                    React.createElement(
-	                        _reactMaterialize.Icon,
-	                        { left: true },
-	                        'save'
-	                    )
+	                    { onClick: function onClick() {
+	                            return _this2.addItem();
+	                        } },
+	                    'Submit'
 	                )
 	            );
 	        }
 	    }]);
 
-	    return ProductList;
+	    return App;
 	}(React.Component);
 
-	var array = [{ id: 100, product: "Apple", price: 3 }, { id: 101, product: "Banana", price: 1 }, { id: 102, product: "Carrot", price: 2 }, { id: 103, product: "Donuts", price: 5 }, { id: 104, product: "Eggplant", price: 4 }];
-
-	ReactDOM.render(React.createElement(ProductList, { productArray: array }), document.querySelector('#root'));
-
-	var ControlledInput = function (_React$Component2) {
-	    _inherits(ControlledInput, _React$Component2);
-
-	    function ControlledInput(props) {
-	        _classCallCheck(this, ControlledInput);
-
-	        var _this2 = _possibleConstructorReturn(this, (ControlledInput.__proto__ || Object.getPrototypeOf(ControlledInput)).call(this, props));
-
-	        _this2.state = { value: '' };
-	        _this2.handleChange = _this2.handleChange.bind(_this2);
-	        return _this2;
-	    }
-
-	    _createClass(ControlledInput, [{
-	        key: 'handleChange',
-	        value: function handleChange(event) {
-	            this.setState({ value: event.target.value });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return React.createElement('input', { type: 'text', value: this.state.value, onChange: this.handleChange });
-	        }
-	    }]);
-
-	    return ControlledInput;
-	}(React.Component);
-
-	var ControlledCheckbox = function (_React$Component3) {
-	    _inherits(ControlledCheckbox, _React$Component3);
-
-	    function ControlledCheckbox(props) {
-	        _classCallCheck(this, ControlledCheckbox);
-
-	        var _this3 = _possibleConstructorReturn(this, (ControlledCheckbox.__proto__ || Object.getPrototypeOf(ControlledCheckbox)).call(this, props));
-
-	        _this3.state = { checked: false };
-	        _this3.handleChange = _this3.handleChange.bind(_this3);
-	        return _this3;
-	    }
-
-	    _createClass(ControlledCheckbox, [{
-	        key: 'handleChange',
-	        value: function handleChange(event) {
-	            console.log(event.target.checked);
-	            this.setState({ checked: event.target.checked });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return React.createElement(
-	                'div',
-	                null,
-	                React.createElement(_reactMaterialize.Input, { type: 'checkbox', checked: this.state.checked, onChange: this.handleChange, label: 'Red' })
-	            );
-	        }
-	    }]);
-
-	    return ControlledCheckbox;
-	}(React.Component);
-
-	var ControlledTextArea = function (_React$Component4) {
-	    _inherits(ControlledTextArea, _React$Component4);
-
-	    function ControlledTextArea(props) {
-	        _classCallCheck(this, ControlledTextArea);
-
-	        var _this4 = _possibleConstructorReturn(this, (ControlledTextArea.__proto__ || Object.getPrototypeOf(ControlledTextArea)).call(this, props));
-
-	        _this4.state = { value: '' };
-	        _this4.handleChange = _this4.handleChange.bind(_this4);
-	        return _this4;
-	    }
-
-	    _createClass(ControlledTextArea, [{
-	        key: 'handleChange',
-	        value: function handleChange(event) {
-	            this.setState({ value: event.target.value });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return React.createElement('textarea', { type: 'text', value: this.state.value, onChange: this.handleChange });
-	        }
-	    }]);
-
-	    return ControlledTextArea;
-	}(React.Component);
-
-	var ControlledSelect = function (_React$Component5) {
-	    _inherits(ControlledSelect, _React$Component5);
-
-	    function ControlledSelect(props) {
-	        _classCallCheck(this, ControlledSelect);
-
-	        var _this5 = _possibleConstructorReturn(this, (ControlledSelect.__proto__ || Object.getPrototypeOf(ControlledSelect)).call(this, props));
-
-	        _this5.state = { value: 'apple' };
-	        _this5.handleChange = _this5.handleChange.bind(_this5);
-	        return _this5;
-	    }
-
-	    _createClass(ControlledSelect, [{
-	        key: 'handleChange',
-	        value: function handleChange(event) {
-	            this.setState({ value: event.target.value });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return React.createElement(
-	                'select',
-	                { className: 'browser-default', value: this.state.value, onChange: this.handleChange },
-	                React.createElement(
-	                    'option',
-	                    { value: 'apple' },
-	                    'apple'
-	                ),
-	                React.createElement(
-	                    'option',
-	                    { value: 'banana' },
-	                    'banana'
-	                ),
-	                React.createElement(
-	                    'option',
-	                    { value: 'carrot' },
-	                    'carrot'
-	                ),
-	                React.createElement(
-	                    'option',
-	                    { value: 'donuts' },
-	                    'donuts'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return ControlledSelect;
-	}(React.Component);
-
-	var ControlledSelect1 = function (_React$Component6) {
-	    _inherits(ControlledSelect1, _React$Component6);
-
-	    function ControlledSelect1(props) {
-	        _classCallCheck(this, ControlledSelect1);
-
-	        var _this6 = _possibleConstructorReturn(this, (ControlledSelect1.__proto__ || Object.getPrototypeOf(ControlledSelect1)).call(this, props));
-
-	        _this6.state = { value: 'apple' };
-	        _this6.handleChange = _this6.handleChange.bind(_this6);
-	        return _this6;
-	    }
-
-	    _createClass(ControlledSelect1, [{
-	        key: 'handleChange',
-	        value: function handleChange(event) {
-	            this.setState({ value: event.target.value });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var array = ["apple", "banana", "carrot", "donuts"];
-	            var options = array.map(function (item, i) {
-	                return React.createElement(
-	                    'option',
-	                    { key: i, value: item },
-	                    item
-	                );
-	            });
-	            return React.createElement(
-	                _reactMaterialize.Input,
-	                { type: 'select', className: 'browser-default', value: this.state.value, onChange: this.handleChange },
-	                options
-	            );
-	        }
-	    }]);
-
-	    return ControlledSelect1;
-	}(React.Component);
-
-	var ControlledMultiple = function (_React$Component7) {
-	    _inherits(ControlledMultiple, _React$Component7);
-
-	    function ControlledMultiple(props) {
-	        _classCallCheck(this, ControlledMultiple);
-
-	        var _this7 = _possibleConstructorReturn(this, (ControlledMultiple.__proto__ || Object.getPrototypeOf(ControlledMultiple)).call(this, props));
-
-	        _this7.state = { value: 'apple' };
-	        _this7.handleChange = _this7.handleChange.bind(_this7);
-	        return _this7;
-	    }
-
-	    _createClass(ControlledMultiple, [{
-	        key: 'handleChange',
-	        value: function handleChange(event) {
-
-	            this.setState(_defineProperty({}, event.target.name, event.target.value));
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var array = ["apple", "banana", "carrot", "donuts"];
-	            var options = array.map(function (item) {
-	                return React.createElement(
-	                    'option',
-	                    { value: item },
-	                    item
-	                );
-	            });
-	            return React.createElement(
-	                'form',
-	                null,
-	                React.createElement('input', { name: 'inputName', type: 'input', value: this.state.inputName, onChange: this.handleChange }),
-	                React.createElement('textarea', { name: 'textAreaName', type: 'text', value: this.state.textAreaName, onChange: this.handleChange }),
-	                React.createElement(
-	                    'select',
-	                    { className: 'browser-default', name: 'selectName', value: this.state.selectName, onChange: this.handleChange },
-	                    options
-	                )
-	            );
-	        }
-	    }]);
-
-	    return ControlledMultiple;
-	}(React.Component);
-
-	ReactDOM.render(React.createElement(ControlledInput, null), document.querySelector('#root21'));
-	ReactDOM.render(React.createElement(ControlledCheckbox, null), document.querySelector('#root22'));
-	ReactDOM.render(React.createElement(ControlledTextArea, null), document.querySelector('#root23'));
-	ReactDOM.render(React.createElement(ControlledSelect, null), document.querySelector('#root24'));
-	ReactDOM.render(React.createElement(ControlledSelect1, null), document.querySelector('#root25'));
-	ReactDOM.render(React.createElement(ControlledMultiple, null), document.querySelector('#root26'));
+	ReactDOM.render(React.createElement(App, null), document.querySelector("#root"));
 
 /***/ },
 /* 1 */
