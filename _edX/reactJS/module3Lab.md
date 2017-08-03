@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Module 3 Lab
-date: 2017-08-02 00:00:00 +900
+date: 2017-08-03 00:00:00 +900
 subject: reactjs
 description:
   edx's course by Microsoft.
@@ -77,4 +77,4 @@ The user should be able to do the following:
 <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
 
-<script src="module3lab.js"></script>
+<script src="module3Lab.js"></script>

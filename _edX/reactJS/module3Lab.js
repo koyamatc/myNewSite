@@ -50,6 +50,8 @@
 
 	var _reactMaterialize = __webpack_require__(1);
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -59,16 +61,113 @@
 	var React = __webpack_require__(236);
 	var ReactDOM = __webpack_require__(261);
 
-	function FirstName() {
+	function PostButton(props) {
+	    var style = {
+	        width: 24,
+	        height: 24
+	    };
+	    return React.createElement(
+	        'button',
+	        { style: style, onClick: function onClick() {
+	                return props.handleClick();
+	            } },
+	        props.label
+	    );
+	}
+	function PostText(props) {
+	    var style = {
+	        width: props.width
+	    };
 	    return React.createElement(
 	        'div',
+	        { style: style },
+	        props.text
+	    );
+	}
+	function Post(props) {
+	    return React.createElement(
+	        'tr',
 	        null,
 	        React.createElement(
-	            'label',
+	            'td',
 	            null,
-	            'First Name'
+	            React.createElement(PostButton, { label: 'x', handleClick: props.removeItem })
 	        ),
-	        React.createElement(_reactMaterialize.Input, { type: 'text', s: 4 })
+	        React.createElement(
+	            'td',
+	            null,
+	            React.createElement(PostText, { text: props.firstName, width: 100 })
+	        ),
+	        React.createElement(
+	            'td',
+	            null,
+	            React.createElement(PostText, { text: props.lastName, width: 100 })
+	        ),
+	        React.createElement(
+	            'td',
+	            null,
+	            React.createElement(PostText, { text: props.activity, width: 100 })
+	        ),
+	        React.createElement(
+	            'td',
+	            null,
+	            React.createElement(PostText, { text: props.restrictions, width: 100 })
+	        )
+	    );
+	}
+
+	function PostTable(props) {
+	    return React.createElement(
+	        _reactMaterialize.Table,
+	        { className: 'bordered' },
+	        React.createElement(
+	            'thead',
+	            null,
+	            React.createElement(
+	                'tr',
+	                null,
+	                React.createElement(
+	                    'th',
+	                    null,
+	                    'Remove'
+	                ),
+	                React.createElement(
+	                    'th',
+	                    null,
+	                    'First Name'
+	                ),
+	                React.createElement(
+	                    'th',
+	                    null,
+	                    'Last Name'
+	                ),
+	                React.createElement(
+	                    'th',
+	                    null,
+	                    'Activity'
+	                ),
+	                React.createElement(
+	                    'th',
+	                    null,
+	                    'Restrictions'
+	                )
+	            )
+	        ),
+	        React.createElement(
+	            'tbody',
+	            null,
+	            props.postList.map(function (item, index) {
+	                return React.createElement(Post, { key: index,
+	                    firstName: item.firstName,
+	                    lastName: item.lastName,
+	                    activity: item.activity,
+	                    restrictions: item.restrictions,
+	                    removeItem: function removeItem() {
+	                        return props.removeItem(index);
+	                    }
+	                });
+	            })
+	        )
 	    );
 	}
 
@@ -83,29 +182,159 @@
 	        _this.state = {
 	            firstName: '',
 	            lastName: '',
-	            activity: '',
-	            restrictions: '',
+	            activity: 'Science Lab',
+	            restrictions: ['', '', ''],
+	            checked: [0, 0, 0],
 	            items: []
 	        };
+	        _this.handleChange = _this.handleChange.bind(_this);
+	        _this.handleSelect = _this.handleSelect.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(App, [{
+	        key: 'handleChange',
+	        value: function handleChange(event) {
+	            this.setState(_defineProperty({}, event.target.name, event.target.value));
+	        }
+	    }, {
+	        key: 'handleSelect',
+	        value: function handleSelect(event) {
+	            var index = event.target.name;
+	            var checkedCopy = this.state.checked;
+	            checkedCopy[index] = event.target.checked;
+	            this.setState({ checked: checkedCopy }, function () {
+	                //console.log(this.state.checked);
+	            });
+	            var restrictCopy = this.state.restrictions;
+	            if (event.target.checked) {
+	                restrictCopy[index] = event.target.value;
+	            } else {
+	                restrictCopy[index] = '';
+	            }
+	            this.setState({ restrictions: restrictCopy });
+	        }
+	    }, {
+	        key: 'addItem',
+	        value: function addItem() {
+	            var itemsCopy = this.state.items.slice();
+	            itemsCopy.push({
+	                "firstName": this.state.firstName,
+	                "lastName": this.state.lastName,
+	                "activity": this.state.activity,
+	                "restrictions": this.state.restrictions
+	            });
+	            this.setState({ items: itemsCopy, firstName: "",
+	                lastName: "",
+	                activity: "Science Lab",
+	                restrictions: ['', '', ''],
+	                checked: [0, 0, 0] });
+	        }
+	    }, {
+	        key: 'removeItem',
+	        value: function removeItem(index) {
+	            var itemsCopy = this.state.items.slice();
+	            itemsCopy.splice(index, 1);
+	            this.setState({ items: itemsCopy });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
 
+	            var array = ['Science Lab', 'Swimming', 'Cooking', 'Painting'];
+	            var options = array.map(function (item, i) {
+	                return React.createElement(
+	                    'option',
+	                    { key: i, value: item },
+	                    item
+	                );
+	            });
+	            var array2 = ['a) Dietary Restrictions', 'b) Physical Disabilities', 'c) Medical Needs'];
+	            var selects = array2.map(function (item, i) {
+	                return React.createElement(_reactMaterialize.Input, {
+	                    type: 'checkbox',
+	                    key: i,
+	                    name: i.toString(),
+	                    checked: _this2.state.checked[i],
+	                    value: item.slice(0, 1),
+	                    label: item,
+	                    onChange: _this2.handleSelect
+	                });
+	            });
 	            return React.createElement(
-	                _reactMaterialize.Col,
-	                { s: 4 },
-	                React.createElement(FirstName, null),
+	                'div',
+	                null,
+	                React.createElement(
+	                    _reactMaterialize.Row,
+	                    null,
+	                    React.createElement(
+	                        _reactMaterialize.Col,
+	                        { s: 6 },
+	                        React.createElement(_reactMaterialize.Input, {
+	                            type: 'text',
+	                            name: 'firstName',
+	                            onChange: this.handleChange,
+	                            label: 'First Name',
+	                            value: this.state.firstName
+	                        })
+	                    )
+	                ),
+	                React.createElement(
+	                    _reactMaterialize.Row,
+	                    null,
+	                    React.createElement(
+	                        _reactMaterialize.Col,
+	                        { s: 6 },
+	                        React.createElement(_reactMaterialize.Input, {
+	                            type: 'text',
+	                            name: 'lastName',
+	                            onChange: this.handleChange,
+	                            label: 'Last Name',
+	                            value: this.state.lastName
+	                        })
+	                    )
+	                ),
+	                React.createElement(
+	                    _reactMaterialize.Row,
+	                    null,
+	                    React.createElement(
+	                        _reactMaterialize.Col,
+	                        { s: 6 },
+	                        React.createElement(
+	                            _reactMaterialize.Input,
+	                            {
+	                                type: 'select',
+	                                name: 'activity',
+	                                label: 'Select Activity',
+	                                className: 'browser-default',
+	                                onChange: this.handleChange,
+	                                value: this.state.activity
+	                            },
+	                            options
+	                        )
+	                    )
+	                ),
+	                React.createElement(
+	                    _reactMaterialize.Row,
+	                    null,
+	                    React.createElement(
+	                        _reactMaterialize.Col,
+	                        { s: 4 },
+	                        selects
+	                    )
+	                ),
 	                React.createElement(
 	                    _reactMaterialize.Button,
 	                    { onClick: function onClick() {
 	                            return _this2.addItem();
 	                        } },
 	                    'Submit'
-	                )
+	                ),
+	                React.createElement(PostTable, {
+	                    postList: this.state.items,
+	                    removeItem: this.removeItem.bind(this)
+	                })
 	            );
 	        }
 	    }]);
