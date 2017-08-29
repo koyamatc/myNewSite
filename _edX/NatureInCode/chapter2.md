@@ -16,7 +16,6 @@ __進化__　：　時間とともに個体群(population)の中で起こる対�
 
 __allele(対立遺伝子)__ :　遺伝子の別バージョンと言える
 
-<div id="root01"></div>
 
 ##### 進化にかかわる4つの力
 
@@ -35,8 +34,9 @@ __allele(対立遺伝子)__ :　遺伝子の別バージョンと言える
 
 + 対立遺伝子は2種類。遺伝子A から派生しているA1とA2とする。
 
-+ 遺伝子は diploid(染色体を2セット持っている)として扱う。
-          haploid(染色体が1セットだけのもの：精子、卵子)  
++ 遺伝子は diploid(遺伝的物質を2セット持っている)として扱う。
+          haploid(遺伝的物質を1セットだけのもの：精子、卵子)  
+          
 
 <div id="root02"></div>
 
@@ -44,8 +44,153 @@ diploidは、減算分裂(meiosis)をしてhaploid:gametes(配偶子)となる�
 
 配偶子どうしが結合してdiploid:zegote(結合子)となる
 
+父親からの配偶子を精子、母親からの配偶子を卵子
+
+１セットづつ遺伝子を受け取った結合子を複製して個体となる
+
+ハーディ・ワインベルグ　モデルでは１つだけの遺伝子を導入する
+
+その遺伝子を A 、　対立遺伝子の１つを A1、　もう一つを A2 とする。
+
+<div id="root01"></div>
+
+ここでは、diploid system（人間や一般的な動物の持つ） を扱うものとする。
+
+遺伝子の組合せはというと３種類ある
+
+<div id="root03"></div>
+
+同じ型の対立遺伝子を持つ場合をホモ接合(homosygous)
+
+異なる型の対立遺伝子を持つ場合をヘテロ接合(heterozygous)
+
+##### 例
+
+１００個体あるとします
+
+遺伝子の組み合わせのことを遺伝子型と呼ぶことにします
+
+個体数を下記の通りとします
+
+<table class="bordered">
+  <tr>
+    <th>遺伝子型</th>
+    <th>個体数</th>
+    <th>割合</th>
+  </tr>
+  <tr>
+    <td>A1A1</td>
+    <td>15</td>
+    <td>15%</td>
+  </tr>
+  <tr>
+    <td>A1A2</td>
+    <td>50</td>
+    <td>50%</td>
+  </tr>
+  <tr>
+    <td>A2A2</td>
+    <td>35</td>
+    <td>35%</td>
+  </tr>
+  <tr>
+    <td>合計</td>
+    <td>100</td>
+    <td>100%</td>
+  </tr>
+</table>
+
+次に、対立遺伝子の頻度を確認してみましょう
+<style>
+.MathJax_Display {
+  text-align: left;
+  color: #000;
+}
+.MathJax_SVG_Display {
+  text-align: left !important;
+}
+.MathJax_SVG_Display line {
+  stroke:#000;
+}
+.MathJax_SVG g{
+  stroke:#000;
+  stroke-width:2;
+  fill:#000;
+}
+</style>
+
+$$
+\begin{eqnarray}
+  \left.
+    \begin{array}{r}
+      A1A1 \ : \ 15 \ \rightarrow \ A1 = 30 \\
+      A1A2 \ : \ 50 \ \rightarrow \ A1 = 50 \\
+    \end{array}
+  \right\}
+  A1 = 80 \ \rightarrow \ 40 ％
+  \\
+  \left.
+    \begin{array}{r}
+      \ \searrow \ A2 = 50\\
+      \ A2A2 \ : \ 35 \ \rightarrow \ A2 = 70 
+    \end{array}
+  \right\}
+  A2 = 120 \ \rightarrow \ 60％
+\end{eqnarray}
+$$      
+
+#### Hardy-Weinberg Frequencies
+
+$$
+  \underbrace{
+    \begin{array}{c}
+      A1A1 \ : \ 15％ \\
+      A1A2 \ : \ 50％ \\
+      A2A2 \ : \ 35％ 
+    \end{array}
+  }_{genotype}
+  \qquad
+  \underbrace{
+    \begin{array}{c}
+      A1 \ : \ 40％ \\
+      A2 \ : \ 60％ 
+    \end{array}
+  }_{allele}
+
+$$
+
+ここで、単純化のためにいくつかの前提条件を導入します
+
+-- 無限の個体数（遺伝子的変化の影響を受けない）
+
+-- 世代間で個体は重ならない（新しい世代が誕生すると、前の世代はすぐさま死亡する）
+
+-- 性的な再生は考慮しない、対立遺伝子はランダムにくっ付きあい
+新しい世代を生成し、新しい遺伝子型(genotype)の頻度となる
+
+-- 進化に影響する４つの力は無い
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="../../js/d3V4draws.js"></script>
+
+
 <script>
 /*
 function round_to_half(value){
@@ -101,21 +246,14 @@ for (let i = 0;i<6;i=I+0.2){
 }
 */
 var svg01 = d3.select("#root01").append("svg")
-            .attr("height",400)
-            .attr("width",450)
+            .attr("height",200)
+            .attr("width",300)
             .style("background","#000");
 
-var data01 = [
-  {x: 150, y: 175, r: 30, fill: "yellow"},
-  {x: 330, y: 100, r: 30, fill: "yellow"},
-  {x: 330, y: 250, r: 30, fill: "yellow"}
-];
 var textData01 = [
-    {x: 120, y: 50, text:"gene"},
-    {x: 300, y: 50, text:"allele"},
-    {x: 180, y: 205, text:"A"},
-    {x: 360, y: 130, text:"A1"},
-    {x: 360, y: 280, text:"A2"}
+    {x: 50, y: 100, text:"gene A"},
+    {x: 150, y: 50, text:"allele A1"},
+    {x: 150, y: 135, text:"alleleA2"}
 ]
 svg01.selectAll('text')
     .data(textData01)
@@ -125,38 +263,10 @@ svg01.selectAll('text')
     .text(function(d){return d.text})
     .attr("stroke","#fff");
 
-svg01.selectAll("circle")
-    .data(data01)
-  .enter().append("circle")
-  .attr("cx", function(d){return d.x})
-  .attr("cy", function(d){return d.y})
-  .attr("r", function(d){return d.r})
-	.style("transparent", "0.5")
-  .style("fill", function(d) { return d.fill; });
-
-svg01.selectAll(".line1")
-  .data(data01)
-.enter().append("line")
-  .attr("x1", function(d){return d.x - 5})
-  .attr("y1", function(d){return d.y - d.r + 10})
-  .attr("x2", function(d){return d.x - 5})
-  .attr("y2", function(d){return d.y + d.r - 10})
-  .attr("class","line1")
-  .attr("stroke","#00b");
-
-svg01.selectAll(".line2")
-  .data(data01)
-.enter().append("line")
-  .attr("x1", function(d){return d.x + 5})
-  .attr("y1", function(d){return d.y - d.r+10})
-  .attr("x2", function(d){return d.x + 5})
-  .attr("y2", function(d){return d.y + d.r - 10})
-  .attr("class","line2")
-  .attr("stroke","#00b");
 
 var vecData01 = [
-{"x1":200,"y1":175,"angles":35,"length":100,"stroke":"#f0f","strokeWidth":4},
-{"x1":200,"y1":175,"angles":-35,"length":100,"stroke":"#f0f","strokeWidth":4}
+{"x1":100,"y1":90,"angles":40,"length":50,"stroke":"#f0f","strokeWidth":4},
+{"x1":100,"y1":90,"angles":-40,"length":50,"stroke":"#f0f","strokeWidth":4}
 ];    
 
 drawVectorA(svg01,vecData01);  
@@ -190,6 +300,14 @@ var data02 = [
   {cx: 320, cy: 150, r: 30, fillColor: "yellow",type:"haploid"},
   {cx: 390, cy: 150, r: 30, fillColor: "yellow",type:"haploid"},
   {cx: 265, cy: 250, r: 30, fillColor: "yellow",type:"diploid"},
+  {cx: 40, cy: 350, r: 30, fillColor: "yellow",type:"diploid"},
+  {cx: 110, cy: 350, r: 30, fillColor: "yellow",type:"diploid"},
+  {cx: 180, cy: 350, r: 30, fillColor: "yellow",type:"diploid"},
+  {cx: 250, cy: 350, r: 30, fillColor: "yellow",type:"diploid"},
+  {cx: 320, cy: 350, r: 30, fillColor: "yellow",type:"diploid"},
+  {cx: 390, cy: 350, r: 30, fillColor: "yellow",type:"diploid"},
+  {cx: 460, cy: 350, r: 30, fillColor: "yellow",type:"diploid"},
+  {cx: 430, cy: 350, r: 30, fillColor: "yellow",type:"diploid"},
 
 ];
 drawCircle(svg02,data02);
@@ -225,11 +343,52 @@ var textData02 = [
 
 drawText(svg02,textData02);
 
+/* root03 */
+var svg03 = d3.select("#root03").append("svg")
+            .attr("height",300)
+            .attr("width",300)
+            .style("background","#000");
 
+var data03 = [
+  {cx: 60, cy: 70, r: 50, fillColor: "yellow",type:"diploid"},
+  {cx: 200, cy: 70, r: 50, fillColor: "yellow",type:"diploid"},
+  {cx: 130, cy: 200, r: 50, fillColor: "yellow",type:"diploid"},
+];
+drawCircle(svg03,data03);
 
+var textData03 = [
+    {x: 80, y: 135, text:"homozygous",
+     stroke:"#fff",fontFamily:"courier", fontSize:"1.5em"},
+    {x: 80, y: 265, text:"heterozygous",
+     stroke:"#fff",fontFamily:"courier", fontSize:"1.5em"},
+    {x: 30, y: 75, text:"A1     A1",
+     stroke:"#000",fontFamily:"courier", fontSize:"1.4em"},
+    {x: 170, y: 75, text:"A2     A2",
+     stroke:"#000",fontFamily:"courier", fontSize:"1.4em"},
+    {x: 100, y: 205, text:"A1     A2",
+     stroke:"#000",fontFamily:"courier", fontSize:"1.4em"},
+]
 
+drawText(svg03,textData03);
 
+svg03.selectAll(".line1")
+  .data(data03)
+.enter().append("line")
+  .attr("x1", function(d){return d.type=="diploid"?d.cx - 5:d.cx})
+  .attr("y1", function(d){return d.cy - d.r + 10})
+  .attr("x2", function(d){return d.type=="diploid"?d.cx - 5:d.cx})
+  .attr("y2", function(d){return d.cy + d.r - 10})
+  .attr("class","line1")
+  .attr("stroke","#00b");
 
-
+svg03.selectAll(".line2")
+  .data(data03)
+.enter().append("line")
+  .attr("x1", function(d){return d.type=="diploid"?d.cx + 5:d.cx})
+  .attr("y1", function(d){return d.cy - d.r+10})
+  .attr("x2", function(d){return d.type=="diploid"?d.cx + 5:d.cx})
+  .attr("y2", function(d){return d.cy + d.r - 10})
+  .attr("class","line2")
+  .attr("stroke","#00b");
 
 </script>
