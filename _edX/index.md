@@ -48,3 +48,44 @@ description:
         </ul>
     </div>
 </div>
+
+<div class="row">
+    <div class="col s12 m6">
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">subject</i>Nature, In Code</div>
+                <div class="collapsible-body">
+                    <ul>
+                    {% for lesson in site.edX %}
+                        {% if lesson.subject == 'natureincode' %}
+                            <li class="collection-item">
+                                <i class="material-icons">label_outline</i>
+                                <a href="{{ lesson.url }}"><b>{{ lesson.title }}</b></a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>    
+            </li>
+        </ul>
+    </div>
+    <div class="col s12 m6">
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">subject</i>------</div>
+                <div class="collapsible-body">
+                    <ul>
+                    {% for lesson in site.edX %}
+                        {% if lesson.subject == '------' %}
+                            <li>
+                                <i class="material-icons">label_outline</i>
+                                <a href="{{ lesson.url }}"><b>{{ lesson.title }}</b></a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>    
+            </li>
+        </ul>
+    </div>
+</div>

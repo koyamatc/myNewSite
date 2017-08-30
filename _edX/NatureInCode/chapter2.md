@@ -171,22 +171,149 @@ $$
 -- 進化に影響する４つの力は無い
 
 
+上記の条件をもとに次の世代がどの様いなるか計算をします
 
+$$
+  \begin{array}{clc}
+    A_{1}A_{1} & 0.4 \times 0.4 = 0.16 & \\ 
+    \hline
+    A_{1}A_{2} & 
+      \left.
+        \begin{array}{l}
+          0.4 \times 0.6 = 0.24 \\
+          0.6 \times 0.4 = 0.24
+        \end{array} 
+      \right\}& 0.48 \\
+    \hline  
+    A_{2}A_{2} & 0.6 \times 0.6 = 0.36 & \\ 
+  \end{array} 
+$$
 
+遺伝子型の頻度は
 
+$$
+  \begin{array}{lccl}
+    次の世代の頻度 & 前の世代との差 & & 対立遺伝子の頻度\\
+    A_{1}A_{1} \ : \ 16％ & +1％ & \rightarrow & A_{1} = 16％ \\
+    A_{1}A_{2} \ : \ 48％ & -2％ & 
+                                   \begin{array}{c}
+                                      \nearrow \\
+                                      \searrow
+                                   \end{array} 
+                                 & \begin{array}{l}
+                                      A_{1} = 24％ \\
+                                      A_{2} = 24％
+                                   \end{array}  \\
+    A_{2}A_{2} \ : \ 36％ & +1％ & \rightarrow & A_{2} = 36％ \\
+  \end{array}
+$$
 
+対立遺伝子の頻度は
 
+$$
+  \begin{eqnarray}
+  A_{1} = 40％ \\
+  A_{2} = 60％
+  \end{eqnarray}
+$$
 
+こちらは前の世代の頻度と変わっていない、
+言い換えると、進化が無いということ
 
+進化にとっては、対立遺伝子の変化が必要
 
+それではさらに次の世代の頻度はどうなるでしょう
 
+対立遺伝子の頻度が変わっていないので、遺伝子型の頻度は前回と同じになります
 
+結局、世代を重ねてもこの値を繰り返すだけです
 
+この1世代進んだ遺伝子型頻度を __ハーディ・ワインベルグ頻度__ と言いい、変わることはありません
 
+------------
 
+##### Programming
 
+$$
+\begin{array}{l}
+  \hline
+  Allele frequencies \\
+  \hline
+  f(A_{1}) \rightarrow p = 1 - q \\
+  f(A_{2}) \rightarrow q = 1 - p \\
 
+  \hline
+  Genotype frequencies \\
+  \hline
+  f(A_{1}A_{1}) = p * p = p^2 \\
+  f(A_{1}A_{2}) = (p * q) + (q * p)= 2pq \\
+  f(A_{2}A_{2}) = q * q = q^2 \\
+  \qquad \qquad \Downarrow \\
+  p^2 + 2pq + q^2 = 1
+\end{array}  
+$$
 
+<button id="calcBtn" class="btn">計算</button>
+
+<table id="resultTable"></table>
+
+{% highlight javascript linenos %}
+var calcBtn = document.querySelector('#calcBtn');
+calcBtn.addEventListener('click', calc);
+
+// genotype frequencies
+var a1a1 = 0.15;
+var a2a2 = 0.35;
+var a1a2 = 1 -(a1a1 + a2a2);
+
+// allele frequencies
+var p = a1a1 + (a1a2 / 2);
+var q = 1 - p;
+
+var table = document.querySelector('#resultTable');
+
+function calc(){
+
+  table.innerHTML = '';
+
+  var tHead = table.createTHead();
+  var hRow = tHead.insertRow();
+  hRow.insertCell().innerHTML = 'Generation'; 
+  hRow.insertCell().innerHTML = 'a1a1';
+  hRow.insertCell().innerHTML = 'a1a2';
+  hRow.insertCell().innerHTML = 'a2a2';
+
+  createRow(0);
+
+  for (let i = 1; i < 6; i++){
+    nextGeneration();
+    createRow(i);
+  }
+}
+
+function createRow(i){
+
+  let row = table.insertRow();
+  row.insertCell().innerHTML = i; 
+  row.insertCell().innerHTML = a1a1;
+  row.insertCell().innerHTML = a1a2;
+  row.insertCell().innerHTML = a2a2;
+
+}
+
+function nextGeneration(){
+  a1a1 = p * p;
+  a1a1 = round_3_decimals(a1a1);
+  a1a2 = 2 * p * q;
+  a1a2 = round_3_decimals(a1a2);
+  a2a2 = q * q;
+  a2a2 = round_3_decimals(a2a2);
+}
+
+function round_3_decimals(value){
+    return Math.round(value * 1000) /1000;
+}
+{% endhighlight %}
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="../../js/d3V4draws.js"></script>
 
@@ -240,7 +367,7 @@ function print_value(){
     
 }
 var p=0,q=1-p;
-for (let i = 0;i<6;i=I+0.2){
+for (let i = 0;i<6;i=i+0.2){
     p=i;
     print_value();
 }
@@ -391,4 +518,60 @@ svg03.selectAll(".line2")
   .attr("class","line2")
   .attr("stroke","#00b");
 
+/* implement in JavaScript */
+var calcBtn = document.querySelector('#calcBtn');
+calcBtn.addEventListener('click', calc);
+
+// genotype frequencies
+var a1a1 = 0.15;
+var a2a2 = 0.35;
+var a1a2 = 1 -(a1a1 + a2a2);
+
+// allele frequencies
+var p = a1a1 + (a1a2 / 2);
+var q = 1 - p;
+
+var table = document.querySelector('#resultTable');
+
+function calc(){
+
+  table.innerHTML = '';
+
+  var tHead = table.createTHead();
+  var hRow = tHead.insertRow();
+  hRow.insertCell().innerHTML = 'Generation'; 
+  hRow.insertCell().innerHTML = 'a1a1';
+  hRow.insertCell().innerHTML = 'a1a2';
+  hRow.insertCell().innerHTML = 'a2a2';
+
+  createRow(0);
+
+  for (let i = 1; i < 6; i++){
+    nextGeneration();
+    createRow(i);
+  }
+}
+
+function createRow(i){
+
+  let row = table.insertRow();
+  row.insertCell().innerHTML = i; 
+  row.insertCell().innerHTML = a1a1;
+  row.insertCell().innerHTML = a1a2;
+  row.insertCell().innerHTML = a2a2;
+
+}
+
+function nextGeneration(){
+  a1a1 = p * p;
+  a1a1 = round_3_decimals(a1a1);
+  a1a2 = 2 * p * q;
+  a1a2 = round_3_decimals(a1a2);
+  a2a2 = q * q;
+  a2a2 = round_3_decimals(a2a2);
+}
+
+function round_3_decimals(value){
+    return Math.round(value * 1000) /1000;
+}
 </script>
