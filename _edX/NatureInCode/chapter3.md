@@ -52,6 +52,10 @@ description:
   stroke-width:2;
   fill:#000;
 }
+body{
+    font-size: 1.3em;
+    font-family: cursive;
+}
 </style>
 ##### Finite population size
 
@@ -78,8 +82,6 @@ $$
 
 diploid(２倍体)では、allele(対立遺伝子)の数は 2N　です
 
-下記条件で次の世代をの頻度を調べます
-
 $$
 \begin{array}{l}
 p = 0.5 \quad q = 0.5 \\ 
@@ -87,19 +89,100 @@ N =  500 \ individuals \quad 2N = 1000 \ alleles
 \end{array}
 $$ 
 
+上記は
+
 対立遺伝子は　A1:A2 = 0.5:0.5 半半存在している
 
 その中から１０００個の対立遺伝子を無作為に抽出する
 
-1000世代繰り返す
+ということで
+
+<div class="row">
+    <div class="input-field col s3">
+        <select id="size">
+            <option value="500" selected>500</option>
+            <option value="1000">1000</option>
+            <option value="2000">2000</option>
+            <option value="5000">5000</option>
+            <option value="10000">10000</option>
+        </select>
+        <label>Population Size</label>
+    </div>
+    <div class="input-field col s3">
+        <select id="gens">
+            <option value="100">100</option>
+            <option value="500">500</option>
+            <option value="1000" selected>1000</option>
+            <option value="5000">5000</option>
+            <option value="10000">10000</option>
+        </select>
+        <label>Generations</label>
+    </div>
+    <div class="input-field col s3">
+        <select id="sims">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+        </select>
+        <label>Simulations</label>
+    </div>
+</div>
 
 <button id="rerun01" class="btn">再実行</button>
 <div id="svg01"></div>
 
+-----
+
+##### Population Size and Genetic Drift
+
+個体数と遺伝的浮動の関係を数学的に説明します
+
+$$
+\begin{array}{l}
+G: \ ２つの対立遺伝子を抽出したときに同じ型になる確率とします (A_{1}A_{1}, A_{2}A_{2})\\
+\end{array}
+$$
+
+<div id="svg02"></div>
+
+大きな配偶子プールから無作為に対立遺伝子を抽出して、次の世代を作っていく
+
+これを繰返し、世代を重ねていく
+
+<div id="svg03"></div>
+
+対立遺伝子の入った器があり、そこから１つを無作為に抽出してコピーを作る
+
+抽出した対立遺伝子は元の器に戻す
+
+もう一つ器から対立遺伝子を無作為に抽出してコピーを作り元の器に戻す
+
+このコピーを前のコピーと合わせて隣の器に入れる
+
+これを繰返し次の世代を作っていくと考える
+
+$$
+$$
+-----
+
+##### Speed of Genetic Drift
+
+-----
+
+##### Effective Population Size
+
+<link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="../../js/d3V4draws.js"></script>
 
 <script>
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+
 
   var p = 0.5;
   var N = 500;
@@ -273,6 +356,11 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
   }
 
   function executeDrawLineChart(){
+    
+    generations = document.querySelector("#gens").value;
+    simulations = document.querySelector("#sims").value;
+    N           = document.querySelector("#size").value;    
+  
     data = [];
 
     for (let i = 0; i < simulations; i++){
@@ -293,6 +381,76 @@ function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
   }
 
   executeDrawLineChart();
+
+/** Po;ulation sizen and Genetic Drift */
+var svg02 = d3.select("#svg02").append("svg")
+                .attr("width",700)
+                .attr("height", 200)
+                .style("background","#000");
+gametes02 = [
+    {"startPos":75,"endPos":220,"innerRadius":70,"outerRadius":70,"stroke":"#fff","strokeWidth":3,"fillColor":"#000","xTranslate":80,"yTranslate":80},
+    {"startPos":75,"endPos":220,"innerRadius":70,"outerRadius":70,"stroke":"#fff","strokeWidth":3,"fillColor":"#000","xTranslate":430,"yTranslate":80}
+];  
+drawArc(svg02,gametes02);
+
+circle02 = [
+  {cx: 260, cy: 100, r: 40, fillColor: "yellow"},
+  {cx: 610, cy: 100, r: 40, fillColor: "yellow"},
+];
+drawCircle(svg02,circle02);
+
+text02 = [
+    {x: 80, y: 80, text:"大きな", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
+    {x: 80, y: 100, text:"配偶子プール", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
+    {x: 430, y: 80, text:"大きな", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
+    {x: 430, y: 100, text:"配偶子プール", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
+    {x: 260, y: 100, text:"2N", "anchor":"middle",
+     stroke:"#000",fontFamily:"serif", fontSize:"2em"},
+    {x: 610, y: 100, text:"2N", "anchor":"middle",
+     stroke:"#000",fontFamily:"serif", fontSize:"2em"},
+]
+drawText(svg02,text02);
+
+var vecData02 = [
+{"x1":160,"y1":100,"angles":0,"length":50,"stroke":"#fff","strokeWidth":4},
+{"x1":310,"y1":100,"angles":0,"length":50,"stroke":"#fff","strokeWidth":4},
+{"x1":510,"y1":100,"angles":0,"length":50,"stroke":"#fff","strokeWidth":4},
+];    
+drawVectorA(svg02,vecData02);
+
+var svg03 = d3.select("#svg03").append("svg")
+                .attr("width",700)
+                .attr("height", 200)
+                .style("background","#000");
+rectData03 = [
+{"x":50,"y":50,"width":60,"height":100,"stroke":"#fff" },
+{"x":320,"y":50,"width":60,"height":100,"stroke":"#fff"},
+{"x":590,"y":50,"width":60,"height":100,"stroke":"#fff"} 
+];
+drawRect(svg03,rectData03);
+
+text03 = [
+    {x: 80, y: 100, text:"2N", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
+    {x: 350, y: 100, text:"2N", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
+    {x: 620, y: 100, text:"2N", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
+    {x: 620, y: 190, text:"G", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
+
+]
+drawText(svg03,text03);
+
+var vecData03 = [
+{"x1":150,"y1":100,"angles":0,"length":130,"stroke":"#fff","strokeWidth":4},
+{"x1":420,"y1":100,"angles":0,"length":130,"stroke":"#fff","strokeWidth":4},
+];    
+drawVectorA(svg03,vecData03);
 
 </script>
 

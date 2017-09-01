@@ -416,7 +416,7 @@
 
   /* arc　描画関数　*/
   function drawArc(svg,data,xScale,yScale){
-    var arc = d3.svg.arc()
+    var arc = d3.arc()
       .innerRadius(function(d){return d.innerRadius})
       .outerRadius(function(d) {return d.outerRadius})
       .startAngle(function(d){return d.startPos * aDegree;})
@@ -750,7 +750,7 @@
       .attr("font-size",function(d){
         return d.fontSize?d.fontSize:12;})
       .attr("font-family",function(d){
-        return d.fontFamily?d.fontFamily:"sans-serif";})
+        return d.fontFamily?d.fontFamily:"serif";})
       .style("fill",function(d){
         return d.fillColor?d.fillColor:"none";})
       .attr("opacity",function(d){
