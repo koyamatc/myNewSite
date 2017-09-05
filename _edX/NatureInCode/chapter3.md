@@ -164,10 +164,60 @@ $$
 これを繰返し次の世代を作っていくと考える
 
 $$
+\begin{array}{l}
+２回とも全く同じ遺伝子を抽出する確率は \ \frac{1}{2N} \\
+２回とも異なる型の遺伝子を抽出する確率は \ (1 - \frac{1}{2N})　\\
+次の世代の抽出する２つの遺伝子が同型の場合の確率は \ G^{1} = \frac{1}{2N} + (1 - \frac{1}{2N})G \\
+抽出した遺伝子が異なる型の確率を \ H = 1 - G \ とします \\
+遺伝的多様性が大きい \rightarrow 抽出される２つの対立遺伝子がより異なると言えることを証明します \\
+次の世代 \\
+H^{1} = 1 - G^{1} \\
+G^{1} = \frac{1}{2N} + (1 - \frac{1}{2N})G \\
+\begin{eqnarray}
+H^{1} &=& 1 - (\frac{1}{2N} + (1 - \frac{1}{2N})G) \\
+&=& 1 - \frac{1}{2N} - (1 - \frac{1}{2N})(1-H) \\
+&=& 1 - \frac{1}{2N} - (1 - \frac{1}{2N} - H + \frac{H}{2N}) \\
+&=& H - \frac{H}{2N} \\
+&=& (1 - \frac{1}{2N})H　\\
+\end{eqnarray} \\
+
+Nが大きいと、H \ と \ H^{1}の差は少なくなる \rightarrow 影響は弱くなる \\
+Nが小さいと、H \ と \ H^{1}の差は大きくなる \rightarrow 影響は強くなる \\
+\end{array}
 $$
+
 -----
 
 ##### Speed of Genetic Drift
+
+$$
+\begin{array}{l}
+H_{0}を初期遺伝的変化率とすると \\
+
+H_{1} = (1 - \frac{1}{2N})H_{0} \\
+H_{2} = (1 - \frac{1}{2N})H_{1} = (1 - \frac{1}{2N})(1 - \frac{1}{2N})H_{0} \\
+H_{3} = (1 - \frac{1}{2N})(1 - \frac{1}{2N})(1 - \frac{1}{2N})H_{0} \\
+H_{x} = (1 - \frac{1}{2N})^{x}H_{0} \\
+
+x \rightarrow \infty \Rightarrow H_{x} \rightarrow 0 \\
+遺伝的変化がなくなってしまう、遺伝的浮動が起こらなくなるということで現実とは異なりますが\\
+ここではこのまま進めます\\
+H_{0} が半部になるにはどのくらいの世代数が必要でしょうか？\\
+\frac{H_{0}}{2} = (1 - \frac{1}{2N})^{x}H_{0} \ とします \\
+\frac{1}{2} = (1 - \frac{1}{2N})^{x} \\
+\ln(\frac{1}{2}) = \ln(1 - \frac{1}{2N})x \qquad \ln(1 + x) \approx x を利用\\
+\ln(\frac{1}{2}) \approx - \frac{1}{2N}x \\
+\ln(\frac{1}{2})(-2N) \approx x \qquad \ln(\frac{1}{x}) = -\ln(x)を利用して \\
+-\ln(2)(-2N) \approx x \\
+2N \dot \ln(2) \approx x  \ qquad \ln(2) \approx 0.7\\
+x \approx 1.4N \\
+N = 100 \rightarrow 140 世代 \\
+n = 10000 \rightarrow 14000世代 \\
+n = 1000000 \rightarrow 1400000 世代 \\
+個体数が大きいと、遺伝的変化率が半分になるのに多くの世代数が必要となる\\
+個体数が少ないと、遺伝的変化率が半分になるのに少ない世代数で達成できる\\   
+\end{array}    
+$$
 
 -----
 
@@ -440,7 +490,11 @@ text03 = [
      stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
     {x: 620, y: 100, text:"2N", "anchor":"middle",
      stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
-    {x: 620, y: 190, text:"G", "anchor":"middle",
+    {x: 80, y: 190, text:"G", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
+    {x: 350, y: 190, text:"G1", "anchor":"middle",
+     stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
+    {x: 620, y: 190, text:"G2", "anchor":"middle",
      stroke:"#fff",fontFamily:"serif", fontSize:"2em"},
 
 ]
