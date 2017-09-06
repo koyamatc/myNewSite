@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Genetic Drift - The Power of Chance
-date: 2017-08-08 12:00:00 +900
+title: Mutation - The Power of Mistakes
+date: 2017-09-06 12:00:00 +900
 subject: natureincode
 description:
   Nature, in Code teaches programming in JavaScript by implementing key concepts in biology (natural selection, genetic drift, epidemics, etc.). Learn programming while discovering the rules that govern life.
@@ -9,27 +9,24 @@ description:
 
 -------
 
-#### Genetic Drift
-
-前章において、ハーディ・ワインベルグの仮定（個体数は無限に大きい、自由交配、突然変異は起きない、自然選択もない、etc)の元、なんの変化も起きないとした。対立遺伝子の頻度は同じのままであり、遺伝子型頻度が今ハーディ・ワインベルグの頻度ではないとしたら、次の世代ではハーディ・ワインベルグ頻度となり、それからはずっと変わることはない。
-
-ここで仮定の一つを外してみる。まずは、個体数は無限であるという仮定を外し、個体数は有限であるとする。このことは進化においてとても影響が大きいことが明らかになります。個体数が有限であると    、進化するチャンス効果が働き始めます。このチャンス効果は個体数がより小さいと、より大きくなります。
+Mutation(突然変異)は、遺伝子の連鎖における無作為な変化。
+突然変異のほとんどは、遺伝子の連鎖（DNA）が複製されるときに起こる。
+複製の処理は、非常に正確ではあるが、100％エラーが無いのではない。
+いつしかエラーは起こり、その新しいコピーは、オリジナルのコピー元とは異なるものになる。
+この章では、この複製処理についてみていきます
 
 この章で学ぶこと:
 
-• 有限サイズの個体数は、進化ダイナミックス（genetic drift：遺伝的浮動）に偶然性を持ち込みます。
+• 突然変異は、遺伝的変異の源である
 
-• 遺伝的浮動は遺伝的変化を抑える働きをする
+• 遺伝的浮動は遺伝的変異を抑える働きをするが、突然変異は遺伝的変異を増加させる。突然変異の効果で、浮動の効果が相殺されると、個体数における遺伝的変異は変わらない
 
-• 浮動効果は、個体群のサイズに比例している：個体数がより小さいと、浮動効果はより大きい。
+• 個体数が少ない、もしくは突然変異率が低いならば、均衡点において遺伝的変異は低い。反対に個体数が多い、もしくは突然変異率が高いなら、遺伝的変異は高くなる
 
-• 浮動効果に相対する別の力が無いならば、遺伝的浮動はどの個体群においても遺伝的変化を抑制する。
+• 新しい突然変異が定着する割合は1/2N。定着するとすれば、そのプロセスには平均で４Ｎ世代かかる
 
-• 遺伝的不当はゆっくりとしたプロセスです-個体群の遺伝的変化を半分に減らすのに1.4N世代かかる。
+• 置換率は突然変異率で与えられ、個体数には依存しない
 
-• 効果的個体数サイズは、キーとなる概念である-そのサイズは理想的な(Wright-Fisher)個体数であり、遺伝的変化における退化を表し、それが、対象となる実際の個体数と同じであることを示している
-
-• 効果的な個体数サイズはしばしば実際の個体数サイズより小さい、それは、個体数サイズのボトルネックとか性別の比率が同じではないなどの理由による。
 
 ---------
 <style>
@@ -57,171 +54,15 @@ body{
     font-family: cursive;
 }
 </style>
-##### Finite population size
-
-Finite population size : 
-$$
-    N=10_{s},  100_{s},  10^2, 10^{12} \dots
-$$
-
-##### Genetic Drift in Theory
-
-$$
-\begin{array}{cccc}
-  allele & allele F & genotype & genotype F \\
-  \hline
-  A_{1} & p & A_{1}A_{1} & p^2 \\
-  A_{2} & q & A_{1}A_{2} & 2pq \\
-  & & A_{2}A_{2} & q^2 
-\end{array}
-$$
-
-ハーディ・ワインベルグモデルでは個体数(N)は無限でしたが
-
-ここでは個体数(N)は、有限とします
-
-diploid(２倍体)では、allele(対立遺伝子)の数は 2N　です
-
-$$
-\begin{array}{l}
-p = 0.5 \quad q = 0.5 \\ 
-N =  500 \ individuals \quad 2N = 1000 \ alleles
-\end{array}
-$$ 
-
-上記は
-
-対立遺伝子は　A1:A2 = 0.5:0.5 半半存在している
-
-その中から１０００個の対立遺伝子を無作為に抽出する
-
-ということで
-
-<div class="row">
-    <div class="input-field col s3">
-        <select id="size">
-            <option value="500" selected>500</option>
-            <option value="1000">1000</option>
-            <option value="2000">2000</option>
-            <option value="5000">5000</option>
-            <option value="10000">10000</option>
-        </select>
-        <label>Population Size</label>
-    </div>
-    <div class="input-field col s3">
-        <select id="gens">
-            <option value="100">100</option>
-            <option value="500">500</option>
-            <option value="1000" selected>1000</option>
-            <option value="5000">5000</option>
-            <option value="10000">10000</option>
-        </select>
-        <label>Generations</label>
-    </div>
-    <div class="input-field col s3">
-        <select id="sims">
-            <option value="1" selected>1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-        </select>
-        <label>Simulations</label>
-    </div>
-</div>
-
-<button id="rerun01" class="btn">再実行</button>
-<div id="svg01"></div>
 
 -----
 
-##### Population Size and Genetic Drift
-
-個体数と遺伝的浮動の関係を数学的に説明します
-
-$$
-\begin{array}{l}
-G: \ ２つの対立遺伝子を抽出したときに同じ型になる確率とします (A_{1}A_{1}, A_{2}A_{2})\\
-\end{array}
-$$
-
-<div id="svg02"></div>
-
-大きな配偶子プールから無作為に対立遺伝子を抽出して、次の世代を作っていく
-
-これを繰返し、世代を重ねていく
-
-<div id="svg03"></div>
-
-対立遺伝子の入った器があり、そこから１つを無作為に抽出してコピーを作る
-
-抽出した対立遺伝子は元の器に戻す
-
-もう一つ器から対立遺伝子を無作為に抽出してコピーを作り元の器に戻す
-
-このコピーを前のコピーと合わせて隣の器に入れる
-
-これを繰返し次の世代を作っていくと考える
-
-$$
-\begin{array}{l}
-２回とも全く同じ遺伝子を抽出する確率は \ \frac{1}{2N} \\
-２回とも異なる型の遺伝子を抽出する確率は \ (1 - \frac{1}{2N})　\\
-次の世代の抽出する２つの遺伝子が同型の場合の確率は \ G^{1} = \frac{1}{2N} + (1 - \frac{1}{2N})G \\
-抽出した遺伝子が異なる型の確率を \ H = 1 - G \ とします \\
-遺伝的多様性が大きい \rightarrow 抽出される２つの対立遺伝子がより異なると言えることを証明します \\
-次の世代 \\
-H^{1} = 1 - G^{1} \\
-G^{1} = \frac{1}{2N} + (1 - \frac{1}{2N})G \\
-\begin{eqnarray}
-H^{1} &=& 1 - (\frac{1}{2N} + (1 - \frac{1}{2N})G) \\
-&=& 1 - \frac{1}{2N} - (1 - \frac{1}{2N})(1-H) \\
-&=& 1 - \frac{1}{2N} - (1 - \frac{1}{2N} - H + \frac{H}{2N}) \\
-&=& H - \frac{H}{2N} \\
-&=& (1 - \frac{1}{2N})H　\\
-\end{eqnarray} \\
-
-Nが大きいと、H \ と \ H^{1}の差は少なくなる \rightarrow 影響は弱くなる \\
-Nが小さいと、H \ と \ H^{1}の差は大きくなる \rightarrow 影響は強くなる \\
-\end{array}
-$$
+##### DNA and Mutation
 
 -----
 
-##### Speed of Genetic Drift
-
-$$
-\begin{array}{l}
-H_{0}を初期遺伝的変化率とすると \\
-
-H_{1} = (1 - \frac{1}{2N})H_{0} \\
-H_{2} = (1 - \frac{1}{2N})H_{1} = (1 - \frac{1}{2N})(1 - \frac{1}{2N})H_{0} \\
-H_{3} = (1 - \frac{1}{2N})(1 - \frac{1}{2N})(1 - \frac{1}{2N})H_{0} \\
-H_{x} = (1 - \frac{1}{2N})^{x}H_{0} \\
-
-x \rightarrow \infty \Rightarrow H_{x} \rightarrow 0 \\
-遺伝的変化がなくなってしまう、遺伝的浮動が起こらなくなるということで現実とは異なりますが\\
-ここではこのまま進めます\\
-H_{0} が半部になるにはどのくらいの世代数が必要でしょうか？\\
-\frac{H_{0}}{2} = (1 - \frac{1}{2N})^{x}H_{0} \ とします \\
-\frac{1}{2} = (1 - \frac{1}{2N})^{x} \\
-\ln(\frac{1}{2}) = \ln(1 - \frac{1}{2N})x \qquad \ln(1 + x) \approx x を利用\\
-\ln(\frac{1}{2}) \approx - \frac{1}{2N}x \\
-\ln(\frac{1}{2})(-2N) \approx x \qquad \ln(\frac{1}{x}) = -\ln(x)を利用して \\
--\ln(2)(-2N) \approx x \\
-2N \dot \ln(2) \approx x  \qquad \ln(2) \approx 0.7\\
-x \approx 1.4N \\
-N = 100 \rightarrow 140 世代 \\
-N = 10000 \rightarrow 14000世代 \\
-N = 1000000 \rightarrow 1400000 世代 \\
-個体数が大きいと、遺伝的変化率が半分になるのに多くの世代数が必要となる\\
-個体数が少ないと、遺伝的変化率が半分になるのに少ない世代数で達成できる\\   
-\end{array}    
-$$
-
------
-
-##### Effective Population Size
+##### Genetic Drift and Mutation
+ 
 
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -524,6 +365,3 @@ var vecData03 = [
 drawVectorA(svg03,vecData03);
 
 </script>
-
-
-
