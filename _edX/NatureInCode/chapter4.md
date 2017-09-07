@@ -74,13 +74,57 @@ body{
     $('select').material_select();
   });
 
+  var number_of_sequences = 100;  
+  var sequence_length = 20;
+  var original_sequence = [];
+  var sequences = []; // population  
+  
+  // 第１世代生成
+  function generate_first_generation(){
+    generate_first_sequence();
+    for (let i = 0;i < number_of_sequences;i++){
+        sequences.push(original_sequence.slice());
+    }
+  }
+  // 最初の遺伝子配列生成  
+  function generate_first_sequence(){
+    for (let i = 0; i  < sequence_length; i++){
+        original_sequence.push(random_base);
+    }  
+  }
+  // 遺伝子配列生成  
+  function random_base(){
+      let bases = ['A','G','C','T'];
+      let index = Math.floor(Math.random()*4);
+      return bases[index];
+  }
 
-  var p = 0.5;
-  var N = 500;
-  var generations = 1000;
-  var simulations = 10;
-  var population_sizes = [];
-  var data = [];
+  generate_first_generation();  
+
+
+var ar = [0,0,0,0,0,0,0];
+var max = [110,260,330,180,90,30,10];
+var i = 0;
+function children_in_family(){
+    if (ar[i]>=max[i]){
+        i++;
+    }
+    ar[i]++;
+    return i;
+}
+
+for (let i=100;i<1000;i++){
+    children_in_family();
+}
+
+console.log(ar,i);
+
+
+
+
+
+
+
 
   var rerun01 = document.querySelector('#rerun01');
   rerun01.addEventListener('click', executeDrawLineChart);
