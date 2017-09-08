@@ -62,7 +62,43 @@ body{
 -----
 
 ##### Genetic Drift and Mutation
- 
+
+|:--|:---:|--|
+|Genetic Drift|&rarr;|decrease genetic variation|
+|Mutation|&rarr;|increase genetic variation|
+
+$$
+\begin{array}{l}
+次世代に同じタイプの対立遺伝子を選択する確率\\
+G^{'} = \frac{1}{2N} + (1 - \frac{1}{2N})G　\\
+突然変異を加える\\
+突然変異率/allele/generation　\\
+\mu \\
+突然変異しない確率は \\
+1 - \mu \\
+２つの対立遺伝子が共に変異しない確率 \ ２つとも同じタイプのまま \\
+(1 - \mu)(1 - \mu) = (1 - \mu)^2 \\
+同じタイプのalleleを選択して、突然変異が起こらない確率\\
+G^{'} = (1 - \mu)^2(\frac{1}{2N} + (1 - \frac{1}{2N})G)　\\
+(1 - \mu)^2を展開します\\
+1-2\mu + \mu^2 \quad \mu^2は非常に小さいので無視できる　\rightarrow 1-2\mu \\
+  \begin{eqnarray}
+  G^{'} &=& (1 - 2\mu)(\frac{1}{2N} + (1 - \frac{1}{2N})G)　\\
+  &=& (1 - 2\mu)(\frac{1}{2N} + G - \frac{G}{2N})　\\
+  &=& \frac{1}{2N} + G - \frac{G}{2N} -\frac{2\mu}{2N} - 2\mu G + \frac{2\mu G}{2N} \\
+  \frac{2\mu}{2N} \ \frac{2\mu G}{2N} \ は非常に小さいので無視\\
+  &=& \frac{1}{2N} + G - \frac{G}{2N} - 2\mu G \\
+  &=& \frac{1}{2N} +(1 - \frac{1}{2N})G - 2\mu G \\
+  H^{'} = 1 - G^{'}なので \\
+  H^{'} &=& 1 - \frac{1}{2N} -(1 - \frac{1}{2N})(1-H) - 2\mu(1-H) \\
+  &=& 1 - \frac{1}{2N} - 1 + H + \frac{1}{2N} - \frac{H}{2N} -2\mu + 2\mu H\\
+  &=& (1 - \frac{1}{2N})H - 2\mu (1 - H)\\
+\end{eqnarray}
+
+
+
+\end{array}
+$$
 
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -74,10 +110,13 @@ body{
     $('select').material_select();
   });
 
+  const bases = ['A','G','C','T'];
   var number_of_sequences = 100;  
   var sequence_length = 20;
   var original_sequence = [];
-  var sequences = []; // population  
+  var sequences = []; // population
+  var number_of_generations = 100;
+  var mutation_rate = 0.0001; // per base and generation  
   
   // 第１世代生成
   function generate_first_generation(){
@@ -89,35 +128,55 @@ body{
   // 最初の遺伝子配列生成  
   function generate_first_sequence(){
     for (let i = 0; i  < sequence_length; i++){
-        original_sequence.push(random_base);
+        original_sequence.push(random_base(""));
     }  
   }
   // 遺伝子配列生成  
-  function random_base(){
-      let bases = ['A','G','C','T'];
-      let index = Math.floor(Math.random()*4);
-      return bases[index];
+  function random_base(current_base){
+      let new_base;
+      do {
+        let index = Math.floor(Math.random()*4);
+        new_base = bases[index];
+      }while(new_base == current_base); /* 現在の元と同じ元が返らないようにする*/
+      return new_base;
+  }
+
+  function print_sequences(title){
+    console.log(title);
+    for (let i=0;i < number_of_sequences;i++){
+       print_sequence(sequences[i]);
+    }
+    console.log("");
+  }
+
+  function print_sequence(sequence){
+    let sequence_string = "";  
+    for (let i=0;i < sequence_length;i++){
+      sequence_string += sequence[i];
+    }
+    console.log(sequence_string);
+  }  
+
+  function run_generations(){
+    for (let i =0; i < number_of_generations; i++){
+      /* each generation */
+      for (let j = 0; j < sequences.length; j++){
+        /*each sequence*/
+        for (let k = 0; k < sequences[j].length; k++){
+          /*each base*/
+          if (Math.random() < mutation_rate){
+            sequences[j][k] = random_base(sequences[j][k]);
+          }
+        }
+
+      }
+    }
   }
 
   generate_first_generation();  
-
-
-var ar = [0,0,0,0,0,0,0];
-var max = [110,260,330,180,90,30,10];
-var i = 0;
-function children_in_family(){
-    if (ar[i]>=max[i]){
-        i++;
-    }
-    ar[i]++;
-    return i;
-}
-
-for (let i=100;i<1000;i++){
-    children_in_family();
-}
-
-console.log(ar,i);
+  print_sequences("Generation 0");
+  run_generations();
+  print_sequences("After " + number_of_generations + " generations");
 
 
 
@@ -126,286 +185,5 @@ console.log(ar,i);
 
 
 
-  var rerun01 = document.querySelector('#rerun01');
-  rerun01.addEventListener('click', executeDrawLineChart);
-
-function draw_line_chart(data,x_label,y_label,legend_values,x_max,y_max_flex) {
-    var margin = {top: 20, right: 20, bottom: 50, left: 50},
-        width = 700 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
-
-    var version = d3.scale ? 3 : 4;
-    var color = (version == 3 ? d3.scale.category10() : d3.scaleOrdinal(d3.schemeCategory10));
-                
-    if (!x_max) {
-        x_max = data[0].length > 0 ? data[0].length : data.length
-    }
-                
-    var y_max = data[0].length > 0 ? d3.max(data, function(array) {
-            return d3.max(array);
-        }) : d3.max(data);
-
-    var x = (version == 3 ? d3.scale.linear() : d3.scaleLinear())
-        .domain([0,x_max])
-        .range([0, width]);
-
-    var y = y_max_flex ? (version == 3 ? d3.scale.linear() : d3.scaleLinear())
-        .domain([0, 1.1 * y_max])
-        .range([height, 0]) : (version == 3 ? d3.scale.linear() : d3.scaleLinear())
-        .range([height, 0]);
-        
-    var xAxis = (version == 3 ? d3.svg.axis().scale(x).orient("bottom") : 
-    	d3.axisBottom().scale(x));
-
-    var yAxis = (version == 3 ? d3.svg.axis().scale(y).orient("left") : 
-    	d3.axisLeft().scale(y));
-
-    var line = (version == 3 ? d3.svg.line() : d3.line())
-        .x(function (d, i) {
-            var dat = (data[0].length > 0 ? data[0] : data);
-            return x((i/(dat.length-1)) * x_max);
-        })
-        .y(function (d) {
-            return y(d);
-        });
-
-    d3.select("svg").remove();    
-    var svg = d3.select("#svg01").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-        .append("text")
-        .style("text-anchor", "middle")
-        .attr("x", width / 2)
-        .attr("y", 6)
-        .attr("dy", "3em")
-        .style("fill", "#000")
-        .text(x_label);
-
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -height / 2)
-        .attr("dy", "-3.5em")
-        .style("text-anchor", "middle")
-        .style("fill", "#000")
-        .text(y_label);
-
-    if (legend_values.length > 0) {		
-        var legend = svg.append("text")
-            .attr("text-anchor", "star")
-            .attr("y", 30)
-            .attr("x", width-100)
-            .append("tspan").attr("class", "legend_title")
-            .text(legend_values[0])
-            .append("tspan").attr("class", "legend_text")
-            .attr("x", width-100).attr("dy", 20).text(legend_values[1])
-            .append("tspan").attr("class", "legend_title")
-            .attr("x", width-100).attr("dy", 20).text(legend_values[2])
-            .append("tspan").attr("class", "legend_text")
-            .attr("x", width-100).attr("dy", 20).text(legend_values[3]);
-    }
-    else {
-        svg.selectAll("line.horizontalGridY")
-            .data(y.ticks(10)).enter()
-            .append("line")
-            .attr("x1", 1)
-            .attr("x2", width)
-            .attr("y1", function(d){ return y(d);})
-            .attr("y2", function(d){ return y(d);})
-            .style("fill", "none")
-            .style("shape-rendering", "crispEdges")
-            .style("stroke", "#f5f5f5")
-            .style("stroke-width", "1px");
-
-        svg.selectAll("line.horizontalGridX")
-            .data(x.ticks(10)).enter()
-            .append("line")
-            .attr("x1", function(d,i){ return x(d);})
-            .attr("x2", function(d,i){ return x(d);})
-            .attr("y1", 1)
-            .attr("y2", height)
-            .style("fill", "none")
-            .style("shape-rendering", "crispEdges")
-            .style("stroke", "#f5f5f5")
-            .style("stroke-width", "1px");
-    }
-
-    d3.select("#svg01").style("font","10px sans-serif");
-    d3.selectAll(".axis line").style("stroke","#000"); 
-    d3.selectAll(".y.axis path").style("display","none"); 
-    d3.selectAll(".x.axis path").style("display","none");    
-    d3.selectAll(".legend_title")
-        .style("font-size","12px").style("fill","#555").style("font-weight","400");
-    d3.selectAll(".legend_text")
-        .style("font-size","20px").style("fill","#bbb").style("font-weight","700");
-
-    if (data[0].length > 0) {
-        var simulation = svg.selectAll(".simulation")
-            .data(data)
-            .enter().append("g")
-            .attr("class", "simulation");
-
-        simulation.append("path")
-            .attr("class", "line")
-            .attr("fill", "none")
-            .attr("d", function(d) { return line(d); })
-            .style("stroke", function(d,i) { return color(i); });
-    } 
-    else {
-        svg.append("path")
-            .datum(data)
-            .attr("class", "line")
-            .attr("fill", "none")
-            .attr("d", line)
-            .style("stroke","steelblue");
-    }
-    d3.selectAll(".line").style("fill", "none").style("stroke-width","1.5px");    
-}
-  
-  function nextGeneration(simulation_counter, current_N){
-    var draws = 2 * current_N;
-    var a1 = 0;
-    var a2 = 0;
-    for (let i = 0; i < draws; i++){
-      if (Math.random() <= p){
-        a1++;
-      } else {
-        a2++;
-      }
-    }
-    p = a1 / draws;
-    data[simulation_counter].push(p);
-  }
-
-  function roundNumber(value, decimals){
-    let shifter = Math.pow(10, decimals);
-    return Math.round(value * shifter) / shifter;
-  }
-
-  function executeDrawLineChart(){
-    
-    generations = document.querySelector("#gens").value;
-    simulations = document.querySelector("#sims").value;
-    N           = document.querySelector("#size").value;    
-  
-    data = [];
-    population_sizes = [];
-
-    for (let i = 0; i < simulations; i++){
-      data.push([]);
-    }
-
-    for (let j = 0; j < simulations; j++){
-
-      p = 0.5;
-      var population_size;
-      for (let i = 0; i < generations; i++){
-        if (i % 10 == 9){
-            population_size = 10;
-        }  else {
-            population_size = N;  
-            }
-        population_sizes.push(population_size);  
-        nextGeneration(j, population_size);
-      }
-    
-    }
-
-    function effective_population_size(all_Ns){
-        var denominator = 0;
-        for (let i = 0; i < all_Ns.length; i++){
-            denominator += 1 / all_Ns[i];
-        }
-        return Math.round(all_Ns.length / denominator);
-    }
-    var Ne = effective_population_size(population_sizes);
-
-    draw_line_chart(data,"Generation","p",["Eff. Population Size:",Ne,"Generations:",generations]);
-  }
-
-  executeDrawLineChart();
-
-/** Po;ulation sizen and Genetic Drift */
-var svg02 = d3.select("#svg02").append("svg")
-                .attr("width",700)
-                .attr("height", 200)
-                .style("background","#000");
-gametes02 = [
-    {"startPos":75,"endPos":220,"innerRadius":70,"outerRadius":70,"stroke":"#fff","strokeWidth":3,"fillColor":"#000","xTranslate":80,"yTranslate":80},
-    {"startPos":75,"endPos":220,"innerRadius":70,"outerRadius":70,"stroke":"#fff","strokeWidth":3,"fillColor":"#000","xTranslate":430,"yTranslate":80}
-];  
-drawArc(svg02,gametes02);
-
-circle02 = [
-  {cx: 260, cy: 100, r: 40, fillColor: "yellow"},
-  {cx: 610, cy: 100, r: 40, fillColor: "yellow"},
-];
-drawCircle(svg02,circle02);
-
-text02 = [
-    {x: 80, y: 80, text:"大きな", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"0.7em"},
-    {x: 80, y: 100, text:"配偶子プール", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"0.7em"},
-    {x: 430, y: 80, text:"大きな", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"0.7em"},
-    {x: 430, y: 100, text:"配偶子プール", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"0.7em"},
-    {x: 260, y: 100, text:"2N", "anchor":"middle",
-     stroke:"#000",fontFamily:"serif", fontSize:"1.3em"},
-    {x: 610, y: 100, text:"2N", "anchor":"middle",
-     stroke:"#000",fontFamily:"serif", fontSize:"1.3em"},
-]
-drawText(svg02,text02);
-
-var vecData02 = [
-{"x1":160,"y1":100,"angles":0,"length":50,"stroke":"#fff","strokeWidth":4},
-{"x1":310,"y1":100,"angles":0,"length":50,"stroke":"#fff","strokeWidth":4},
-{"x1":510,"y1":100,"angles":0,"length":50,"stroke":"#fff","strokeWidth":4},
-];    
-drawVectorA(svg02,vecData02);
-
-var svg03 = d3.select("#svg03").append("svg")
-                .attr("width",700)
-                .attr("height", 200)
-                .style("background","#000");
-rectData03 = [
-{"x":50,"y":50,"width":60,"height":100,"stroke":"#fff" },
-{"x":320,"y":50,"width":60,"height":100,"stroke":"#fff"},
-{"x":590,"y":50,"width":60,"height":100,"stroke":"#fff"} 
-];
-drawRect(svg03,rectData03);
-
-text03 = [
-    {x: 80, y: 100, text:"2N", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
-    {x: 350, y: 100, text:"2N", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
-    {x: 620, y: 100, text:"2N", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
-    {x: 80, y: 190, text:"G", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
-    {x: 350, y: 190, text:"G1", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
-    {x: 620, y: 190, text:"G2", "anchor":"middle",
-     stroke:"#fff",fontFamily:"serif", fontSize:"1.3em"},
-
-]
-drawText(svg03,text03);
-
-var vecData03 = [
-{"x1":150,"y1":100,"angles":0,"length":130,"stroke":"#fff","strokeWidth":4},
-{"x1":420,"y1":100,"angles":0,"length":130,"stroke":"#fff","strokeWidth":4},
-];    
-drawVectorA(svg03,vecData03);
 
 </script>

@@ -1,0 +1,21 @@
+// Place your settings in this file to overwrite the default settings
+{
+  // Controls the font size.
+    "editor.fontSize": 18,
+  
+    // 1 つのタブに相当するスペースの数。`editor.detectIndentation` がオンの場合、この設定はファイル コンテンツに基づいて上書きされます。
+    "editor.tabSize": 2,
+    
+  // Controls after how many characters the editor will wrap to the next line. Setting this to 0 turns on viewport width wrapping
+    "editor.wrappingColumn": 80,
+    "editor.multiCursorModifier": "ctrlCmd",
+  
+  // 現在選択している配色テーマで配色とフォント スタイルを上書きします。
+  "editor.tokenColorCustomizations": {
+    "comments": "#EA9797"
+  },
+  
+    "workbench.colorTheme": "Monokai",
+  // emmet 省略記法を展開すべきでない言語の配列。
+      "emmet.excludeLanguages": [],	
+  }
