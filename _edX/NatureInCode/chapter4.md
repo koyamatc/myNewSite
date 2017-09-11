@@ -92,13 +92,16 @@ G^{'} = (1 - \mu)^2(\frac{1}{2N} + (1 - \frac{1}{2N})G)　\\
   H^{'} = 1 - G^{'}なので \\
   H^{'} &=& 1 - \frac{1}{2N} -(1 - \frac{1}{2N})(1-H) - 2\mu(1-H) \\
   &=& 1 - \frac{1}{2N} - 1 + H + \frac{1}{2N} - \frac{H}{2N} -2\mu + 2\mu H\\
-  &=& (1 - \frac{1}{2N})H - 2\mu (1 - H)\\
+  &=& \underbrace{(1 - \frac{1}{2N})H}_{Genetic \ drift} - \underbrace{2\mu (1 - H)}_{Mutation} \\
 \end{eqnarray}
-
-
 
 \end{array}
 $$
+
+-----
+
+##### Fixation
+
 
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -178,12 +181,38 @@ $$
   run_generations();
   print_sequences("After " + number_of_generations + " generations");
 
+  /* Fixation */
+  var N = 100;
+  var p = 0.5;
+  var simulations = 10000;
+  var fixations_of_mutant = 0;
+  function next_generation(){
+    let draws = 2 * N;
+    let a1 = 0;
+    let a2 = 0;
+    for (let i = 0; i < draws; i++){
+      if(Math.random() <= p){
+        a1++:
+      } else {
+        a2++;
+      }
+    }
+  }
 
+  function run_until_fixation(){
+    p = 1 / (2 * N);
+    do {
+      next_generarion();
+    } while(p>0 && p < 1);
+    if (p == 1){
+      fixations_of_mutant++; 
+    }
+  }
 
+  for (let i = 0; i < simulationsj; i++ ){
+    run_until_fixation();
+  }
 
-
-
-
-
+  console.log(fixations_of_mutant / simulations);
 
 </script>
