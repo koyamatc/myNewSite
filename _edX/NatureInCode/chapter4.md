@@ -186,6 +186,8 @@ $$
   var p = 0.5;
   var simulations = 10000;
   var fixations_of_mutant = 0;
+  var total_generations = 0;
+
   function next_generation(){
     let draws = 2 * N;
     let a1 = 0;
@@ -201,11 +203,14 @@ $$
 
   function run_until_fixation(){
     p = 1 / (2 * N);
+    let generations = 0;
     do {
       next_generarion();
+      generations++; 
     } while(p>0 && p < 1);
     if (p == 1){
       fixations_of_mutant++; 
+      total_generations += generations;
     }
   }
 
@@ -213,6 +218,6 @@ $$
     run_until_fixation();
   }
 
-  console.log(fixations_of_mutant / simulations);
+  console.log(total_generations / fixations_of_mutant);
 
 </script>
