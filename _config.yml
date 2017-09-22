@@ -37,12 +37,12 @@ exclude:
   - webpack.config.js
 
 collections:
-  edX:
-    output: true  
+  my_collection:
+    output: true 
 
 defaults:
   - scope:
       path: ""
-      type: edX
+      type: my_collection 
     values:
       layout: page
