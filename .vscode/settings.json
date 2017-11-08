@@ -11,11 +11,13 @@
     "editor.multiCursorModifier": "ctrlCmd",
   
   // 現在選択している配色テーマで配色とフォント スタイルを上書きします。
-  "editor.tokenColorCustomizations": {
+    "editor.tokenColorCustomizations": {
     "comments": "#EA9797"
-  },
-  
+    },
     "workbench.colorTheme": "Monokai",
   // emmet 省略記法を展開すべきでない言語の配列。
-      "emmet.excludeLanguages": [],	
-  }
+    "emmet.excludeLanguages": [],
+  
+    // Path to Python, you can use a custom version of Python by modifying this setting to include the full path.
+    "python.pythonPath": "c:/Python36/python.exe",
+  }  
