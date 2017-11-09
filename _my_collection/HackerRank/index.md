@@ -29,11 +29,11 @@ description:
     <div class="col s12 m6">
         <ul class="collapsible" data-collapsible="accordion">
             <li>
-                <div class="collapsible-header"><i class="material-icons">subject</i>XXXXXXXX</div>
+                <div class="collapsible-header"><i class="material-icons">subject</i>Algorithms implementation</div>
                 <div class="collapsible-body">
                     <ul>
                     {% for lesson in site.my_collection %}
-                        {% if lesson.subject == 'xxxxx' %}
+                        {% if lesson.subject == 'algorithms-implementation' %}
                             <li>
                                 <i class="material-icons">label_outline</i>
                                 <a href="{{ lesson.url }}"><b>{{ lesson.title }}</b></a>
@@ -70,11 +70,11 @@ description:
     <div class="col s12 m6">
         <ul class="collapsible" data-collapsible="accordion">
             <li>
-                <div class="collapsible-header"><i class="material-icons">subject</i>------</div>
+                <div class="collapsible-header"><i class="material-icons">subject</i>Algorithms Strings</div>
                 <div class="collapsible-body">
                     <ul>
                     {% for lesson in site.my_collection %}
-                        {% if lesson.subject == '------' %}
+                        {% if lesson.subject == 'algorithms-strings' %}
                             <li>
                                 <i class="material-icons">label_outline</i>
                                 <a href="{{ lesson.url }}"><b>{{ lesson.title }}</b></a>
