@@ -1,11 +1,18 @@
-l = []
-a = []
-a.append(3)
-l.append(a)
-a = [1]
-l.append(a)
-a =l[1]
-a.append(5)
-l[1] = a
+n = 7
+scores = [100,100,50,40,40,20,10]
+m = 4
+alice = [5,25,50,120]
 
-print(l)
+scores = list(set(scores))
+scores.sort()
+
+for i in alice:
+    if i in scores:
+        pass
+    else:
+        scores.append(i)
+        scores.sort()
+        print(scores)
+
+    print(len(scores)- scores.index(i))            
+             
