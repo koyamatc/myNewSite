@@ -12,7 +12,6 @@ for i in alice:
     else:
         scores.append(i)
         scores.sort()
-        print(scores)
 
     print(len(scores)- scores.index(i))            
              
