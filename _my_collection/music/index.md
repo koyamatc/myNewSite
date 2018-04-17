@@ -29,8 +29,18 @@ description:
                     </li>
                     <li class="collection-item">
                       <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/nat-king-cole-l-o-v-e-love-full-jazzy-accoustic-hq/1440498072_2148172085">
+                        <b>Love</b></a>
+                    </li>
+                    <li class="collection-item">
+                      <i class="material-icons">mic</i>
                         <a href="https://www.smule.com/recording/doris-day-sentimental-journey/1440498072_2044619252">
                         <b>Sentimental Journey</b></a>
+                    </li>
+                    <li class="collection-item">
+                      <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/judy-garland-somewhere-over-the-rainbow-lullaby/1440498072_1972323165">
+                        <b>Somewhere Over The Rainbow</b></a>
                     </li>
                   </ul>
                 </div>    
@@ -47,6 +57,11 @@ description:
                       <i class="material-icons">mic</i>
                         <a href="https://www.smule.com/recording/%E4%B8%AD%E5%B3%B6%E7%BE%8E%E5%98%89-%E6%A1%9C%E8%89%B2%E8%88%9E%E3%81%86%E3%81%93%E3%82%8D-inst/1440498072_2139975426">
                         <b>桜色舞うころ</b></a>
+                    </li>
+                    <li class="collection-item">
+                      <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/%E7%A6%8F%E8%80%B3-%E3%82%A2%E3%82%B3%E3%83%BC%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF-%E6%98%9F%E3%81%AE%E3%81%8B%E3%81%91%E3%82%89%E3%82%92%E6%8E%A2%E3%81%97%E3%81%AB%E8%A1%8C%E3%81%93%E3%81%86again-%E7%A6%8F%E8%80%B3-mazkt/1440498072_1989769053">
+                        <b>星のかけらを探しに行こう</b></a>
                     </li>
                   </ul>
                 </div>    
