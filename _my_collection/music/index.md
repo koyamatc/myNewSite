@@ -42,6 +42,11 @@ description:
                         <a href="https://www.smule.com/recording/judy-garland-somewhere-over-the-rainbow-lullaby/1440498072_1972323165">
                         <b>Somewhere Over The Rainbow</b></a>
                     </li>
+                    <li class="collection-item">
+                      <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/the-beatles-yesterday-piano/1440498072_2227186060">
+                        <b>Yesterday</b></a>
+                    </li>
                   </ul>
                 </div>    
             </li>
