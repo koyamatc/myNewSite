@@ -55,7 +55,7 @@ description:
     <div class="col s12 m6">
         <ul class="collapsible" data-collapsible="accordion">
             <li>
-                <div class="collapsible-header"><i class="material-icons">subject</i>JPop</div>
+                <div class="collapsible-header"><i class="material-icons">subject</i>JPops</div>
                 <div class="collapsible-body">
                   <ul>
                     <li class="collection-item">
@@ -115,6 +115,27 @@ description:
           <ul class="collapsible" data-collapsible="accordion">
               <li>
                 <div class="collapsible-header"><i class="material-icons">subject</i>Collaborations</div>
+                <div class="collapsible-body">
+                    <ul>
+                      <li class="collection-item">
+                        <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/the-police-every-breath-you-take-lullaby/262856713_2237656502">
+                        <b>Every Breath You Take -- with ACE_Charlotte</b></a>
+                      </li>
+                      <li class="collection-item">
+                        <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/nat-king-cole-smile/1059809514_2237583441">
+                        <b>Smile -- with hankosankeiko</b></a>
+                      </li>
+                    </ul>
+                </div>
+              </li>
+          </ul>
+      </div>
+      <div class="col s12 m6">
+          <ul class="collapsible" data-collapsible="accordion">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">subject</i>Collaborations JPops</div>
                 <div class="collapsible-body">
                     <ul>
                       <li class="collection-item">
