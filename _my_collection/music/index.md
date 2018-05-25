@@ -119,8 +119,23 @@ description:
                     <ul>
                       <li class="collection-item">
                         <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/heart-alone-bearthanyouacoustic/589732902_2168536250">
+                        <b>Alone -- with Jwhitlov2sing</b></a>
+                      </li>
+                      <li class="collection-item">
+                        <i class="material-icons">mic</i>
                         <a href="https://www.smule.com/recording/the-police-every-breath-you-take-lullaby/262856713_2237656502">
                         <b>Every Breath You Take -- with ACE_Charlotte</b></a>
+                      </li>
+                      <li class="collection-item">
+                        <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/billy-joel-honesty-acoustic-guitar/589732902_2168473432">
+                        <b>Honesty -- with Jwhitlov2sing</b></a>
+                      </li>
+                      <li class="collection-item">
+                        <i class="material-icons">mic</i>
+                        <a href="https://www.smule.com/recording/ribbon-in-the-sky/589732902_2179701237">
+                        <b>Ribbon In The Sky -- with Jwhitlov2sing</b></a>
                       </li>
                       <li class="collection-item">
                         <i class="material-icons">mic</i>
